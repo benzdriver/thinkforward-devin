@@ -4146,3 +4146,175 @@ EmptyState 空状态组件用于在没有数据或内容时向用户显示友好
 ```
 
 EmptyState组件提供了一种用户友好的方式来处理无数据或内容的情况，可以减少用户困惑并提供明确的后续操作指导。通过与后端良好的集成，可以根据不同的空数据原因显示最适合的空状态提示。
+
+### LoadingState 加载状态
+
+LoadingState 加载状态组件用于在数据加载过程中向用户显示友好的加载提示，可以包含旋转图标、进度条、标题和描述文本。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认加载状态 | 一般加载场景 |
+| subtle | 轻微加载状态 | 浅色背景的加载状态 |
+| ghost | 幽灵加载状态 | 无背景的简洁加载状态 |
+| overlay | 覆盖加载状态 | 覆盖在内容上方的加载状态，带模糊效果 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 特性
+
+1. **自定义图标**：支持自定义加载图标
+2. **标题和描述**：可以设置标题和描述文本
+3. **进度条**：支持显示加载进度条
+4. **进度百分比**：显示加载进度百分比
+5. **全高模式**：可以设置为占满容器高度
+6. **覆盖模式**：可以覆盖在内容上方显示
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<LoadingState 
+  title="加载中" 
+  description="正在加载数据，请稍候" 
+/>
+
+// 不同变体
+<LoadingState 
+  variant="default" 
+  title="默认加载状态" 
+/>
+
+<LoadingState 
+  variant="subtle" 
+  title="轻微加载状态" 
+/>
+
+<LoadingState 
+  variant="ghost" 
+  title="幽灵加载状态" 
+/>
+
+<LoadingState 
+  variant="overlay" 
+  title="覆盖加载状态" 
+/>
+
+// 不同尺寸
+<LoadingState 
+  size="sm" 
+  title="小尺寸加载状态" 
+/>
+
+<LoadingState 
+  size="md" 
+  title="中等尺寸加载状态" 
+/>
+
+<LoadingState 
+  size="lg" 
+  title="大尺寸加载状态" 
+/>
+
+// 自定义图标
+<LoadingState 
+  icon={<CustomSpinner />} 
+  title="自定义加载图标" 
+/>
+
+// 带进度条
+<LoadingState 
+  title="上传中" 
+  description="正在上传文件" 
+  progress={75}
+  showProgressBar
+/>
+
+// 不显示旋转图标
+<LoadingState 
+  title="处理中" 
+  description="正在处理您的请求" 
+  showSpinner={false}
+  progress={50}
+  showProgressBar
+/>
+
+// 全高模式
+<LoadingState 
+  fullHeight 
+  title="初始化中" 
+  description="正在初始化应用" 
+/>
+
+// 覆盖模式
+<LoadingState 
+  variant="overlay" 
+  title="保存中" 
+  description="正在保存您的更改" 
+/>
+```
+
+#### 后端集成考虑
+
+1. **进度反馈**：后端API应当支持进度反馈，特别是对于长时间运行的操作。
+
+```json
+{
+  "status": "loading",
+  "progress": 65,
+  "estimatedTimeRemaining": "约1分钟",
+  "currentStep": "正在处理图片",
+  "totalSteps": 4,
+  "currentStepIndex": 2
+}
+```
+
+2. **分阶段加载**：对于复杂操作，后端应提供分阶段加载信息。
+
+```json
+{
+  "status": "loading",
+  "stages": [
+    { "name": "初始化", "status": "completed", "progress": 100 },
+    { "name": "数据处理", "status": "in_progress", "progress": 45 },
+    { "name": "生成报告", "status": "pending", "progress": 0 },
+    { "name": "完成", "status": "pending", "progress": 0 }
+  ],
+  "currentStage": 1,
+  "overallProgress": 35
+}
+```
+
+3. **加载状态持久化**：对于可能跨会话的长时间操作，后端应支持加载状态持久化。
+
+```json
+{
+  "status": "loading",
+  "operationId": "op_12345",
+  "progress": 70,
+  "resumable": true,
+  "startedAt": "2023-05-01T10:30:00Z",
+  "lastUpdatedAt": "2023-05-01T10:35:00Z"
+}
+```
+
+4. **取消操作支持**：后端应支持取消正在进行的操作。
+
+```json
+{
+  "status": "loading",
+  "operationId": "op_12345",
+  "progress": 80,
+  "cancellable": true,
+  "cancelEndpoint": "/api/operations/op_12345/cancel"
+}
+```
+
+LoadingState组件提供了一种用户友好的方式来显示加载状态，减少用户等待焦虑并提供清晰的进度反馈。通过与后端良好的集成，可以为用户提供准确的加载进度和预估完成时间，提升整体用户体验。
