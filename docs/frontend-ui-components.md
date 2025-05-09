@@ -3575,3 +3575,199 @@ const CustomButton = ({ className, ...props }) => (
 ```
 
 通过遵循这些指南，后端和前端可以更好地协作，提供一致的用户体验。
+
+### DatePicker 日期选择器
+
+DatePicker 日期选择器组件是一个用于选择日期的分子级组件，支持单个日期选择和日期范围选择，提供了丰富的自定义选项和交互体验。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认日期选择器 | 一般日期选择场景 |
+| filled | 填充背景日期选择器 | 在浅色背景上更加突出 |
+| outline | 轮廓日期选择器 | 更强边框的日期选择器 |
+| ghost | 幽灵日期选择器 | 无背景的简洁日期选择器 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 特性
+
+1. **日期范围选择**：支持选择日期范围
+2. **自定义格式**：支持自定义日期格式
+3. **本地化支持**：支持多语言和地区设置
+4. **禁用日期**：可以禁用特定日期或日期范围
+5. **最小/最大日期**：可以设置可选择的日期范围
+6. **自定义图标**：支持自定义日历图标
+7. **键盘导航**：支持键盘导航和操作
+8. **日期验证**：内置日期验证功能
+9. **周数显示**：可选显示周数
+10. **多种定位选项**：日历弹出位置可自定义
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<DatePicker placeholder="选择日期" />
+
+// 不同变体
+<DatePicker variant="default" placeholder="默认日期选择器" />
+<DatePicker variant="filled" placeholder="填充背景日期选择器" />
+<DatePicker variant="outline" placeholder="轮廓日期选择器" />
+<DatePicker variant="ghost" placeholder="幽灵日期选择器" />
+
+// 不同尺寸
+<DatePicker size="sm" placeholder="小尺寸" />
+<DatePicker size="md" placeholder="中等尺寸" />
+<DatePicker size="lg" placeholder="大尺寸" />
+
+// 日期范围选择
+<DatePicker 
+  isRange 
+  placeholder="选择日期范围" 
+/>
+
+// 自定义格式
+<DatePicker 
+  format="yyyy年MM月dd日" 
+  placeholder="自定义格式" 
+/>
+
+// 本地化支持
+<DatePicker 
+  locale="zh-CN" 
+  placeholder="中文日期" 
+/>
+
+// 最小/最大日期限制
+<DatePicker 
+  minDate={new Date(2023, 0, 1)} 
+  maxDate={new Date(2023, 11, 31)} 
+  placeholder="2023年日期" 
+/>
+
+// 禁用特定日期
+<DatePicker 
+  disabledDates={[new Date(2023, 5, 15), new Date(2023, 5, 16)]} 
+  placeholder="禁用特定日期" 
+/>
+
+// 禁用特定星期几
+<DatePicker 
+  disabledDays={[0, 6]} // 禁用周六和周日
+  placeholder="禁用周末" 
+/>
+
+// 显示周数
+<DatePicker 
+  showWeekNumbers 
+  placeholder="显示周数" 
+/>
+
+// 自定义日历位置
+<DatePicker 
+  calendarPosition="top" 
+  calendarAlign="right" 
+  placeholder="日历在上方右对齐" 
+/>
+
+// 自定义图标
+<DatePicker 
+  icon={<CustomIcon />} 
+  placeholder="自定义图标" 
+/>
+
+// 错误状态
+<DatePicker 
+  hasError 
+  placeholder="错误状态" 
+/>
+
+// 禁用状态
+<DatePicker 
+  disabled 
+  placeholder="禁用状态" 
+/>
+
+// 只读状态
+<DatePicker 
+  readOnly 
+  value={new Date()} 
+  placeholder="只读状态" 
+/>
+
+// 受控组件
+<DatePicker 
+  value={selectedDate} 
+  onChange={(date) => setSelectedDate(date)} 
+  placeholder="受控日期选择器" 
+/>
+
+// 日期范围受控组件
+<DatePicker 
+  isRange 
+  value={{ start: startDate, end: endDate }} 
+  onChange={(range) => {
+    setStartDate(range.start);
+    setEndDate(range.end);
+  }} 
+  placeholder="受控日期范围选择器" 
+/>
+```
+
+#### 后端集成考虑
+
+1. **日期格式**：后端API应当支持多种日期格式，并在文档中明确指定接受的格式。
+
+```json
+{
+  "date": "2023-06-15",  // ISO 格式
+  "dateRange": {
+    "start": "2023-06-15",
+    "end": "2023-06-20"
+  }
+}
+```
+
+2. **日期验证**：后端应当实现日期验证逻辑，确保日期在有效范围内。
+
+```json
+{
+  "errors": {
+    "date": "日期必须在2023年内",
+    "dateRange.start": "开始日期不能晚于结束日期"
+  }
+}
+```
+
+3. **本地化支持**：后端应当考虑不同地区的日期格式和时区差异。
+
+```json
+{
+  "dateFormats": {
+    "zh-CN": "yyyy年MM月dd日",
+    "en-US": "MM/dd/yyyy",
+    "fr-FR": "dd/MM/yyyy"
+  }
+}
+```
+
+4. **预设选项**：后端可以提供常用的日期预设选项。
+
+```json
+{
+  "datePresets": [
+    { "label": "今天", "value": "2023-06-15" },
+    { "label": "本周", "value": { "start": "2023-06-12", "end": "2023-06-18" } },
+    { "label": "本月", "value": { "start": "2023-06-01", "end": "2023-06-30" } }
+  ]
+}
+```
+
+DatePicker组件提供了灵活且功能丰富的日期选择体验，适用于各种需要日期输入的场景，如预约系统、活动日历、报表筛选等。通过与后端良好的集成，可以确保日期数据的准确性和一致性。
