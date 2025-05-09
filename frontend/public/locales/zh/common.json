@@ -1,0 +1,32 @@
+{
+  "app": {
+    "name": "ThinkForward AI",
+    "tagline": "您的AI驱动移民助手"
+  },
+  "navigation": {
+    "home": "首页",
+    "dashboard": "仪表盘",
+    "assessment": "评估",
+    "documents": "文档",
+    "forms": "表格",
+    "consultants": "顾问",
+    "workspace": "工作空间",
+    "settings": "设置"
+  },
+  "auth": {
+    "login": "登录",
+    "register": "注册",
+    "forgotPassword": "忘记密码",
+    "resetPassword": "重置密码"
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "submit": "提交",
+    "next": "下一步",
+    "previous": "上一步",
+    "loading": "加载中...",
+    "error": "发生错误",
+    "success": "成功！"
+  }
+}

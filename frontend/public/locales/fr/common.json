@@ -1,0 +1,32 @@
+{
+  "app": {
+    "name": "ThinkForward AI",
+    "tagline": "Votre assistant d'immigration propulsé par l'IA"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "assessment": "Évaluation",
+    "documents": "Documents",
+    "forms": "Formulaires",
+    "consultants": "Consultants",
+    "workspace": "Espace de travail",
+    "settings": "Paramètres"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "forgotPassword": "Mot de passe oublié",
+    "resetPassword": "Réinitialiser le mot de passe"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "submit": "Soumettre",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Succès !"
+  }
+}
