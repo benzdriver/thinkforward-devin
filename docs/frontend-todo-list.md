@@ -41,7 +41,7 @@
   - [x] LoadingState（加载状态）
   - [x] ErrorState（错误状态）
 - [ ] 创建模板组件：
-  - [ ] AuthLayout（认证页面布局）
+  - [x] AuthLayout（认证页面布局）
   - [ ] DashboardLayout（仪表盘布局）
   - [ ] PageHeader（页面标题和描述）
   - [ ] SectionContainer（内容区块容器）
