@@ -15,7 +15,7 @@
 
 - [x] 完善色彩系统（定义主色、辅助色、中性色变量）
 - [x] 完善排版系统（设置字体、标题、正文样式）
-- [ ] 完善现有UI组件（Button, Card, Dropdown）
+- [x] 完善现有UI组件（Button, Card, Dropdown）
 - [ ] 添加缺失的原子组件：
   - [ ] Alert（已部分实现）
   - [ ] Input
