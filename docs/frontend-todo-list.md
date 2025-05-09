@@ -1,0 +1,149 @@
+# ThinkForward AI 前端开发待办事项清单
+
+根据对比分析，以下是需要完成的详细任务列表，按优先级和逻辑顺序排列：
+
+## 1. 项目基础设置
+
+- [x] 安装缺失的依赖库：React Query, Zustand, React Hook Form, Zod
+- [x] 配置next-i18next国际化支持
+- [ ] 配置TypeScript（解决当前的类型错误）
+- [ ] 设置状态管理架构（Context API + Zustand）
+- [ ] 配置API请求客户端（使用React Query）
+- [ ] 创建环境变量配置文件
+
+## 2. 设计系统完善
+
+- [ ] 完善色彩系统（定义主色、辅助色、中性色变量）
+- [ ] 完善排版系统（设置字体、标题、正文样式）
+- [ ] 完善现有UI组件（Button, Card, Dropdown）
+- [ ] 添加缺失的原子组件：
+  - [ ] Alert（已部分实现）
+  - [ ] Input
+  - [ ] Checkbox
+  - [ ] Radio
+  - [ ] Toggle
+  - [ ] Textarea
+  - [ ] Select
+  - [ ] Modal
+  - [ ] Tooltip
+  - [ ] Badge
+  - [ ] Avatar
+  - [ ] Progress
+  - [ ] Tabs
+  - [ ] Accordion
+- [ ] 创建分子组件：
+  - [ ] FormField（带标签和错误提示的表单字段）
+  - [ ] SearchInput（搜索输入框）
+  - [ ] FileUpload（文件上传）
+  - [ ] DatePicker（日期选择器）
+  - [ ] Notification（通知组件）
+  - [ ] EmptyState（空状态）
+  - [ ] LoadingState（加载状态）
+  - [ ] ErrorState（错误状态）
+- [ ] 创建模板组件：
+  - [ ] AuthLayout（认证页面布局）
+  - [ ] DashboardLayout（仪表盘布局）
+  - [ ] PageHeader（页面标题和描述）
+  - [ ] SectionContainer（内容区块容器）
+
+## 3. 认证系统实现
+
+- [ ] 创建认证Context
+- [ ] 实现登录/注册逻辑
+- [ ] 创建受保护路由HOC
+- [ ] 实现令牌刷新机制
+- [ ] 添加认证状态持久化
+
+## 4. 公共页面实现
+
+- [ ] 登录页 (`/auth/login`)
+- [ ] 注册页 (`/auth/register`)
+- [ ] 密码重置页 (`/auth/reset-password`)
+- [ ] 关于我们页 (`/about`)
+- [ ] 定价页 (`/pricing`)
+
+## 5. 客户页面实现
+
+- [ ] 客户仪表盘 (`/dashboard`)
+- [ ] 初始评估页 (`/assessment/start`)
+- [ ] 评估步骤页 (`/assessment/[step]`)
+- [ ] 评估结果页 (`/assessment/result/[id]`)
+- [ ] 路径选择页 (`/pathways/select`)
+- [ ] 资料收集页 - 对话式 (`/profile/build/conversation`)
+- [ ] 资料收集页 - 表单式 (`/profile/build/form`)
+- [ ] 模式切换组件
+- [ ] 文档上传页 (`/documents/upload`)
+- [ ] 文档管理页 (`/documents/manage`)
+- [ ] 表格生成页 (`/forms/generate`)
+- [ ] 表格预览页 (`/forms/preview/[id]`)
+- [ ] 顾问匹配页 (`/consultants/match`)
+- [ ] 顾问预约页 (`/consultants/book/[id]`)
+- [ ] 协作空间页 (`/workspace/[id]`)
+- [ ] 个人资料页 (`/profile/settings`)
+
+## 6. 顾问页面实现
+
+- [ ] 顾问仪表盘 (`/consultant/dashboard`)
+- [ ] 客户管理页 (`/consultant/clients`)
+- [ ] 客户详情页 (`/consultant/clients/[id]`)
+- [ ] 案例管理页 (`/consultant/cases`)
+- [ ] 日程管理页 (`/consultant/schedule`)
+- [ ] 顾问资料页 (`/consultant/profile`)
+
+## 7. 管理员页面实现
+
+- [ ] 管理员仪表盘 (`/admin/dashboard`)
+- [ ] 用户管理页 (`/admin/users`)
+- [ ] 系统设置页 (`/admin/settings`)
+
+## 8. 功能模块实现
+
+- [ ] 对话式数据收集模块
+  - [ ] 对话界面组件
+  - [ ] 消息历史管理
+  - [ ] AI响应处理
+  - [ ] 数据提取逻辑
+- [ ] 表单式数据收集模块
+  - [ ] 动态表单生成
+  - [ ] 表单验证（使用Zod）
+  - [ ] 表单数据持久化
+- [ ] 模式切换功能
+  - [ ] 数据映射逻辑
+  - [ ] 状态保持机制
+- [ ] 文档管理模块
+  - [ ] 文件上传组件
+  - [ ] 文档预览
+  - [ ] 文档分类管理
+- [ ] 表格生成模块
+  - [ ] 表格模板渲染
+  - [ ] 数据填充逻辑
+  - [ ] PDF生成和下载
+- [ ] 顾问匹配模块
+  - [ ] 顾问搜索和筛选
+  - [ ] 匹配算法前端展示
+- [ ] 预约系统
+  - [ ] 日历组件
+  - [ ] 时间选择器
+  - [ ] 预约确认流程
+- [ ] 协作空间
+  - [ ] 消息组件
+  - [ ] 任务管理
+  - [ ] 文档共享
+
+## 9. API集成
+
+- [ ] 创建API请求钩子（使用React Query）
+- [ ] 实现错误处理和重试逻辑
+- [ ] 添加请求缓存策略
+- [ ] 实现乐观更新
+- [ ] 添加请求状态管理
+
+## 10. 测试和优化
+
+- [ ] 添加单元测试
+- [ ] 添加集成测试
+- [ ] 性能优化
+- [ ] 可访问性优化
+- [ ] 响应式设计优化
+
+这个待办事项清单涵盖了从基础设置到具体功能实现的所有必要任务，按照逻辑顺序和优先级排列，可以作为前端开发的路线图使用。
