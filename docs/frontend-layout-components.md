@@ -462,3 +462,278 @@ DashboardLayout 仪表盘布局组件用于创建应用程序的主要界面布�
 ```
 
 DashboardLayout组件提供了一种灵活且用户友好的方式来创建应用程序的主要界面布局，确保品牌一致性和良好的用户体验。通过与后端良好的集成，可以根据用户的角色、权限和偏好动态调整界面的外观和行为。
+
+### PageHeader 页面标题和描述
+
+PageHeader 页面标题和描述组件用于创建统一的页面标题区域，包括标题、描述、面包屑导航和操作按钮。该组件提供了灵活的配置选项，包括不同的视觉样式、大小和对齐方式。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认无背景和边框 | 简洁的页面标题 |
+| bordered | 底部带有边框 | 视觉上分隔页面标题和内容 |
+| filled | 浅灰色背景和圆角 | 更突出的页面标题 |
+| gradient | 渐变背景和圆角 | 更具视觉吸引力的页面标题 |
+
+#### 大小
+
+| 大小名 | 描述 |
+|--------|------|
+| sm | 小尺寸，适合简单页面 |
+| md | 中等尺寸，适合大多数页面 |
+| lg | 大尺寸，适合重要页面 |
+
+#### 对齐方式
+
+| 对齐名 | 描述 |
+|--------|------|
+| left | 左对齐（默认） |
+| center | 居中对齐 |
+| right | 右对齐 |
+
+#### 特性
+
+1. **面包屑导航**：支持显示面包屑导航，帮助用户了解当前页面在网站结构中的位置
+2. **返回链接**：支持显示返回链接，方便用户返回上一级页面
+3. **操作按钮**：支持在标题右侧显示操作按钮，如添加、编辑、删除等
+4. **徽章**：支持在标题旁边显示徽章，如状态、数量等
+5. **图标**：支持在标题前显示图标
+6. **响应式设计**：在移动设备上自动调整布局
+7. **多语言支持**：与next-i18next集成，支持多语言
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<PageHeader
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+// 不同变体
+<PageHeader
+  variant="default"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+<PageHeader
+  variant="bordered"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+<PageHeader
+  variant="filled"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+<PageHeader
+  variant="gradient"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+// 不同大小
+<PageHeader
+  size="sm"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+<PageHeader
+  size="md"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+<PageHeader
+  size="lg"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+// 不同对齐方式
+<PageHeader
+  align="left"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+<PageHeader
+  align="center"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+<PageHeader
+  align="right"
+  title="用户管理"
+  description="管理系统中的所有用户"
+/>
+
+// 带面包屑导航
+<PageHeader
+  title="用户详情"
+  description="查看和编辑用户详细信息"
+  breadcrumbs={[
+    { label: "仪表盘", href: "/dashboard" },
+    { label: "用户管理", href: "/dashboard/users" },
+    { label: "用户详情" }
+  ]}
+/>
+
+// 带返回链接
+<PageHeader
+  title="用户详情"
+  description="查看和编辑用户详细信息"
+  backLink={{
+    href: "/dashboard/users",
+    label: "返回用户列表"
+  }}
+/>
+
+// 带操作按钮
+<PageHeader
+  title="用户管理"
+  description="管理系统中的所有用户"
+  actions={
+    <>
+      <Button variant="outline">导出</Button>
+      <Button>添加用户</Button>
+    </>
+  }
+/>
+
+// 带徽章
+<PageHeader
+  title="用户管理"
+  description="管理系统中的所有用户"
+  badge={<Badge variant="success">活跃</Badge>}
+/>
+
+// 带图标
+<PageHeader
+  title="用户管理"
+  description="管理系统中的所有用户"
+  icon={<UsersIcon className="w-8 h-8 text-primary-500" />}
+/>
+
+// 完整示例
+<PageHeader
+  variant="filled"
+  size="md"
+  align="left"
+  title="用户详情"
+  description="查看和编辑用户详细信息"
+  breadcrumbs={[
+    { label: "仪表盘", href: "/dashboard" },
+    { label: "用户管理", href: "/dashboard/users" },
+    { label: "用户详情" }
+  ]}
+  actions={
+    <>
+      <Button variant="outline">删除</Button>
+      <Button>编辑</Button>
+    </>
+  }
+  badge={<Badge variant="success">活跃</Badge>}
+  icon={<UserIcon className="w-8 h-8 text-primary-500" />}
+/>
+```
+
+#### 后端集成考虑
+
+1. **页面元数据**：后端应提供页面元数据API，以便前端可以根据页面ID或路径获取适当的标题、描述等信息。
+
+```json
+{
+  "pageMetadata": {
+    "dashboard": {
+      "title": "仪表盘",
+      "description": "查看系统概览和关键指标",
+      "icon": "dashboard",
+      "permissions": ["user", "admin"]
+    },
+    "users": {
+      "title": "用户管理",
+      "description": "管理系统中的所有用户",
+      "icon": "users",
+      "permissions": ["admin"],
+      "actions": [
+        {
+          "id": "export-users",
+          "label": "导出",
+          "icon": "download",
+          "variant": "outline",
+          "permissions": ["admin"]
+        },
+        {
+          "id": "add-user",
+          "label": "添加用户",
+          "icon": "plus",
+          "variant": "primary",
+          "permissions": ["admin"]
+        }
+      ]
+    }
+  }
+}
+```
+
+2. **面包屑导航**：后端应提供面包屑导航API，以便前端可以根据当前页面路径生成适当的面包屑导航。
+
+```json
+{
+  "breadcrumbs": {
+    "/dashboard/users/123": [
+      {
+        "label": "仪表盘",
+        "href": "/dashboard"
+      },
+      {
+        "label": "用户管理",
+        "href": "/dashboard/users"
+      },
+      {
+        "label": "用户详情"
+      }
+    ]
+  }
+}
+```
+
+3. **用户权限**：后端应提供用户权限API，以便前端可以根据用户的权限显示或隐藏特定的操作按钮。
+
+```json
+{
+  "permissions": {
+    "users": {
+      "view": true,
+      "create": true,
+      "edit": true,
+      "delete": false,
+      "export": true
+    }
+  }
+}
+```
+
+4. **动态内容**：后端应提供动态内容API，以便前端可以根据上下文显示适当的徽章、状态等信息。
+
+```json
+{
+  "entityStatus": {
+    "user-123": {
+      "status": "active",
+      "statusLabel": "活跃",
+      "statusVariant": "success",
+      "lastActive": "2023-01-01T12:00:00Z"
+    }
+  }
+}
+```
+
+PageHeader组件提供了一种统一且用户友好的方式来创建页面标题区域，确保整个应用程序的一致性和良好的用户体验。通过与后端良好的集成，可以根据页面上下文、用户权限和系统配置动态调整页面标题区域的内容和行为。
