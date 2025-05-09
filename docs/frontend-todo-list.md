@@ -30,7 +30,7 @@
   - [x] Avatar
   - [x] Progress
   - [x] Tabs
-  - [ ] Accordion
+  - [x] Accordion
 - [ ] 创建分子组件：
   - [ ] FormField（带标签和错误提示的表单字段）
   - [ ] SearchInput（搜索输入框）

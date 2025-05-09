@@ -1763,6 +1763,251 @@ const [activeTab, setActiveTab] = React.useState("tab1");
 </Tabs>
 ```
 
+### Accordion 手风琴折叠面板
+
+Accordion 手风琴折叠面板组件用于在有限空间内展示大量内容，允许用户展开或折叠内容部分，提高信息的可访问性和页面的整洁度。
+
+#### 变体与尺寸
+
+| 变体 | 描述 | 用途 |
+|------|------|------|
+| default | 标准边框样式 | 一般内容展示 |
+| bordered | 带边框样式 | 强调内容分组 |
+| minimal | 极简样式 | 低干扰的内容展示 |
+| shadow | 阴影样式 | 突出显示重要内容 |
+| ghost | 无样式 | 自定义样式场景 |
+
+| 尺寸 | 描述 | 用途 |
+|------|------|------|
+| sm | 小尺寸 | 紧凑布局、次要内容 |
+| md | 中等尺寸 | 标准布局（默认） |
+| lg | 大尺寸 | 重要内容、主要功能 |
+
+| 图标位置 | 描述 |
+|----------|------|
+| left | 图标在左侧 |
+| right | 图标在右侧（默认） |
+
+#### 特性
+
+- **单项或多项展开**：支持同时只展开一项或允许多项同时展开
+- **可折叠选项**：允许折叠所有项目或保持至少一项展开
+- **自定义图标**：支持自定义展开/折叠图标
+- **图标位置选择**：可选择图标在左侧或右侧显示
+- **禁用状态**：支持禁用特定项目
+- **动画效果**：内容展开和折叠时的平滑过渡动画
+- **可访问性**：符合ARIA规范，支持键盘导航
+- **受控与非受控模式**：支持受控和非受控使用方式
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Accordion type="single" defaultValue="item-1" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>第一项</AccordionTrigger>
+    <AccordionContent>
+      这是第一项的内容。
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>第二项</AccordionTrigger>
+    <AccordionContent>
+      这是第二项的内容。
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-3">
+    <AccordionTrigger>第三项</AccordionTrigger>
+    <AccordionContent>
+      这是第三项的内容。
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+// 多项展开
+<Accordion type="multiple" defaultValue={["item-1", "item-2"]}>
+  {/* 折叠面板项目 */}
+</Accordion>
+
+// 不同变体
+<Accordion variant="default">
+  {/* 折叠面板项目 */}
+</Accordion>
+
+<Accordion variant="bordered">
+  {/* 折叠面板项目 */}
+</Accordion>
+
+<Accordion variant="minimal">
+  {/* 折叠面板项目 */}
+</Accordion>
+
+<Accordion variant="shadow">
+  {/* 折叠面板项目 */}
+</Accordion>
+
+<Accordion variant="ghost">
+  {/* 折叠面板项目 */}
+</Accordion>
+
+// 不同尺寸
+<AccordionTrigger size="sm">
+  小尺寸触发器
+</AccordionTrigger>
+
+<AccordionTrigger size="md">
+  中等尺寸触发器
+</AccordionTrigger>
+
+<AccordionTrigger size="lg">
+  大尺寸触发器
+</AccordionTrigger>
+
+// 图标位置
+<AccordionTrigger iconPosition="left">
+  图标在左侧
+</AccordionTrigger>
+
+<AccordionTrigger iconPosition="right">
+  图标在右侧
+</AccordionTrigger>
+
+// 自定义图标
+<AccordionTrigger 
+  icon={<PlusMinusIcon className="h-4 w-4" />}
+>
+  自定义图标
+</AccordionTrigger>
+
+// 禁用项目
+<AccordionItem value="item-disabled" disabled>
+  <AccordionTrigger>禁用项目</AccordionTrigger>
+  <AccordionContent>
+    此内容无法访问。
+  </AccordionContent>
+</AccordionItem>
+
+// 隐藏图标
+<AccordionTrigger showIcon={false}>
+  无图标触发器
+</AccordionTrigger>
+
+// 受控模式
+const [value, setValue] = React.useState("item-1");
+
+<Accordion 
+  type="single" 
+  value={value} 
+  onValueChange={setValue}
+>
+  {/* 折叠面板项目 */}
+</Accordion>
+
+// 实际应用场景 - 常见问题解答
+<Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>
+      如何创建账户？
+    </AccordionTrigger>
+    <AccordionContent>
+      点击页面右上角的"注册"按钮，填写必要信息并按照指示完成账户创建流程。
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="faq-2">
+    <AccordionTrigger>
+      如何重置密码？
+    </AccordionTrigger>
+    <AccordionContent>
+      在登录页面点击"忘记密码"链接，输入您的电子邮件地址，然后按照发送到您邮箱的指示进行操作。
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="faq-3">
+    <AccordionTrigger>
+      如何联系客服？
+    </AccordionTrigger>
+    <AccordionContent>
+      您可以通过页面底部的"联系我们"链接，或发送电子邮件至support@example.com与我们的客服团队取得联系。
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+// 实际应用场景 - 产品详情
+<Accordion type="multiple" variant="minimal" className="mt-8">
+  <AccordionItem value="description">
+    <AccordionTrigger size="lg">产品描述</AccordionTrigger>
+    <AccordionContent>
+      <p className="text-neutral-700">
+        这款高性能笔记本电脑采用最新的处理器技术，提供卓越的计算性能和图形处理能力。
+        轻薄的设计和长效电池续航使其成为专业人士和学生的理想选择。
+      </p>
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="specs">
+    <AccordionTrigger size="lg">技术规格</AccordionTrigger>
+    <AccordionContent>
+      <ul className="list-disc pl-5 space-y-2">
+        <li>处理器: Intel Core i7 第12代</li>
+        <li>内存: 16GB DDR5</li>
+        <li>存储: 512GB NVMe SSD</li>
+        <li>显示屏: 15.6英寸 4K UHD</li>
+        <li>电池: 86Wh，最长12小时续航</li>
+      </ul>
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="shipping">
+    <AccordionTrigger size="lg">配送信息</AccordionTrigger>
+    <AccordionContent>
+      <p className="text-neutral-700">
+        我们提供全国范围内的免费标准配送服务，预计送达时间为3-5个工作日。
+        如需加急配送，可选择我们的优先配送服务，额外收取费用。
+      </p>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+// 实际应用场景 - 设置面板
+<Accordion 
+  type="multiple" 
+  defaultValue={["account"]} 
+  variant="bordered"
+  className="w-full max-w-2xl"
+>
+  <AccordionItem value="account">
+    <AccordionTrigger 
+      icon={<UserIcon className="h-4 w-4" />}
+      iconPosition="left"
+    >
+      账户设置
+    </AccordionTrigger>
+    <AccordionContent>
+      {/* 账户设置表单 */}
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="privacy">
+    <AccordionTrigger 
+      icon={<LockIcon className="h-4 w-4" />}
+      iconPosition="left"
+    >
+      隐私设置
+    </AccordionTrigger>
+    <AccordionContent>
+      {/* 隐私设置表单 */}
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="notifications">
+    <AccordionTrigger 
+      icon={<BellIcon className="h-4 w-4" />}
+      iconPosition="left"
+    >
+      通知设置
+    </AccordionTrigger>
+    <AccordionContent>
+      {/* 通知设置表单 */}
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
