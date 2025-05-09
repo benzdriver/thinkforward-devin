@@ -37,7 +37,7 @@
   - [x] FileUpload（文件上传）
   - [x] DatePicker（日期选择器）
   - [x] Notification（通知组件）
-  - [ ] EmptyState（空状态）
+  - [x] EmptyState（空状态）
   - [ ] LoadingState（加载状态）
   - [ ] ErrorState（错误状态）
 - [ ] 创建模板组件：

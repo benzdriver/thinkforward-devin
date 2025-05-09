@@ -3972,3 +3972,177 @@ function App() {
 ```
 
 Notification组件提供了灵活且用户友好的通知系统，适用于各种需要向用户提供反馈的场景，如表单提交、异步操作完成、系统状态变更等。通过与后端良好的集成，可以确保用户及时获得重要信息并采取适当的行动。
+
+### EmptyState 空状态
+
+EmptyState 空状态组件用于在没有数据或内容时向用户显示友好的提示，可以包含图标、标题、描述和操作按钮。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认空状态 | 一般空内容场景 |
+| subtle | 轻微空状态 | 浅色背景的空状态 |
+| ghost | 幽灵空状态 | 无背景的简洁空状态 |
+| card | 卡片空状态 | 带阴影的卡片式空状态 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 特性
+
+1. **自定义图标**：支持自定义空状态图标
+2. **标题和描述**：可以设置标题和描述文本
+3. **操作按钮**：支持添加主要和次要操作按钮
+4. **加载状态**：内置加载状态显示
+5. **全高模式**：可以设置为占满容器高度
+6. **页脚内容**：支持添加页脚内容
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<EmptyState 
+  title="暂无数据" 
+  description="当前没有可显示的数据" 
+/>
+
+// 不同变体
+<EmptyState 
+  variant="default" 
+  title="默认空状态" 
+/>
+
+<EmptyState 
+  variant="subtle" 
+  title="轻微空状态" 
+/>
+
+<EmptyState 
+  variant="ghost" 
+  title="幽灵空状态" 
+/>
+
+<EmptyState 
+  variant="card" 
+  title="卡片空状态" 
+/>
+
+// 不同尺寸
+<EmptyState 
+  size="sm" 
+  title="小尺寸空状态" 
+/>
+
+<EmptyState 
+  size="md" 
+  title="中等尺寸空状态" 
+/>
+
+<EmptyState 
+  size="lg" 
+  title="大尺寸空状态" 
+/>
+
+// 自定义图标
+<EmptyState 
+  icon={<CustomIcon />} 
+  title="自定义图标" 
+/>
+
+// 带操作按钮
+<EmptyState 
+  title="暂无文件" 
+  description="您还没有上传任何文件" 
+  action={<Button>上传文件</Button>} 
+/>
+
+// 带主要和次要操作按钮
+<EmptyState 
+  title="暂无联系人" 
+  description="您的联系人列表为空" 
+  action={<Button>添加联系人</Button>} 
+  secondaryAction={<Button variant="outline">导入联系人</Button>} 
+/>
+
+// 加载状态
+<EmptyState 
+  isLoading 
+  title="加载中" 
+  description="正在加载数据，请稍候" 
+/>
+
+// 全高模式
+<EmptyState 
+  fullHeight 
+  title="暂无结果" 
+  description="没有找到匹配的搜索结果" 
+/>
+
+// 带页脚
+<EmptyState 
+  title="暂无通知" 
+  description="您没有未读通知" 
+  footer="通知将在这里显示" 
+/>
+```
+
+#### 后端集成考虑
+
+1. **空数据状态**：后端API应当在返回空数据集时提供有用的元数据，帮助前端显示适当的空状态。
+
+```json
+{
+  "items": [],
+  "meta": {
+    "isEmpty": true,
+    "emptyReason": "no_data",
+    "emptyMessage": "暂无数据",
+    "emptyDescription": "您还没有创建任何项目",
+    "suggestedAction": "create_new"
+  }
+}
+```
+
+2. **加载状态**：后端应当支持异步加载模式，并提供加载状态信息。
+
+```json
+{
+  "status": "loading",
+  "progress": 45,
+  "estimatedTimeRemaining": "30s"
+}
+```
+
+3. **错误处理**：当出现错误导致无法显示数据时，后端应提供有用的错误信息。
+
+```json
+{
+  "status": "error",
+  "error": {
+    "code": "data_access_error",
+    "message": "无法访问数据",
+    "userAction": "retry",
+    "technicalDetails": "Database connection timeout"
+  }
+}
+```
+
+4. **权限相关空状态**：当用户没有权限查看数据时，后端应提供明确的权限信息。
+
+```json
+{
+  "status": "empty",
+  "reason": "permission_denied",
+  "message": "您没有权限查看此内容",
+  "requiredPermission": "view_reports",
+  "requestPermissionUrl": "/request-access/reports"
+}
+```
+
+EmptyState组件提供了一种用户友好的方式来处理无数据或内容的情况，可以减少用户困惑并提供明确的后续操作指导。通过与后端良好的集成，可以根据不同的空数据原因显示最适合的空状态提示。
