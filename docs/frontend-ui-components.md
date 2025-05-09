@@ -492,6 +492,70 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 />
 ```
 
+### Toggle 开关
+
+开关组件用于让用户切换某个功能或设置的开启/关闭状态。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认开关 | 一般开关场景，使用主色 |
+| success | 成功开关 | 表示积极操作的开关 |
+| warning | 警告开关 | 需要注意的开关 |
+| destructive | 危险开关 | 表示危险操作的开关 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Toggle label="启用通知" />
+
+// 不同变体
+<Toggle variant="default" label="默认开关" />
+<Toggle variant="success" label="成功开关" />
+<Toggle variant="warning" label="警告开关" />
+<Toggle variant="destructive" label="危险开关" />
+
+// 不同尺寸
+<Toggle size="sm" label="小尺寸" />
+<Toggle size="md" label="中等尺寸" />
+<Toggle size="lg" label="大尺寸" />
+
+// 带描述
+<Toggle 
+  label="启用双重认证" 
+  description="提高账户安全性，登录时需要额外验证"
+/>
+
+// 禁用状态
+<Toggle disabled label="禁用状态" />
+
+// 默认选中
+<Toggle defaultChecked label="默认开启" />
+
+// 受控组件
+<Toggle 
+  checked={isEnabled} 
+  onCheckedChange={setIsEnabled}
+  label="受控开关"
+/>
+
+// 带错误信息
+<Toggle 
+  label="必须启用" 
+  error="请启用此功能才能继续"
+/>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。

@@ -21,7 +21,7 @@
   - [x] Input
   - [x] Checkbox
   - [x] Radio
-  - [ ] Toggle
+  - [x] Toggle
   - [ ] Textarea
   - [ ] Select
   - [ ] Modal
