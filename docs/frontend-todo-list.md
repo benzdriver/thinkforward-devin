@@ -20,7 +20,7 @@
   - [x] Alert（已完成实现）
   - [x] Input
   - [x] Checkbox
-  - [ ] Radio
+  - [x] Radio
   - [ ] Toggle
   - [ ] Textarea
   - [ ] Select

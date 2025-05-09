@@ -421,6 +421,77 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 />
 ```
 
+### Radio 单选框
+
+单选框组件用于让用户从一组选项中选择一个选项。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认单选框 | 一般选择场景 |
+| error | 错误状态 | 表单验证失败时 |
+| success | 成功状态 | 表单验证成功时 |
+| warning | 警告状态 | 需要注意的选择 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Radio name="option" value="option1" label="选项1" />
+<Radio name="option" value="option2" label="选项2" />
+
+// 不同变体
+<Radio variant="default" name="variant" value="default" label="默认单选框" />
+<Radio variant="error" name="variant" value="error" error="请选择一个选项" label="错误状态" />
+<Radio variant="success" name="variant" value="success" label="成功状态" />
+<Radio variant="warning" name="variant" value="warning" label="警告状态" />
+
+// 不同尺寸
+<Radio size="sm" name="size" value="sm" label="小尺寸" />
+<Radio size="md" name="size" value="md" label="中等尺寸" />
+<Radio size="lg" name="size" value="lg" label="大尺寸" />
+
+// 带描述
+<Radio 
+  name="description" 
+  value="with-desc"
+  label="带描述的选项" 
+  description="这是关于此选项的更多信息"
+/>
+
+// 禁用状态
+<Radio disabled name="disabled" value="disabled" label="禁用状态" />
+
+// 默认选中
+<Radio defaultChecked name="default" value="checked" label="默认选中" />
+
+// 受控组件
+<Radio 
+  checked={selectedValue === 'controlled'} 
+  onChange={() => setSelectedValue('controlled')}
+  name="controlled"
+  value="controlled"
+  label="受控单选框"
+/>
+
+// 带错误信息
+<Radio 
+  name="error" 
+  value="error"
+  label="必选选项" 
+  error="请选择此项才能继续"
+/>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
