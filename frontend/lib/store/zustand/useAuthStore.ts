@@ -11,6 +11,8 @@ export type User = {
 export type AuthState = {
   user: User | null;
   token: string | null;
+  refreshToken: string | null;
+  tokenExpiry: number | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
@@ -21,11 +23,18 @@ export type AuthActions = {
   register: (email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
   resetError: () => void;
+  restoreAuth: (user: User, token: string, refreshToken: string) => void;
+  updateToken: (token: string, refreshToken: string, tokenExpiry: number) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
 
-const mockLogin = async (email: string, password: string): Promise<{ user: User; token: string }> => {
+const mockLogin = async (email: string, password: string): Promise<{ 
+  user: User; 
+  token: string; 
+  refreshToken: string;
+  tokenExpiry: number;
+}> => {
   await new Promise(resolve => setTimeout(resolve, 1000));
   
   if (email === 'test@example.com' && password === 'password') {
@@ -37,13 +46,20 @@ const mockLogin = async (email: string, password: string): Promise<{ user: User;
         role: 'client',
       },
       token: 'mock-jwt-token',
+      refreshToken: 'mock-refresh-token',
+      tokenExpiry: new Date().getTime() + 30 * 60 * 1000, // 30分钟后过期
     };
   }
   
   throw new Error('Invalid credentials');
 };
 
-const mockRegister = async (email: string, password: string, name: string): Promise<{ user: User; token: string }> => {
+const mockRegister = async (email: string, password: string, name: string): Promise<{ 
+  user: User; 
+  token: string;
+  refreshToken: string;
+  tokenExpiry: number;
+}> => {
   await new Promise(resolve => setTimeout(resolve, 1000));
   
   return {
@@ -54,6 +70,8 @@ const mockRegister = async (email: string, password: string, name: string): Prom
       role: 'client',
     },
     token: 'mock-jwt-token',
+    refreshToken: 'mock-refresh-token',
+    tokenExpiry: new Date().getTime() + 30 * 60 * 1000, // 30分钟后过期
   };
 };
 
@@ -62,6 +80,8 @@ export const useAuthStore = create<AuthStore>()(
     (set) => ({
       user: null,
       token: null,
+      refreshToken: null,
+      tokenExpiry: null,
       isAuthenticated: false,
       isLoading: false,
       error: null,
@@ -70,10 +90,12 @@ export const useAuthStore = create<AuthStore>()(
         set({ isLoading: true, error: null });
         
         try {
-          const { user, token } = await mockLogin(email, password);
+          const { user, token, refreshToken, tokenExpiry } = await mockLogin(email, password);
           set({ 
             user, 
             token, 
+            refreshToken,
+            tokenExpiry,
             isAuthenticated: true, 
             isLoading: false,
             error: null,
@@ -90,10 +112,12 @@ export const useAuthStore = create<AuthStore>()(
         set({ isLoading: true, error: null });
         
         try {
-          const { user, token } = await mockRegister(email, password, name);
+          const { user, token, refreshToken, tokenExpiry } = await mockRegister(email, password, name);
           set({ 
             user, 
             token, 
+            refreshToken,
+            tokenExpiry,
             isAuthenticated: true, 
             isLoading: false,
             error: null,
@@ -110,6 +134,8 @@ export const useAuthStore = create<AuthStore>()(
         set({ 
           user: null, 
           token: null, 
+          refreshToken: null,
+          tokenExpiry: null,
           isAuthenticated: false,
           error: null,
         });
@@ -118,12 +144,34 @@ export const useAuthStore = create<AuthStore>()(
       resetError: () => {
         set({ error: null });
       },
+      
+      restoreAuth: (user, token, refreshToken) => {
+        set({
+          user,
+          token,
+          refreshToken,
+          tokenExpiry: new Date().getTime() + 30 * 60 * 1000, // 默认30分钟
+          isAuthenticated: true,
+          isLoading: false,
+          error: null,
+        });
+      },
+      
+      updateToken: (token, refreshToken, tokenExpiry) => {
+        set({
+          token,
+          refreshToken,
+          tokenExpiry,
+        });
+      },
     }),
     {
       name: 'auth-storage',
       partialize: (state) => ({ 
         user: state.user,
         token: state.token,
+        refreshToken: state.refreshToken,
+        tokenExpiry: state.tokenExpiry,
         isAuthenticated: state.isAuthenticated,
       }),
     }
