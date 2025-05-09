@@ -18,7 +18,7 @@
 - [x] 完善现有UI组件（Button, Card, Dropdown）
 - [ ] 添加缺失的原子组件：
   - [x] Alert（已完成实现）
-  - [ ] Input
+  - [x] Input
   - [ ] Checkbox
   - [ ] Radio
   - [ ] Toggle

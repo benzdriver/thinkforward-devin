@@ -289,6 +289,74 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 </Alert>
 ```
 
+### Input 输入框
+
+输入框组件用于收集用户输入的文本信息。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认输入框 | 一般文本输入 |
+| error | 错误状态 | 表单验证失败时 |
+| success | 成功状态 | 表单验证成功时 |
+| warning | 警告状态 | 需要注意的输入 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Input placeholder="请输入文本" />
+
+// 不同变体
+<Input variant="default" placeholder="默认输入框" />
+<Input variant="error" error="请输入有效内容" placeholder="错误状态" />
+<Input variant="success" placeholder="成功状态" />
+<Input variant="warning" placeholder="警告状态" />
+
+// 不同尺寸
+<Input size="sm" placeholder="小尺寸" />
+<Input size="md" placeholder="中等尺寸" />
+<Input size="lg" placeholder="大尺寸" />
+
+// 带标签
+<Input label="用户名" placeholder="请输入用户名" />
+
+// 带帮助文本
+<Input 
+  label="电子邮件" 
+  placeholder="请输入电子邮件" 
+  helperText="我们不会公开您的电子邮件"
+/>
+
+// 带图标
+<Input 
+  startIcon={<EmailIcon />}
+  endIcon={<InfoIcon />}
+  placeholder="请输入电子邮件"
+/>
+
+// 禁用状态
+<Input disabled placeholder="禁用状态" />
+
+// 只读状态
+<Input readOnly value="只读内容" />
+
+// 密码输入
+<Input type="password" placeholder="请输入密码" />
+
+// 数字输入
+<Input type="number" placeholder="请输入数字" />
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
