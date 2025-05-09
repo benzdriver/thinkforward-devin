@@ -49,16 +49,17 @@
 ## 3. 认证系统实现
 
 - [x] 创建认证Context
-- [ ] 实现登录/注册逻辑
-- [ ] 创建受保护路由HOC
+- [x] 实现登录/注册逻辑
+- [x] 创建受保护路由HOC
 - [ ] 实现令牌刷新机制
 - [ ] 添加认证状态持久化
 
 ## 4. 公共页面实现
 
-- [ ] 登录页 (`/auth/login`)
-- [ ] 注册页 (`/auth/register`)
-- [ ] 密码重置页 (`/auth/reset-password`)
+- [x] 登录页 (`/auth/login`)
+- [x] 注册页 (`/auth/register`)
+- [x] 密码重置页 (`/auth/reset-password`)
+- [x] 忘记密码页 (`/auth/forgot-password`)
 - [ ] 关于我们页 (`/about`)
 - [ ] 定价页 (`/pricing`)
 
