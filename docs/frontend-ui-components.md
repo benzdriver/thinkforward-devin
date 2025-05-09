@@ -1229,6 +1229,162 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 </Badge>
 ```
 
+### Avatar 头像
+
+Avatar 头像组件用于展示用户或实体的图像标识，支持图片、文字缩写和图标作为头像内容，并提供多种尺寸、形状和状态选项。
+
+#### 变体与尺寸
+
+| 尺寸 | 描述 | 用途 |
+|------|------|------|
+| xs | 超小尺寸 (24px) | 紧凑列表、评论区 |
+| sm | 小尺寸 (32px) | 表格、紧凑布局 |
+| md | 中等尺寸 (40px) | 标准布局（默认） |
+| lg | 大尺寸 (48px) | 用户卡片、详情页 |
+| xl | 超大尺寸 (64px) | 个人资料页 |
+| 2xl | 特大尺寸 (80px) | 突出显示 |
+
+| 形状 | 描述 |
+|------|------|
+| circle | 圆形（默认） |
+| square | 方形（圆角） |
+
+| 边框 | 描述 |
+|------|------|
+| none | 无边框（默认） |
+| thin | 细边框 |
+| thick | 粗边框 |
+
+| 状态 | 描述 |
+|------|------|
+| none | 无状态指示器（默认） |
+| online | 在线状态（绿色） |
+| offline | 离线状态（灰色） |
+| busy | 忙碌状态（红色） |
+| away | 离开状态（黄色） |
+
+| 头像占位符变体 | 描述 |
+|--------------|------|
+| default | 默认灰色背景 |
+| primary | 主题色背景 |
+| secondary | 次要色背景 |
+| destructive | 危险色背景 |
+| success | 成功色背景 |
+| warning | 警告色背景 |
+| info | 信息色背景 |
+
+#### 特性
+
+- **图片加载处理**：支持图片加载状态管理，包括加载中、加载成功和加载失败状态
+- **自动生成缩写**：当没有提供图片或自定义占位符时，自动从名称生成缩写字母
+- **默认图标**：当没有图片、缩写或自定义占位符时，显示默认用户图标
+- **状态指示器**：可选的状态指示器，显示用户的在线状态
+- **头像组**：支持头像组展示，可设置最大显示数量和溢出计数
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Avatar src="/path/to/image.jpg" alt="用户名" />
+
+// 不同尺寸
+<Avatar size="xs" alt="小尺寸" />
+<Avatar size="sm" alt="小尺寸" />
+<Avatar size="md" alt="中等尺寸" />
+<Avatar size="lg" alt="大尺寸" />
+<Avatar size="xl" alt="超大尺寸" />
+<Avatar size="2xl" alt="特大尺寸" />
+
+// 不同形状
+<Avatar shape="circle" alt="圆形" />
+<Avatar shape="square" alt="方形" />
+
+// 带边框
+<Avatar border="thin" alt="细边框" />
+<Avatar border="thick" alt="粗边框" />
+
+// 状态指示器
+<Avatar status="online" alt="在线" />
+<Avatar status="offline" alt="离线" />
+<Avatar status="busy" alt="忙碌" />
+<Avatar status="away" alt="离开" />
+
+// 自定义占位符
+<Avatar 
+  fallback={<CheckIcon className="h-1/2 w-1/2" />}
+  fallbackVariant="success"
+  alt="自定义图标"
+/>
+
+// 使用缩写作为占位符
+<Avatar alt="张三" /> // 显示 "张"
+<Avatar alt="Zhang San" /> // 显示 "ZS"
+
+// 自定义占位符颜色
+<Avatar 
+  alt="李四"
+  fallbackVariant="primary"
+/>
+
+// 图片加载状态处理
+<Avatar 
+  src="/path/to/image.jpg"
+  alt="王五"
+  delayMs={1000} // 1秒后显示占位符
+  onLoadingStatusChange={(status) => console.log(`图片加载状态: ${status}`)}
+/>
+
+// 头像组
+<AvatarGroup spacing="normal" max={3}>
+  <Avatar src="/path/to/user1.jpg" alt="用户1" />
+  <Avatar src="/path/to/user2.jpg" alt="用户2" />
+  <Avatar src="/path/to/user3.jpg" alt="用户3" />
+  <Avatar src="/path/to/user4.jpg" alt="用户4" />
+  <Avatar src="/path/to/user5.jpg" alt="用户5" />
+</AvatarGroup>
+
+// 头像组不同间距
+<AvatarGroup spacing="tight">
+  {/* 头像列表 */}
+</AvatarGroup>
+
+<AvatarGroup spacing="normal">
+  {/* 头像列表 */}
+</AvatarGroup>
+
+<AvatarGroup spacing="loose">
+  {/* 头像列表 */}
+</AvatarGroup>
+
+// 头像组统一样式
+<AvatarGroup size="sm" shape="square" border="thin">
+  {/* 所有头像将应用相同的尺寸、形状和边框 */}
+</AvatarGroup>
+
+// 实际应用场景
+<div className="flex items-center space-x-3">
+  <Avatar src="/path/to/user.jpg" alt="张三" status="online" />
+  <div>
+    <h4 className="font-medium">张三</h4>
+    <p className="text-sm text-neutral-500">产品经理</p>
+  </div>
+</div>
+
+// 评论区用法
+<div className="flex space-x-3">
+  <Avatar size="sm" src="/path/to/user.jpg" alt="李四" />
+  <div className="flex-1">
+    <div className="bg-neutral-50 p-3 rounded-lg">
+      <h5 className="font-medium">李四</h5>
+      <p>这是一条评论内容...</p>
+    </div>
+    <div className="mt-1 text-xs text-neutral-500">
+      2分钟前
+    </div>
+  </div>
+</div>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。

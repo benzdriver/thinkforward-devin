@@ -27,7 +27,7 @@
   - [x] Modal
   - [x] Tooltip
   - [x] Badge
-  - [ ] Avatar
+  - [x] Avatar
   - [ ] Progress
   - [ ] Tabs
   - [ ] Accordion
