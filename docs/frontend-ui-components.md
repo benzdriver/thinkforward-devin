@@ -1535,6 +1535,234 @@ Progress 进度条组件用于显示操作的完成进度或加载状态，支�
 </div>
 ```
 
+### Tabs 标签页
+
+Tabs 标签页组件用于在同一区域内组织和切换不同内容视图，使用户能够在不同内容部分之间轻松导航，同时保持界面整洁。
+
+#### 变体与尺寸
+
+| 变体 | 描述 | 用途 |
+|------|------|------|
+| default | 底部边框样式 | 一般内容切换 |
+| pills | 胶囊式样式 | 强调内容分类 |
+| underline | 下划线样式 | 简洁的内容切换 |
+| bordered | 带边框样式 | 更明显的内容分组 |
+| minimal | 极简样式 | 低干扰的内容切换 |
+
+| 尺寸 | 描述 | 用途 |
+|------|------|------|
+| sm | 小尺寸 | 紧凑布局、次要内容 |
+| md | 中等尺寸 | 标准布局（默认） |
+| lg | 大尺寸 | 重要内容、主要功能 |
+
+| 方向 | 描述 |
+|------|------|
+| horizontal | 水平排列（默认） |
+| vertical | 垂直排列 |
+
+#### 特性
+
+- **可控与非可控模式**：支持受控和非受控使用方式
+- **自适应宽度**：可设置标签页占满容器宽度
+- **图标支持**：标签可包含图标
+- **徽章支持**：标签可包含徽章（如计数器）
+- **动画效果**：内容切换时的过渡动画
+- **可访问性**：符合ARIA规范，支持键盘导航
+- **方向选择**：支持水平和垂直方向的标签页
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Tabs defaultValue="tab1">
+  <TabsList>
+    <TabsTrigger value="tab1">标签页 1</TabsTrigger>
+    <TabsTrigger value="tab2">标签页 2</TabsTrigger>
+    <TabsTrigger value="tab3">标签页 3</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">标签页 1 的内容</TabsContent>
+  <TabsContent value="tab2">标签页 2 的内容</TabsContent>
+  <TabsContent value="tab3">标签页 3 的内容</TabsContent>
+</Tabs>
+
+// 不同变体
+<Tabs defaultValue="tab1">
+  <TabsList variant="default">
+    {/* 标签触发器 */}
+  </TabsList>
+</Tabs>
+
+<Tabs defaultValue="tab1">
+  <TabsList variant="pills">
+    {/* 标签触发器 */}
+  </TabsList>
+</Tabs>
+
+<Tabs defaultValue="tab1">
+  <TabsList variant="underline">
+    {/* 标签触发器 */}
+  </TabsList>
+</Tabs>
+
+<Tabs defaultValue="tab1">
+  <TabsList variant="bordered">
+    {/* 标签触发器 */}
+  </TabsList>
+</Tabs>
+
+<Tabs defaultValue="tab1">
+  <TabsList variant="minimal">
+    {/* 标签触发器 */}
+  </TabsList>
+</Tabs>
+
+// 不同尺寸
+<TabsList size="sm">
+  {/* 小尺寸标签 */}
+</TabsList>
+
+<TabsList size="md">
+  {/* 中等尺寸标签 */}
+</TabsList>
+
+<TabsList size="lg">
+  {/* 大尺寸标签 */}
+</TabsList>
+
+// 占满宽度
+<TabsList fullWidth>
+  {/* 标签将平均分配可用宽度 */}
+</TabsList>
+
+// 垂直方向
+<Tabs orientation="vertical">
+  <TabsList>
+    {/* 标签将垂直排列 */}
+  </TabsList>
+  {/* 内容 */}
+</Tabs>
+
+// 带图标的标签
+<TabsTrigger 
+  value="dashboard" 
+  icon={<DashboardIcon className="h-4 w-4" />}
+>
+  仪表盘
+</TabsTrigger>
+
+// 带徽章的标签
+<TabsTrigger 
+  value="messages" 
+  badge={<Badge variant="primary">5</Badge>}
+>
+  消息
+</TabsTrigger>
+
+// 禁用的标签
+<TabsTrigger value="settings" disabled>
+  设置
+</TabsTrigger>
+
+// 内容动画
+<TabsContent value="tab1" animation="fade">
+  内容将淡入淡出
+</TabsContent>
+
+<TabsContent value="tab2" animation="slide">
+  内容将滑入滑出
+</TabsContent>
+
+<TabsContent value="tab3" animation="zoom">
+  内容将缩放显示
+</TabsContent>
+
+// 受控模式
+const [activeTab, setActiveTab] = React.useState("tab1");
+
+<Tabs value={activeTab} onValueChange={setActiveTab}>
+  {/* 标签和内容 */}
+</Tabs>
+
+// 实际应用场景 - 用户资料页
+<Tabs defaultValue="profile">
+  <TabsList>
+    <TabsTrigger value="profile">个人资料</TabsTrigger>
+    <TabsTrigger value="account">账户设置</TabsTrigger>
+    <TabsTrigger value="security">安全设置</TabsTrigger>
+    <TabsTrigger value="notifications">通知设置</TabsTrigger>
+  </TabsList>
+  <TabsContent value="profile">
+    <h3 className="text-lg font-medium mb-4">个人资料</h3>
+    {/* 个人资料表单 */}
+  </TabsContent>
+  <TabsContent value="account">
+    <h3 className="text-lg font-medium mb-4">账户设置</h3>
+    {/* 账户设置表单 */}
+  </TabsContent>
+  <TabsContent value="security">
+    <h3 className="text-lg font-medium mb-4">安全设置</h3>
+    {/* 安全设置表单 */}
+  </TabsContent>
+  <TabsContent value="notifications">
+    <h3 className="text-lg font-medium mb-4">通知设置</h3>
+    {/* 通知设置表单 */}
+  </TabsContent>
+</Tabs>
+
+// 实际应用场景 - 产品详情页
+<Tabs defaultValue="description" variant="underline">
+  <TabsList>
+    <TabsTrigger value="description">产品描述</TabsTrigger>
+    <TabsTrigger value="specs">规格参数</TabsTrigger>
+    <TabsTrigger value="reviews">用户评价</TabsTrigger>
+    <TabsTrigger value="shipping">配送信息</TabsTrigger>
+  </TabsList>
+  <TabsContent value="description">
+    {/* 产品描述内容 */}
+  </TabsContent>
+  <TabsContent value="specs">
+    {/* 规格参数内容 */}
+  </TabsContent>
+  <TabsContent value="reviews">
+    {/* 用户评价内容 */}
+  </TabsContent>
+  <TabsContent value="shipping">
+    {/* 配送信息内容 */}
+  </TabsContent>
+</Tabs>
+
+// 实际应用场景 - 仪表盘
+<Tabs defaultValue="overview" variant="pills">
+  <TabsList className="mb-6">
+    <TabsTrigger 
+      value="overview" 
+      icon={<ChartIcon className="h-4 w-4" />}
+    >
+      概览
+    </TabsTrigger>
+    <TabsTrigger 
+      value="analytics" 
+      icon={<AnalyticsIcon className="h-4 w-4" />}
+    >
+      分析
+    </TabsTrigger>
+    <TabsTrigger 
+      value="reports" 
+      icon={<ReportIcon className="h-4 w-4" />}
+    >
+      报告
+    </TabsTrigger>
+    <TabsTrigger 
+      value="settings" 
+      icon={<SettingsIcon className="h-4 w-4" />}
+    >
+      设置
+    </TabsTrigger>
+  </TabsList>
+  {/* 各标签页内容 */}
+</Tabs>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
