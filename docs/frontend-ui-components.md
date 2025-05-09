@@ -629,6 +629,125 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 <Textarea rows={5} placeholder="五行高度" />
 ```
 
+### Select 高级选择器
+
+高级选择器组件用于从多个选项中选择一个值，相比原生下拉菜单提供更好的用户体验和自定义能力。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认选择器 | 一般选择场景 |
+| error | 错误状态 | 表单验证失败时 |
+| success | 成功状态 | 表单验证成功时 |
+| warning | 警告状态 | 需要注意的选择 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Select 
+  options={[
+    { value: "option1", label: "选项1" },
+    { value: "option2", label: "选项2" },
+    { value: "option3", label: "选项3" }
+  ]} 
+  placeholder="请选择"
+/>
+
+// 不同变体
+<Select 
+  variant="default" 
+  options={options} 
+  placeholder="默认选择器" 
+/>
+<Select 
+  variant="error" 
+  error="请选择一个选项" 
+  options={options} 
+  placeholder="错误状态" 
+/>
+<Select 
+  variant="success" 
+  options={options} 
+  placeholder="成功状态" 
+/>
+<Select 
+  variant="warning" 
+  options={options} 
+  placeholder="警告状态" 
+/>
+
+// 不同尺寸
+<Select size="sm" options={options} placeholder="小尺寸" />
+<Select size="md" options={options} placeholder="中等尺寸" />
+<Select size="lg" options={options} placeholder="大尺寸" />
+
+// 带标签
+<Select 
+  label="选择国家" 
+  options={countryOptions} 
+  placeholder="请选择国家"
+/>
+
+// 带帮助文本
+<Select 
+  label="选择语言" 
+  options={languageOptions} 
+  placeholder="请选择语言" 
+  helperText="选择您偏好的语言"
+/>
+
+// 禁用状态
+<Select 
+  disabled 
+  options={options} 
+  placeholder="禁用状态"
+/>
+
+// 禁用特定选项
+<Select 
+  options={[
+    { value: "option1", label: "选项1" },
+    { value: "option2", label: "选项2", disabled: true },
+    { value: "option3", label: "选项3" }
+  ]} 
+  placeholder="部分选项禁用"
+/>
+
+// 受控组件
+<Select 
+  value={selectedValue} 
+  onChange={setSelectedValue}
+  options={options} 
+  placeholder="受控选择器"
+/>
+
+// 必填字段
+<Select 
+  label="必选字段" 
+  required 
+  options={options} 
+  placeholder="请选择"
+/>
+
+// 带错误信息
+<Select 
+  label="国家" 
+  error="请选择一个国家" 
+  options={countryOptions} 
+  placeholder="请选择国家"
+/>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。

@@ -23,7 +23,7 @@
   - [x] Radio
   - [x] Toggle
   - [x] Textarea
-  - [ ] Select
+  - [x] Select
   - [ ] Modal
   - [ ] Tooltip
   - [ ] Badge
