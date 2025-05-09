@@ -25,7 +25,7 @@
   - [x] Textarea
   - [x] Select
   - [x] Modal
-  - [ ] Tooltip
+  - [x] Tooltip
   - [ ] Badge
   - [ ] Avatar
   - [ ] Progress

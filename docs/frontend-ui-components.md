@@ -939,6 +939,196 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 </Modal>
 ```
 
+### Tooltip 工具提示
+
+工具提示组件用于在用户悬停或聚焦在元素上时显示简短的信息提示，帮助用户理解元素的功能或提供额外的上下文信息。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 深色背景，浅色文字 | 默认样式，适用于大多数场景 |
+| light | 浅色背景，深色文字，带边框 | 在深色背景上使用 |
+| primary | 主题色背景 | 强调重要信息 |
+| destructive | 危险色背景 | 警告或危险操作提示 |
+| success | 成功色背景 | 成功状态相关提示 |
+| warning | 警告色背景 | 需要注意的信息提示 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸，适合简短文本 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸，适合较长文本 |
+
+#### 位置
+
+| 位置名 | 描述 |
+|--------|------|
+| top | 显示在目标元素上方（默认） |
+| right | 显示在目标元素右侧 |
+| bottom | 显示在目标元素下方 |
+| left | 显示在目标元素左侧 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Tooltip content="这是一个提示信息">
+  <Button>悬停查看提示</Button>
+</Tooltip>
+
+// 不同变体
+<Tooltip 
+  content="默认深色提示" 
+  variant="default"
+>
+  <Button>默认提示</Button>
+</Tooltip>
+
+<Tooltip 
+  content="浅色提示" 
+  variant="light"
+>
+  <Button>浅色提示</Button>
+</Tooltip>
+
+<Tooltip 
+  content="主题色提示" 
+  variant="primary"
+>
+  <Button>主题色提示</Button>
+</Tooltip>
+
+<Tooltip 
+  content="危险操作提示" 
+  variant="destructive"
+>
+  <Button variant="destructive">危险提示</Button>
+</Tooltip>
+
+<Tooltip 
+  content="成功状态提示" 
+  variant="success"
+>
+  <Button variant="success">成功提示</Button>
+</Tooltip>
+
+<Tooltip 
+  content="警告信息提示" 
+  variant="warning"
+>
+  <Button variant="warning">警告提示</Button>
+</Tooltip>
+
+// 不同尺寸
+<Tooltip 
+  content="小尺寸提示" 
+  size="sm"
+>
+  <Button>小尺寸</Button>
+</Tooltip>
+
+<Tooltip 
+  content="大尺寸提示" 
+  size="lg"
+>
+  <Button>大尺寸</Button>
+</Tooltip>
+
+// 不同位置
+<Tooltip 
+  content="顶部提示" 
+  position="top"
+>
+  <Button>顶部</Button>
+</Tooltip>
+
+<Tooltip 
+  content="右侧提示" 
+  position="right"
+>
+  <Button>右侧</Button>
+</Tooltip>
+
+<Tooltip 
+  content="底部提示" 
+  position="bottom"
+>
+  <Button>底部</Button>
+</Tooltip>
+
+<Tooltip 
+  content="左侧提示" 
+  position="left"
+>
+  <Button>左侧</Button>
+</Tooltip>
+
+// 自定义延迟
+<Tooltip 
+  content="显示延迟较长的提示" 
+  delayShow={500}
+  delayHide={200}
+>
+  <Button>自定义延迟</Button>
+</Tooltip>
+
+// 自定义最大宽度
+<Tooltip 
+  content="这是一个较长的提示信息，可能需要限制最大宽度以确保良好的用户体验。" 
+  maxWidth={300}
+>
+  <Button>自定义宽度</Button>
+</Tooltip>
+
+// 禁用提示
+<Tooltip 
+  content="此提示不会显示" 
+  disabled={true}
+>
+  <Button>禁用提示</Button>
+</Tooltip>
+
+// 交互式提示（鼠标可以移动到提示上而不消失）
+<Tooltip 
+  content={
+    <div>
+      <p>这是一个交互式提示</p>
+      <Button size="sm">点击此按钮</Button>
+    </div>
+  } 
+  interactive={true}
+>
+  <Button>交互式提示</Button>
+</Tooltip>
+
+// 自定义偏移距离
+<Tooltip 
+  content="与目标元素有更大间距的提示" 
+  offset={10}
+>
+  <Button>自定义偏移</Button>
+</Tooltip>
+
+// 复杂内容
+<Tooltip 
+  content={
+    <div className="p-2">
+      <h4 className="font-bold mb-2">提示标题</h4>
+      <p className="mb-2">这是提示的详细描述内容。</p>
+      <div className="flex items-center text-xs">
+        <span className="bg-primary-100 text-primary-800 px-2 py-0.5 rounded">标签</span>
+      </div>
+    </div>
+  } 
+  maxWidth={300}
+>
+  <Button>复杂内容提示</Button>
+</Tooltip>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
