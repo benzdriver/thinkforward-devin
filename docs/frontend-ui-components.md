@@ -2739,6 +2739,759 @@ const [searchValue, setSearchValue] = React.useState('');
 </div>
 ```
 
+## 分子组件
+
+### FormField 表单字段
+
+FormField 表单字段组件是一个分子级组件，用于创建具有标签、描述文本和错误消息的完整表单控件。它可以与任何表单输入元素（如Input、Select、Checkbox等）结合使用，提供一致的布局和样式。
+
+#### 布局与尺寸
+
+| 布局 | 描述 | 用途 |
+|------|------|------|
+| vertical | 垂直布局（默认） | 标准表单布局，标签在上，输入在下 |
+| horizontal | 水平布局 | 紧凑布局，标签在左，输入在右 |
+| inline | 内联布局 | 极简布局，标签和输入在同一行 |
+
+| 标签宽度 | 描述 | 用途 |
+|----------|------|------|
+| auto | 自动宽度（默认） | 根据内容自动调整宽度 |
+| sm | 小宽度 (6rem) | 短标签，紧凑布局 |
+| md | 中等宽度 (8rem) | 标准标签长度 |
+| lg | 大宽度 (10rem) | 较长标签 |
+| xl | 超大宽度 (12rem) | 非常长的标签 |
+
+| 文本尺寸 | 描述 | 用途 |
+|----------|------|------|
+| sm | 小尺寸 | 紧凑布局、次要内容 |
+| md | 中等尺寸 | 标准布局（默认） |
+| lg | 大尺寸 | 重要内容、主要功能 |
+
+#### 特性
+
+- **灵活布局**：支持垂直、水平和内联三种布局方式
+- **标签宽度控制**：在水平布局中可设置标签宽度
+- **描述文本**：支持添加辅助说明文本
+- **错误消息**：支持显示不同类型的消息（错误、警告、成功、信息）
+- **必填标记**：可显示必填字段标记
+- **禁用状态**：支持整个表单字段的禁用状态
+- **可访问性**：自动关联标签、描述和错误消息，符合ARIA规范
+- **尺寸变体**：支持不同尺寸的文本样式
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<FormField
+  id="username"
+  label="用户名"
+  description="请输入您的用户名"
+  message="用户名不能为空"
+  messageVariant="error"
+  required
+>
+  <Input placeholder="请输入用户名" />
+</FormField>
+
+// 不同布局
+<FormField
+  id="email"
+  label="电子邮箱"
+  layout="vertical"
+>
+  <Input type="email" placeholder="example@domain.com" />
+</FormField>
+
+<FormField
+  id="password"
+  label="密码"
+  layout="horizontal"
+  labelWidth="md"
+>
+  <Input type="password" placeholder="请输入密码" />
+</FormField>
+
+<FormField
+  id="remember"
+  label="记住我"
+  layout="inline"
+>
+  <Checkbox />
+</FormField>
+
+// 带描述和错误消息
+<FormField
+  id="bio"
+  label="个人简介"
+  description="请简要介绍自己，不超过200字"
+  message="个人简介不能超过200字"
+  messageVariant="warning"
+>
+  <Textarea placeholder="请输入个人简介" />
+</FormField>
+
+// 不同消息类型
+<FormField
+  id="field1"
+  label="字段1"
+  message="这是一个错误消息"
+  messageVariant="error"
+>
+  <Input />
+</FormField>
+
+<FormField
+  id="field2"
+  label="字段2"
+  message="这是一个警告消息"
+  messageVariant="warning"
+>
+  <Input />
+</FormField>
+
+<FormField
+  id="field3"
+  label="字段3"
+  message="这是一个成功消息"
+  messageVariant="success"
+>
+  <Input />
+</FormField>
+
+<FormField
+  id="field4"
+  label="字段4"
+  message="这是一个信息消息"
+  messageVariant="info"
+>
+  <Input />
+</FormField>
+
+// 带图标的消息
+<FormField
+  id="password"
+  label="密码"
+  message="密码强度不足"
+  messageVariant="warning"
+  messageIcon={<WarningIcon className="h-4 w-4" />}
+>
+  <Input type="password" />
+</FormField>
+
+// 禁用状态
+<FormField
+  id="disabled-field"
+  label="禁用字段"
+  description="此字段已禁用"
+  disabled
+>
+  <Input disabled />
+</FormField>
+
+// 隐藏标签（但保持可访问性）
+<FormField
+  id="search"
+  label="搜索"
+  hideLabel
+>
+  <Input placeholder="搜索..." />
+</FormField>
+
+// 与其他表单元素结合使用
+<FormField
+  id="country"
+  label="国家/地区"
+>
+  <Select>
+    <option value="cn">中国</option>
+    <option value="us">美国</option>
+    <option value="uk">英国</option>
+  </Select>
+</FormField>
+
+<FormField
+  id="terms"
+  label="我同意服务条款和隐私政策"
+  layout="inline"
+>
+  <Checkbox />
+</FormField>
+
+// 实际应用场景 - 注册表单
+<form className="space-y-6">
+  <FormField
+    id="register-name"
+    label="姓名"
+    required
+  >
+    <Input placeholder="请输入您的姓名" />
+  </FormField>
+  
+  <FormField
+    id="register-email"
+    label="电子邮箱"
+    description="我们将发送验证链接到此邮箱"
+    required
+  >
+    <Input type="email" placeholder="example@domain.com" />
+  </FormField>
+  
+  <FormField
+    id="register-password"
+    label="密码"
+    description="密码长度至少为8位，包含字母和数字"
+    required
+  >
+    <Input type="password" placeholder="请设置密码" />
+  </FormField>
+  
+  <FormField
+    id="register-confirm-password"
+    label="确认密码"
+    message="两次输入的密码不一致"
+    messageVariant="error"
+    required
+  >
+    <Input type="password" placeholder="请再次输入密码" />
+  </FormField>
+  
+  <FormField
+    id="register-terms"
+    layout="inline"
+  >
+    <Checkbox id="terms" />
+    <label htmlFor="terms" className="ml-2 text-sm text-neutral-600">
+      我已阅读并同意<a href="#" className="text-primary-600 hover:underline">服务条款</a>和<a href="#" className="text-primary-600 hover:underline">隐私政策</a>
+    </label>
+  </FormField>
+  
+  <Button type="submit" className="w-full">注册账户</Button>
+</form>
+
+// 实际应用场景 - 设置表单
+<form className="space-y-4">
+  <FormField
+    id="settings-name"
+    label="显示名称"
+    layout="horizontal"
+    labelWidth="md"
+  >
+    <Input defaultValue="张三" />
+  </FormField>
+  
+  <FormField
+    id="settings-email"
+    label="电子邮箱"
+    layout="horizontal"
+    labelWidth="md"
+    message="邮箱已验证"
+    messageVariant="success"
+  >
+    <Input type="email" defaultValue="zhangsan@example.com" />
+  </FormField>
+  
+  <FormField
+    id="settings-language"
+    label="界面语言"
+    layout="horizontal"
+    labelWidth="md"
+  >
+    <Select defaultValue="zh">
+      <option value="zh">中文</option>
+      <option value="en">英文</option>
+    </Select>
+  </FormField>
+  
+  <FormField
+    id="settings-notifications"
+    label="接收通知"
+    layout="horizontal"
+    labelWidth="md"
+  >
+    <Toggle defaultChecked />
+  </FormField>
+</form>
+```
+
+### SearchInput 搜索输入框
+
+SearchInput 搜索输入框组件是一个专门用于搜索功能的增强型输入框，提供了搜索图标、清除按钮和加载状态等功能，使搜索体验更加直观和友好。
+
+#### 变体与尺寸
+
+| 变体 | 描述 | 用途 |
+|------|------|------|
+| default | 默认样式 | 标准搜索框 |
+| filled | 填充背景 | 在浅色背景上更加突出 |
+| outline | 加粗边框 | 强调输入区域 |
+| ghost | 透明背景 | 融入周围环境 |
+
+| 尺寸 | 描述 | 用途 |
+|------|------|------|
+| sm | 小尺寸 | 紧凑布局、次要搜索 |
+| md | 中等尺寸 | 标准搜索框（默认） |
+| lg | 大尺寸 | 主要搜索功能 |
+
+| 图标位置 | 描述 | 用途 |
+|----------|------|------|
+| left | 左侧图标 | 标准搜索框布局（默认） |
+| right | 右侧图标 | 替代布局 |
+| both | 两侧图标 | 特殊用途 |
+| none | 无图标 | 极简布局 |
+
+#### 特性
+
+- **多种变体**：支持默认、填充、轮廓和幽灵四种变体
+- **尺寸选项**：提供小、中、大三种尺寸
+- **图标位置**：可选择图标在左侧、右侧、两侧或无图标
+- **圆角选项**：支持标准圆角或完全圆形外观
+- **清除按钮**：内置一键清除功能
+- **加载状态**：支持显示加载指示器
+- **自定义图标**：支持自定义搜索图标和清除图标
+- **受控与非受控**：支持受控和非受控使用方式
+- **禁用状态**：支持禁用状态样式
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<SearchInput placeholder="搜索..." />
+
+// 不同变体
+<SearchInput variant="default" placeholder="默认变体" />
+<SearchInput variant="filled" placeholder="填充变体" />
+<SearchInput variant="outline" placeholder="轮廓变体" />
+<SearchInput variant="ghost" placeholder="幽灵变体" />
+
+// 不同尺寸
+<SearchInput size="sm" placeholder="小尺寸" />
+<SearchInput size="md" placeholder="中等尺寸" />
+<SearchInput size="lg" placeholder="大尺寸" />
+
+// 不同图标位置
+<SearchInput iconPosition="left" placeholder="左侧图标" />
+<SearchInput iconPosition="right" placeholder="右侧图标" />
+<SearchInput iconPosition="both" placeholder="两侧图标" />
+<SearchInput iconPosition="none" placeholder="无图标" />
+
+// 圆形搜索框
+<SearchInput isRounded placeholder="圆形搜索框" />
+
+// 无清除按钮
+<SearchInput hasClearButton={false} placeholder="无清除按钮" />
+
+// 加载状态
+<SearchInput loading placeholder="加载中..." />
+
+// 自定义图标
+<SearchInput 
+  searchIcon={<CustomSearchIcon className="h-4 w-4" />}
+  clearIcon={<CustomClearIcon className="h-4 w-4" />}
+  placeholder="自定义图标"
+/>
+
+// 禁用状态
+<SearchInput disabled placeholder="禁用状态" />
+
+// 带清除回调
+<SearchInput 
+  placeholder="带清除回调"
+  onClear={() => console.log('搜索已清除')}
+/>
+
+// 受控组件
+const [searchValue, setSearchValue] = React.useState('');
+
+<SearchInput 
+  value={searchValue}
+  onChange={(e) => setSearchValue(e.target.value)}
+  placeholder="受控搜索框"
+/>
+
+// 实际应用场景 - 顶部导航搜索
+<div className="flex items-center justify-between p-4 border-b">
+  <div className="flex-1 max-w-md">
+    <SearchInput 
+      placeholder="搜索文档、设置等..." 
+      size="md"
+      variant="filled"
+      isRounded
+    />
+  </div>
+  <div className="flex items-center space-x-4">
+    {/* 其他导航元素 */}
+  </div>
+</div>
+
+// 实际应用场景 - 数据表格筛选
+<div className="flex flex-col space-y-4">
+  <div className="flex items-center justify-between">
+    <h2 className="text-xl font-semibold">用户列表</h2>
+    <div className="w-64">
+      <SearchInput 
+        placeholder="搜索用户..." 
+        size="sm"
+        variant="outline"
+      />
+    </div>
+  </div>
+  <table className="min-w-full divide-y divide-gray-200">
+    {/* 表格内容 */}
+  </table>
+</div>
+
+// 实际应用场景 - 移动应用搜索
+<div className="p-4 bg-gray-100">
+  <SearchInput 
+    placeholder="搜索商品..." 
+    variant="default"
+    size="lg"
+    isRounded
+    iconPosition="left"
+    className="w-full"
+  />
+  <div className="mt-4 flex flex-wrap gap-2">
+    <Badge variant="default">热门搜索</Badge>
+    <Badge variant="outline">手机</Badge>
+    <Badge variant="outline">电脑</Badge>
+    <Badge variant="outline">耳机</Badge>
+    <Badge variant="outline">相机</Badge>
+  </div>
+</div>
+
+// 实际应用场景 - 带过滤器的搜索
+<div className="flex space-x-2">
+  <div className="flex-1">
+    <SearchInput placeholder="搜索文件..." />
+  </div>
+  <Select className="w-32">
+    <option value="all">所有类型</option>
+    <option value="doc">文档</option>
+    <option value="img">图片</option>
+    <option value="vid">视频</option>
+  </Select>
+  <Button variant="primary" size="sm">搜索</Button>
+</div>
+
+// 实际应用场景 - 实时搜索结果
+<div className="relative">
+  <SearchInput 
+    placeholder="搜索联系人..." 
+    variant="filled"
+  />
+  <div className="absolute top-full left-0 right-0 mt-1 bg-white border rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
+    <div className="p-2 hover:bg-gray-100 cursor-pointer">
+      <div className="font-medium">张三</div>
+      <div className="text-sm text-gray-500">zhangsan@example.com</div>
+    </div>
+    <div className="p-2 hover:bg-gray-100 cursor-pointer">
+      <div className="font-medium">李四</div>
+      <div className="text-sm text-gray-500">lisi@example.com</div>
+    </div>
+    <div className="p-2 hover:bg-gray-100 cursor-pointer">
+      <div className="font-medium">王五</div>
+      <div className="text-sm text-gray-500">wangwu@example.com</div>
+    </div>
+  </div>
+</div>
+```
+
+### FileUpload 文件上传
+
+FileUpload 文件上传组件是一个用于处理文件上传的分子级组件，提供了拖放区域、文件列表和验证功能，使文件上传体验更加直观和友好。
+
+#### 变体与尺寸
+
+| 变体 | 描述 | 用途 |
+|------|------|------|
+| default | 默认样式 | 标准上传区域 |
+| filled | 填充背景 | 在浅色背景上更加突出 |
+| outline | 加粗边框 | 强调上传区域 |
+| ghost | 透明背景 | 融入周围环境 |
+
+| 尺寸 | 描述 | 用途 |
+|------|------|------|
+| sm | 小尺寸 | 紧凑布局、次要上传功能 |
+| md | 中等尺寸 | 标准上传区域（默认） |
+| lg | 大尺寸 | 主要上传功能 |
+
+#### 特性
+
+- **多种变体**：支持默认、填充、轮廓和幽灵四种变体
+- **尺寸选项**：提供小、中、大三种尺寸
+- **拖放支持**：支持拖放文件上传
+- **多文件上传**：支持单个或多个文件上传
+- **文件类型验证**：支持限制允许的文件类型
+- **文件大小验证**：支持限制文件大小
+- **自定义图标**：支持自定义上传图标
+- **文件列表**：内置文件列表显示
+- **自定义文件渲染**：支持自定义文件项渲染
+- **错误状态**：支持显示错误状态和消息
+- **成功状态**：支持显示成功状态和消息
+- **禁用状态**：支持禁用状态样式
+- **受控与非受控**：支持受控和非受控使用方式
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<FileUpload 
+  label="上传文件"
+  description="点击或拖放文件到此处上传"
+/>
+
+// 不同变体
+<FileUpload variant="default" label="默认变体" />
+<FileUpload variant="filled" label="填充变体" />
+<FileUpload variant="outline" label="轮廓变体" />
+<FileUpload variant="ghost" label="幽灵变体" />
+
+// 不同尺寸
+<FileUpload size="sm" label="小尺寸" />
+<FileUpload size="md" label="中等尺寸" />
+<FileUpload size="lg" label="大尺寸" />
+
+// 多文件上传
+<FileUpload 
+  label="上传多个文件"
+  description="最多可上传5个文件"
+  maxFiles={5}
+/>
+
+// 文件类型限制
+<FileUpload 
+  label="上传图片"
+  description="支持 JPG、PNG 和 GIF 格式"
+  acceptedFileTypes={["image/jpeg", "image/png", "image/gif"]}
+/>
+
+// 文件大小限制
+<FileUpload 
+  label="上传文档"
+  description="文件大小不超过5MB"
+  maxSize={5 * 1024 * 1024} // 5MB
+/>
+
+// 错误状态
+<FileUpload 
+  label="上传文件"
+  error
+  errorMessage="上传失败，请重试"
+/>
+
+// 成功状态
+<FileUpload 
+  label="上传文件"
+  success
+  successMessage="文件上传成功"
+/>
+
+// 禁用状态
+<FileUpload 
+  label="上传文件"
+  disabled
+  description="当前不可上传"
+/>
+
+// 自定义图标
+<FileUpload 
+  label="上传文件"
+  icon={<CustomUploadIcon className="h-8 w-8" />}
+/>
+
+// 隐藏文件列表
+<FileUpload 
+  label="上传文件"
+  showFileList={false}
+/>
+
+// 自定义文件渲染
+<FileUpload 
+  label="上传文件"
+  renderFile={(file, onRemove) => (
+    <div className="flex items-center p-2 bg-primary-50 rounded-md">
+      <FileIcon type={file.type} />
+      <span className="ml-2 font-medium">{file.name}</span>
+      <button onClick={onRemove} className="ml-auto">删除</button>
+    </div>
+  )}
+/>
+
+// 受控组件
+const [file, setFile] = React.useState<File | null>(null);
+
+<FileUpload 
+  label="上传文件"
+  value={file}
+  onChange={(newFile) => setFile(newFile as File | null)}
+/>
+
+// 带回调函数
+<FileUpload 
+  label="上传文件"
+  onChange={(files) => console.log('文件已选择', files)}
+  onRemove={(file) => console.log('文件已移除', file)}
+/>
+
+// 实际应用场景 - 头像上传
+<div className="space-y-4">
+  <h3 className="text-lg font-medium">个人头像</h3>
+  <div className="flex items-start space-x-4">
+    <div className="w-20 h-20 rounded-full bg-secondary-100 flex items-center justify-center overflow-hidden">
+      {avatarFile ? (
+        <img 
+          src={URL.createObjectURL(avatarFile)} 
+          alt="头像预览" 
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-10 w-10 text-secondary-400" 
+          viewBox="0 0 20 20" 
+          fill="currentColor"
+        >
+          <path 
+            fillRule="evenodd" 
+            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" 
+            clipRule="evenodd" 
+          />
+        </svg>
+      )}
+    </div>
+    <div className="flex-1">
+      <FileUpload 
+        label="更换头像"
+        description="支持 JPG、PNG 格式，文件大小不超过2MB"
+        acceptedFileTypes={["image/jpeg", "image/png"]}
+        maxSize={2 * 1024 * 1024}
+        maxFiles={1}
+        value={avatarFile}
+        onChange={(file) => setAvatarFile(file as File | null)}
+        size="sm"
+      />
+    </div>
+  </div>
+</div>
+
+// 实际应用场景 - 文档上传
+<div className="space-y-6">
+  <h3 className="text-xl font-semibold">上传申请材料</h3>
+  <p className="text-secondary-600">请上传以下必要文件以完成申请流程。所有文件必须为PDF格式。</p>
+  
+  <div className="space-y-4">
+    <FormField
+      id="passport"
+      label="护照扫描件"
+      description="请上传护照信息页的清晰扫描件"
+      required
+    >
+      <FileUpload 
+        acceptedFileTypes={[".pdf"]}
+        maxSize={10 * 1024 * 1024}
+        label="上传护照扫描件"
+        description="PDF格式，不超过10MB"
+      />
+    </FormField>
+    
+    <FormField
+      id="resume"
+      label="个人简历"
+      description="请上传最新的个人简历"
+      required
+    >
+      <FileUpload 
+        acceptedFileTypes={[".pdf"]}
+        maxSize={10 * 1024 * 1024}
+        label="上传个人简历"
+        description="PDF格式，不超过10MB"
+      />
+    </FormField>
+    
+    <FormField
+      id="education"
+      label="学历证明"
+      description="请上传学位证书和成绩单"
+      required
+    >
+      <FileUpload 
+        acceptedFileTypes={[".pdf"]}
+        maxSize={10 * 1024 * 1024}
+        maxFiles={5}
+        label="上传学历证明"
+        description="PDF格式，不超过10MB，最多5个文件"
+      />
+    </FormField>
+    
+    <FormField
+      id="additional"
+      label="其他支持材料"
+      description="可选，如推荐信、获奖证书等"
+    >
+      <FileUpload 
+        acceptedFileTypes={[".pdf"]}
+        maxSize={10 * 1024 * 1024}
+        maxFiles={10}
+        label="上传其他材料"
+        description="PDF格式，不超过10MB，最多10个文件"
+      />
+    </FormField>
+  </div>
+  
+  <div className="flex justify-end space-x-4">
+    <Button variant="outline">保存草稿</Button>
+    <Button variant="primary">提交申请</Button>
+  </div>
+</div>
+
+// 实际应用场景 - 图片上传
+<div className="space-y-4">
+  <h3 className="text-lg font-medium">上传产品图片</h3>
+  
+  <FileUpload 
+    label="上传产品图片"
+    description="支持 JPG、PNG 格式，每张图片不超过5MB，最多上传8张"
+    acceptedFileTypes={["image/jpeg", "image/png"]}
+    maxSize={5 * 1024 * 1024}
+    maxFiles={8}
+    renderFile={(file, onRemove) => (
+      <div className="relative group">
+        <div className="aspect-square w-24 rounded-md overflow-hidden border border-secondary-200">
+          <img 
+            src={URL.createObjectURL(file)} 
+            alt={file.name} 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+          aria-label="移除图片"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-destructive-500"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="m15 9-6 6" />
+            <path d="m9 9 6 6" />
+          </svg>
+        </button>
+      </div>
+    )}
+  />
+</div>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。

@@ -34,7 +34,7 @@
 - [ ] 创建分子组件：
   - [x] FormField（带标签和错误提示的表单字段）
   - [x] SearchInput（搜索输入框）
-  - [ ] FileUpload（文件上传）
+  - [x] FileUpload（文件上传）
   - [ ] DatePicker（日期选择器）
   - [ ] Notification（通知组件）
   - [ ] EmptyState（空状态）
