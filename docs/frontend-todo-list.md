@@ -17,7 +17,7 @@
 - [x] 完善排版系统（设置字体、标题、正文样式）
 - [x] 完善现有UI组件（Button, Card, Dropdown）
 - [ ] 添加缺失的原子组件：
-  - [ ] Alert（已部分实现）
+  - [x] Alert（已完成实现）
   - [ ] Input
   - [ ] Checkbox
   - [ ] Radio

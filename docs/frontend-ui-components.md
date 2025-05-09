@@ -230,6 +230,65 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 />
 ```
 
+### Alert 提示框
+
+提示框组件用于向用户显示重要信息、警告或错误消息。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| info | 信息提示 | 提供一般信息或提示 |
+| success | 成功提示 | 操作成功或完成时的反馈 |
+| warning | 警告提示 | 需要注意的信息 |
+| error | 错误提示 | 操作失败或错误信息 |
+| neutral | 中性提示 | 一般性通知 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Alert>这是一条信息提示</Alert>
+
+// 不同变体
+<Alert variant="info">这是一条信息提示</Alert>
+<Alert variant="success">这是一条成功提示</Alert>
+<Alert variant="warning">这是一条警告提示</Alert>
+<Alert variant="error">这是一条错误提示</Alert>
+<Alert variant="neutral">这是一条中性提示</Alert>
+
+// 不同尺寸
+<Alert size="sm">小尺寸提示</Alert>
+<Alert size="md">中等尺寸提示</Alert>
+<Alert size="lg">大尺寸提示</Alert>
+
+// 带标题
+<Alert title="提示标题">这是提示内容</Alert>
+
+// 可关闭的提示
+<Alert 
+  dismissible 
+  onDismiss={() => console.log('提示已关闭')}
+>
+  这是一条可关闭的提示
+</Alert>
+
+// 自定义图标
+<Alert 
+  icon={<CustomIcon />}
+>
+  带自定义图标的提示
+</Alert>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
