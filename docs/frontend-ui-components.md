@@ -748,6 +748,197 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 />
 ```
 
+### Modal 模态对话框
+
+模态对话框组件用于在当前页面上显示需要用户注意或交互的内容，阻断用户与页面其他部分的交互，直到用户关闭对话框或完成操作。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认对话框 | 一般信息展示和交互 |
+| destructive | 危险操作对话框 | 删除、重置等危险操作确认 |
+| success | 成功对话框 | 操作成功的反馈 |
+| warning | 警告对话框 | 需要用户注意的操作 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 (最大宽度 384px) |
+| md | 中等尺寸 (最大宽度 448px) |
+| lg | 大尺寸 (最大宽度 512px) |
+| xl | 超大尺寸 (最大宽度 576px) |
+| 2xl | 双倍超大尺寸 (最大宽度 672px) |
+| 3xl | 三倍超大尺寸 (最大宽度 768px) |
+| 4xl | 四倍超大尺寸 (最大宽度 896px) |
+| 5xl | 五倍超大尺寸 (最大宽度 1024px) |
+| full | 全屏 |
+
+#### 位置
+
+| 位置名 | 描述 |
+|--------|------|
+| center | 居中显示（默认） |
+| top | 顶部显示 |
+| bottom | 底部显示 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Modal
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  title="对话框标题"
+>
+  <p>这是一个基本的模态对话框内容。</p>
+</Modal>
+
+// 不同变体
+<Modal
+  variant="default"
+  isOpen={isOpen}
+  onClose={onClose}
+  title="信息"
+>
+  <p>这是一个默认对话框。</p>
+</Modal>
+
+<Modal
+  variant="destructive"
+  isOpen={isOpen}
+  onClose={onClose}
+  title="确认删除"
+>
+  <p>您确定要删除此项目吗？此操作无法撤销。</p>
+</Modal>
+
+<Modal
+  variant="success"
+  isOpen={isOpen}
+  onClose={onClose}
+  title="操作成功"
+>
+  <p>您的更改已成功保存。</p>
+</Modal>
+
+<Modal
+  variant="warning"
+  isOpen={isOpen}
+  onClose={onClose}
+  title="注意"
+>
+  <p>此操作可能需要几分钟时间完成。</p>
+</Modal>
+
+// 不同尺寸
+<Modal
+  size="sm"
+  isOpen={isOpen}
+  onClose={onClose}
+  title="小尺寸对话框"
+>
+  <p>这是一个小尺寸对话框。</p>
+</Modal>
+
+<Modal
+  size="lg"
+  isOpen={isOpen}
+  onClose={onClose}
+  title="大尺寸对话框"
+>
+  <p>这是一个大尺寸对话框，适合展示更多内容。</p>
+</Modal>
+
+// 不同位置
+<Modal
+  position="top"
+  isOpen={isOpen}
+  onClose={onClose}
+  title="顶部对话框"
+>
+  <p>这个对话框显示在页面顶部。</p>
+</Modal>
+
+<Modal
+  position="bottom"
+  isOpen={isOpen}
+  onClose={onClose}
+  title="底部对话框"
+>
+  <p>这个对话框显示在页面底部。</p>
+</Modal>
+
+// 带描述
+<Modal
+  isOpen={isOpen}
+  onClose={onClose}
+  title="账户设置"
+  description="管理您的账户偏好设置"
+>
+  <p>这里是账户设置的内容。</p>
+</Modal>
+
+// 带页脚
+<Modal
+  isOpen={isOpen}
+  onClose={onClose}
+  title="确认操作"
+  footer={
+    <div>
+      <Button variant="outline" onClick={onClose}>取消</Button>
+      <Button onClick={handleConfirm}>确认</Button>
+    </div>
+  }
+>
+  <p>您确定要执行此操作吗？</p>
+</Modal>
+
+// 自定义内容间距
+<Modal
+  isOpen={isOpen}
+  onClose={onClose}
+  title="自定义间距"
+  bodySpacing="lg"
+>
+  <p>这个对话框的内容区域有更大的内边距。</p>
+</Modal>
+
+// 无标题栏
+<Modal
+  isOpen={isOpen}
+  onClose={onClose}
+  showCloseButton={false}
+>
+  <div className="p-6">
+    <h3 className="text-lg font-bold mb-4">自定义标题</h3>
+    <p>这是一个没有标准标题栏的对话框，您可以完全自定义内容。</p>
+    <Button className="mt-4" onClick={onClose}>关闭</Button>
+  </div>
+</Modal>
+
+// 禁用点击遮罩关闭
+<Modal
+  isOpen={isOpen}
+  onClose={onClose}
+  title="重要操作"
+  closeOnOverlayClick={false}
+>
+  <p>此对话框必须通过关闭按钮关闭，点击外部区域不会关闭。</p>
+</Modal>
+
+// 禁用ESC键关闭
+<Modal
+  isOpen={isOpen}
+  onClose={onClose}
+  title="重要操作"
+  closeOnEsc={false}
+>
+  <p>此对话框不能通过按ESC键关闭。</p>
+</Modal>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。

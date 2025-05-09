@@ -24,7 +24,7 @@
   - [x] Toggle
   - [x] Textarea
   - [x] Select
-  - [ ] Modal
+  - [x] Modal
   - [ ] Tooltip
   - [ ] Badge
   - [ ] Avatar
