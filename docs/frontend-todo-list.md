@@ -44,7 +44,7 @@
   - [x] AuthLayout（认证页面布局）
   - [x] DashboardLayout（仪表盘布局）
   - [x] PageHeader（页面标题和描述）
-  - [ ] SectionContainer（内容区块容器）
+  - [x] SectionContainer（内容区块容器）
 
 ## 3. 认证系统实现
 

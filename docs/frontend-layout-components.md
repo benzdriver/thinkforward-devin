@@ -737,3 +737,363 @@ PageHeader 页面标题和描述组件用于创建统一的页面标题区域，
 ```
 
 PageHeader组件提供了一种统一且用户友好的方式来创建页面标题区域，确保整个应用程序的一致性和良好的用户体验。通过与后端良好的集成，可以根据页面上下文、用户权限和系统配置动态调整页面标题区域的内容和行为。
+
+### SectionContainer 内容区块容器
+
+SectionContainer 内容区块容器组件用于创建统一的内容区块，包括标题、描述、内容区域和页脚。该组件提供了灵活的配置选项，包括不同的视觉样式、内边距和宽度。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认白色背景 | 简洁的内容区块 |
+| filled | 浅灰色背景 | 突出显示的内容区块 |
+| bordered | 带边框和圆角 | 视觉上分隔的内容区块 |
+| card | 带边框、圆角和阴影 | 卡片式内容区块 |
+| highlight | 主色调浅色背景和边框 | 强调重要内容 |
+
+#### 内边距
+
+| 内边距名 | 描述 |
+|----------|------|
+| none | 无内边距 |
+| sm | 小内边距 (16px) |
+| md | 中等内边距 (24px) |
+| lg | 大内边距 (32px) |
+| xl | 超大内边距 (48px) |
+
+#### 外边距
+
+| 外边距名 | 描述 |
+|----------|------|
+| none | 无外边距 |
+| sm | 小外边距 (16px) |
+| md | 中等外边距 (24px) |
+| lg | 大外边距 (32px) |
+| xl | 超大外边距 (48px) |
+
+#### 宽度
+
+| 宽度名 | 描述 |
+|--------|------|
+| full | 全宽 |
+| container | 最大宽度为7xl，居中 |
+| narrow | 最大宽度为3xl，居中 |
+| wide | 最大宽度为屏幕2xl，居中 |
+
+#### 特性
+
+1. **标题和描述**：支持显示区块标题和描述
+2. **标题操作按钮**：支持在标题右侧显示操作按钮
+3. **页脚**：支持显示页脚内容
+4. **分隔线**：支持在内容项之间、标题和内容之间、内容和页脚之间显示分隔线
+5. **自定义样式**：支持自定义标题、描述、内容和页脚的样式
+6. **响应式设计**：在移动设备上自动调整布局
+7. **灵活的内容区域**：支持任何类型的内容
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<SectionContainer>
+  <p>这是一个基本的内容区块</p>
+</SectionContainer>
+
+// 不同变体
+<SectionContainer variant="default">
+  <p>这是一个默认的内容区块</p>
+</SectionContainer>
+
+<SectionContainer variant="filled">
+  <p>这是一个填充背景的内容区块</p>
+</SectionContainer>
+
+<SectionContainer variant="bordered">
+  <p>这是一个带边框的内容区块</p>
+</SectionContainer>
+
+<SectionContainer variant="card">
+  <p>这是一个卡片式的内容区块</p>
+</SectionContainer>
+
+<SectionContainer variant="highlight">
+  <p>这是一个强调的内容区块</p>
+</SectionContainer>
+
+// 不同内边距
+<SectionContainer padding="none">
+  <p>这是一个无内边距的内容区块</p>
+</SectionContainer>
+
+<SectionContainer padding="sm">
+  <p>这是一个小内边距的内容区块</p>
+</SectionContainer>
+
+<SectionContainer padding="md">
+  <p>这是一个中等内边距的内容区块</p>
+</SectionContainer>
+
+<SectionContainer padding="lg">
+  <p>这是一个大内边距的内容区块</p>
+</SectionContainer>
+
+<SectionContainer padding="xl">
+  <p>这是一个超大内边距的内容区块</p>
+</SectionContainer>
+
+// 不同外边距
+<SectionContainer margin="none">
+  <p>这是一个无外边距的内容区块</p>
+</SectionContainer>
+
+<SectionContainer margin="sm">
+  <p>这是一个小外边距的内容区块</p>
+</SectionContainer>
+
+<SectionContainer margin="md">
+  <p>这是一个中等外边距的内容区块</p>
+</SectionContainer>
+
+<SectionContainer margin="lg">
+  <p>这是一个大外边距的内容区块</p>
+</SectionContainer>
+
+<SectionContainer margin="xl">
+  <p>这是一个超大外边距的内容区块</p>
+</SectionContainer>
+
+// 不同宽度
+<SectionContainer width="full">
+  <p>这是一个全宽的内容区块</p>
+</SectionContainer>
+
+<SectionContainer width="container">
+  <p>这是一个容器宽度的内容区块</p>
+</SectionContainer>
+
+<SectionContainer width="narrow">
+  <p>这是一个窄宽度的内容区块</p>
+</SectionContainer>
+
+<SectionContainer width="wide">
+  <p>这是一个宽宽度的内容区块</p>
+</SectionContainer>
+
+// 带标题和描述
+<SectionContainer
+  title="用户统计"
+  description="查看系统中的用户统计数据"
+>
+  <UserStatsChart />
+</SectionContainer>
+
+// 带标题操作按钮
+<SectionContainer
+  title="用户统计"
+  description="查看系统中的用户统计数据"
+  headerActions={
+    <>
+      <Button variant="outline">导出</Button>
+      <Button>刷新</Button>
+    </>
+  }
+>
+  <UserStatsChart />
+</SectionContainer>
+
+// 带页脚
+<SectionContainer
+  title="用户统计"
+  description="查看系统中的用户统计数据"
+  footer={
+    <div className="flex justify-between items-center">
+      <p className="text-sm text-neutral-500">上次更新: 2023-01-01</p>
+      <Button variant="link">查看更多</Button>
+    </div>
+  }
+>
+  <UserStatsChart />
+</SectionContainer>
+
+// 带分隔线
+<SectionContainer
+  title="用户统计"
+  description="查看系统中的用户统计数据"
+  headerDivider={true}
+  footerDivider={true}
+  footer={
+    <div className="flex justify-between items-center">
+      <p className="text-sm text-neutral-500">上次更新: 2023-01-01</p>
+      <Button variant="link">查看更多</Button>
+    </div>
+  }
+>
+  <UserStatsChart />
+</SectionContainer>
+
+// 内容项之间的分隔线
+<SectionContainer
+  title="最近活动"
+  description="查看最近的系统活动"
+  divider={true}
+>
+  <div className="py-4">活动 1: 用户登录</div>
+  <div className="py-4">活动 2: 文件上传</div>
+  <div className="py-4">活动 3: 设置更改</div>
+</SectionContainer>
+
+// 完整示例
+<SectionContainer
+  variant="card"
+  padding="lg"
+  margin="md"
+  width="container"
+  title="用户统计"
+  description="查看系统中的用户统计数据"
+  titleClassName="text-primary-600"
+  descriptionClassName="text-neutral-600"
+  headerClassName="bg-neutral-50 rounded-t-lg"
+  contentClassName="space-y-4"
+  headerActions={
+    <>
+      <Button variant="outline">导出</Button>
+      <Button>刷新</Button>
+    </>
+  }
+  headerDivider={true}
+  footerDivider={true}
+  footer={
+    <div className="flex justify-between items-center">
+      <p className="text-sm text-neutral-500">上次更新: 2023-01-01</p>
+      <Button variant="link">查看更多</Button>
+    </div>
+  }
+  id="user-stats-section"
+>
+  <UserStatsChart />
+  <UserStatsTable />
+</SectionContainer>
+```
+
+#### 后端集成考虑
+
+1. **内容区块配置**：后端应提供内容区块配置API，以便前端可以根据区块ID或类型获取适当的标题、描述等信息。
+
+```json
+{
+  "sections": {
+    "user-stats": {
+      "title": "用户统计",
+      "description": "查看系统中的用户统计数据",
+      "variant": "card",
+      "permissions": ["admin"],
+      "actions": [
+        {
+          "id": "export-stats",
+          "label": "导出",
+          "icon": "download",
+          "variant": "outline",
+          "permissions": ["admin"]
+        },
+        {
+          "id": "refresh-stats",
+          "label": "刷新",
+          "icon": "refresh",
+          "variant": "primary",
+          "permissions": ["admin"]
+        }
+      ]
+    },
+    "recent-activities": {
+      "title": "最近活动",
+      "description": "查看最近的系统活动",
+      "variant": "default",
+      "permissions": ["user", "admin"],
+      "divider": true
+    }
+  }
+}
+```
+
+2. **内容数据**：后端应提供内容数据API，以便前端可以获取区块内容的数据。
+
+```json
+{
+  "sectionData": {
+    "user-stats": {
+      "totalUsers": 1250,
+      "activeUsers": 780,
+      "newUsers": 45,
+      "userGrowth": 12.5,
+      "lastUpdated": "2023-01-01T12:00:00Z",
+      "chartData": [
+        { "date": "2023-01-01", "users": 1200 },
+        { "date": "2023-01-02", "users": 1220 },
+        { "date": "2023-01-03", "users": 1250 }
+      ]
+    },
+    "recent-activities": {
+      "activities": [
+        {
+          "id": "activity-1",
+          "type": "login",
+          "user": "张三",
+          "time": "2023-01-01T12:00:00Z",
+          "details": "从192.168.1.1登录"
+        },
+        {
+          "id": "activity-2",
+          "type": "upload",
+          "user": "李四",
+          "time": "2023-01-01T11:30:00Z",
+          "details": "上传了文件'report.pdf'"
+        }
+      ]
+    }
+  }
+}
+```
+
+3. **用户权限**：后端应提供用户权限API，以便前端可以根据用户的权限显示或隐藏特定的内容区块或操作按钮。
+
+```json
+{
+  "permissions": {
+    "sections": {
+      "user-stats": {
+        "view": true,
+        "export": true,
+        "refresh": true
+      },
+      "recent-activities": {
+        "view": true
+      }
+    }
+  }
+}
+```
+
+4. **布局配置**：后端应提供布局配置API，以便前端可以根据用户偏好或系统配置调整内容区块的布局。
+
+```json
+{
+  "layout": {
+    "dashboard": {
+      "sections": [
+        {
+          "id": "user-stats",
+          "width": "full",
+          "order": 1
+        },
+        {
+          "id": "recent-activities",
+          "width": "half",
+          "order": 2
+        }
+      ]
+    }
+  }
+}
+```
+
+SectionContainer组件提供了一种灵活且用户友好的方式来创建内容区块，确保整个应用程序的一致性和良好的用户体验。通过与后端良好的集成，可以根据用户权限、系统配置和内容类型动态调整内容区块的外观和行为。
