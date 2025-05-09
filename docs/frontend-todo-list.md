@@ -36,7 +36,7 @@
   - [x] SearchInput（搜索输入框）
   - [x] FileUpload（文件上传）
   - [x] DatePicker（日期选择器）
-  - [ ] Notification（通知组件）
+  - [x] Notification（通知组件）
   - [ ] EmptyState（空状态）
   - [ ] LoadingState（加载状态）
   - [ ] ErrorState（错误状态）

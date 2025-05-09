@@ -3771,3 +3771,204 @@ DatePicker 日期选择器组件是一个用于选择日期的分子级组件，
 ```
 
 DatePicker组件提供了灵活且功能丰富的日期选择体验，适用于各种需要日期输入的场景，如预约系统、活动日历、报表筛选等。通过与后端良好的集成，可以确保日期数据的准确性和一致性。
+
+### Notification 通知组件
+
+Notification 通知组件用于向用户显示重要信息、成功消息、警告或错误提示，支持多种显示方式和自动关闭功能。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| info | 信息通知 | 提供一般信息或提示 |
+| success | 成功通知 | 操作成功或完成时的反馈 |
+| warning | 警告通知 | 需要注意的信息 |
+| error | 错误通知 | 操作失败或错误信息 |
+| neutral | 中性通知 | 一般性通知 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 位置
+
+| 位置名 | 描述 |
+|--------|------|
+| topLeft | 左上角 |
+| topCenter | 顶部居中 |
+| topRight | 右上角 |
+| bottomLeft | 左下角 |
+| bottomCenter | 底部居中 |
+| bottomRight | 右下角 |
+| inline | 内联显示（不固定位置） |
+
+#### 特性
+
+1. **自动关闭**：支持设置自动关闭时间
+2. **自定义图标**：可以自定义通知图标
+3. **动作按钮**：支持添加操作按钮
+4. **关闭按钮**：可以显示或隐藏关闭按钮
+5. **动画效果**：支持显示和隐藏动画
+6. **Toast系统**：提供全局Toast通知系统
+7. **多通知管理**：支持同时显示多个通知
+8. **可访问性**：符合ARIA标准，支持屏幕阅读器
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Notification title="通知标题" description="这是一条通知消息" />
+
+// 不同变体
+<Notification variant="info" title="信息" description="这是一条信息通知" />
+<Notification variant="success" title="成功" description="操作已成功完成" />
+<Notification variant="warning" title="警告" description="请注意此操作的风险" />
+<Notification variant="error" title="错误" description="操作失败，请重试" />
+<Notification variant="neutral" title="提示" description="这是一条中性通知" />
+
+// 不同尺寸
+<Notification size="sm" title="小尺寸通知" />
+<Notification size="md" title="中等尺寸通知" />
+<Notification size="lg" title="大尺寸通知" />
+
+// 不同位置
+<Notification position="topRight" title="右上角通知" />
+<Notification position="bottomCenter" title="底部居中通知" />
+<Notification position="inline" title="内联通知" />
+
+// 自动关闭
+<Notification 
+  title="自动关闭" 
+  description="此通知将在5秒后自动关闭" 
+  autoClose 
+  autoCloseDelay={5000} 
+/>
+
+// 自定义图标
+<Notification 
+  title="自定义图标" 
+  icon={<CustomIcon />} 
+/>
+
+// 带操作按钮
+<Notification 
+  title="带操作按钮" 
+  description="点击按钮执行操作" 
+  action={<Button size="sm">执行</Button>} 
+/>
+
+// 无关闭按钮
+<Notification 
+  title="无关闭按钮" 
+  hasClose={false} 
+/>
+
+// 带动画效果
+<Notification 
+  title="带动画效果" 
+  isAnimated 
+/>
+
+// 使用Toast系统
+function MyComponent() {
+  const { addToast, removeToast, clearToasts } = useToast();
+  
+  const handleShowToast = () => {
+    addToast({
+      variant: "success",
+      title: "操作成功",
+      description: "您的更改已保存",
+      autoClose: true
+    });
+  };
+  
+  return (
+    <Button onClick={handleShowToast}>
+      显示通知
+    </Button>
+  );
+}
+
+// 使用ToastProvider
+function App() {
+  return (
+    <ToastProvider position="topRight">
+      <MyComponent />
+    </ToastProvider>
+  );
+}
+```
+
+#### 后端集成考虑
+
+1. **通知状态**：后端API应返回清晰的状态代码和消息，以便前端可以显示适当的通知。
+
+```json
+{
+  "status": "success",
+  "message": "用户资料已更新",
+  "data": { ... }
+}
+```
+
+2. **错误处理**：后端应提供结构化的错误信息，包括错误类型和详细描述。
+
+```json
+{
+  "status": "error",
+  "error": {
+    "type": "validation_error",
+    "message": "提交的表单包含错误",
+    "details": { ... }
+  }
+}
+```
+
+3. **通知优先级**：后端可以指定通知的优先级，影响前端的显示方式。
+
+```json
+{
+  "notifications": [
+    {
+      "id": "1",
+      "type": "warning",
+      "title": "系统维护",
+      "message": "系统将于今晚10点进行维护",
+      "priority": "high",
+      "autoClose": false
+    },
+    {
+      "id": "2",
+      "type": "info",
+      "title": "新功能上线",
+      "message": "查看我们的新功能",
+      "priority": "low",
+      "autoClose": true,
+      "autoCloseDelay": 8000
+    }
+  ]
+}
+```
+
+4. **通知分组**：后端可以对相关通知进行分组，前端可以将它们显示为一组。
+
+```json
+{
+  "notificationGroups": [
+    {
+      "id": "group1",
+      "title": "文档更新",
+      "notifications": [
+        { "id": "1", "message": "文档1已更新" },
+        { "id": "2", "message": "文档2已更新" }
+      ]
+    }
+  ]
+}
+```
+
+Notification组件提供了灵活且用户友好的通知系统，适用于各种需要向用户提供反馈的场景，如表单提交、异步操作完成、系统状态变更等。通过与后端良好的集成，可以确保用户及时获得重要信息并采取适当的行动。
