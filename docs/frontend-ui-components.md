@@ -4318,3 +4318,204 @@ LoadingState 加载状态组件用于在数据加载过程中向用户显示友�
 ```
 
 LoadingState组件提供了一种用户友好的方式来显示加载状态，减少用户等待焦虑并提供清晰的进度反馈。通过与后端良好的集成，可以为用户提供准确的加载进度和预估完成时间，提升整体用户体验。
+
+### ErrorState 错误状态
+
+ErrorState 错误状态组件用于在发生错误时向用户显示友好的错误提示，可以包含图标、标题、描述、错误代码和重试操作按钮。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认错误状态 | 一般错误场景 |
+| subtle | 轻微错误状态 | 浅色背景的错误状态 |
+| ghost | 幽灵错误状态 | 无背景的简洁错误状态 |
+| critical | 严重错误状态 | 强调严重错误的状态 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 特性
+
+1. **自定义图标**：支持自定义错误图标
+2. **标题和描述**：可以设置标题和描述文本
+3. **错误代码**：显示错误代码或错误标识
+4. **错误详情**：可折叠的详细错误信息
+5. **重试操作**：支持添加重试按钮
+6. **次要操作**：支持添加次要操作按钮
+7. **全高模式**：可以设置为占满容器高度
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<ErrorState 
+  title="发生错误" 
+  description="无法加载数据，请稍后再试" 
+/>
+
+// 不同变体
+<ErrorState 
+  variant="default" 
+  title="默认错误状态" 
+/>
+
+<ErrorState 
+  variant="subtle" 
+  title="轻微错误状态" 
+/>
+
+<ErrorState 
+  variant="ghost" 
+  title="幽灵错误状态" 
+/>
+
+<ErrorState 
+  variant="critical" 
+  title="严重错误状态" 
+/>
+
+// 不同尺寸
+<ErrorState 
+  size="sm" 
+  title="小尺寸错误状态" 
+/>
+
+<ErrorState 
+  size="md" 
+  title="中等尺寸错误状态" 
+/>
+
+<ErrorState 
+  size="lg" 
+  title="大尺寸错误状态" 
+/>
+
+// 自定义图标
+<ErrorState 
+  icon={<CustomErrorIcon />} 
+  title="自定义错误图标" 
+/>
+
+// 带错误代码
+<ErrorState 
+  title="请求失败" 
+  description="无法连接到服务器" 
+  errorCode={500}
+/>
+
+// 带错误详情
+<ErrorState 
+  title="表单提交失败" 
+  description="提交表单时发生错误" 
+  errorDetails={JSON.stringify(errorResponse, null, 2)}
+  showDetails
+/>
+
+// 带重试按钮
+<ErrorState 
+  title="加载失败" 
+  description="无法加载数据" 
+  retryAction={<Button onClick={handleRetry}>重试</Button>}
+/>
+
+// 带主要和次要操作按钮
+<ErrorState 
+  title="权限不足" 
+  description="您没有访问此资源的权限" 
+  retryAction={<Button>请求权限</Button>} 
+  secondaryAction={<Button variant="outline">返回</Button>} 
+/>
+
+// 全高模式
+<ErrorState 
+  fullHeight 
+  title="页面错误" 
+  description="加载页面时发生错误" 
+  errorCode="PAGE_LOAD_ERROR"
+/>
+```
+
+#### 后端集成考虑
+
+1. **标准化错误响应**：后端API应当提供标准化的错误响应格式。
+
+```json
+{
+  "status": "error",
+  "error": {
+    "code": "RESOURCE_NOT_FOUND",
+    "message": "请求的资源不存在",
+    "userMessage": "无法找到您请求的内容",
+    "details": "Resource ID 12345 not found in database",
+    "timestamp": "2023-05-01T10:30:00Z",
+    "requestId": "req_abcdef123456",
+    "path": "/api/resources/12345"
+  }
+}
+```
+
+2. **错误分类**：后端应提供错误分类信息，帮助前端显示适当的错误状态。
+
+```json
+{
+  "status": "error",
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "category": "user_input",
+    "severity": "warning",
+    "message": "输入验证失败",
+    "fields": [
+      {
+        "field": "email",
+        "message": "请输入有效的电子邮件地址"
+      },
+      {
+        "field": "password",
+        "message": "密码长度必须至少为8个字符"
+      }
+    ]
+  }
+}
+```
+
+3. **可恢复性信息**：后端应指明错误是否可恢复以及如何恢复。
+
+```json
+{
+  "status": "error",
+  "error": {
+    "code": "RATE_LIMIT_EXCEEDED",
+    "message": "超出API请求限制",
+    "recoverable": true,
+    "retryAfter": 60,
+    "retryStrategy": "exponential_backoff"
+  }
+}
+```
+
+4. **错误上下文**：提供足够的上下文信息，帮助用户理解和解决问题。
+
+```json
+{
+  "status": "error",
+  "error": {
+    "code": "PAYMENT_FAILED",
+    "message": "支付处理失败",
+    "context": {
+      "paymentMethod": "credit_card",
+      "lastFourDigits": "1234",
+      "failureReason": "insufficient_funds",
+      "alternativePaymentMethods": ["balance", "alipay"],
+      "supportReference": "case_12345"
+    }
+  }
+}
+```
+
+ErrorState组件提供了一种用户友好的方式来处理错误情况，减少用户挫折感并提供明确的错误信息和恢复路径。通过与后端良好的集成，可以根据不同的错误类型和严重程度显示最适合的错误状态提示，帮助用户理解问题并采取适当的行动。

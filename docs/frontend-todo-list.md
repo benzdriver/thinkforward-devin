@@ -39,7 +39,7 @@
   - [x] Notification（通知组件）
   - [x] EmptyState（空状态）
   - [x] LoadingState（加载状态）
-  - [ ] ErrorState（错误状态）
+  - [x] ErrorState（错误状态）
 - [ ] 创建模板组件：
   - [ ] AuthLayout（认证页面布局）
   - [ ] DashboardLayout（仪表盘布局）
