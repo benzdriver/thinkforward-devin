@@ -357,6 +357,70 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 <Input type="number" placeholder="请输入数字" />
 ```
 
+### Checkbox 复选框
+
+复选框组件用于让用户从一组选项中选择一个或多个选项。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认复选框 | 一般选择场景 |
+| error | 错误状态 | 表单验证失败时 |
+| success | 成功状态 | 表单验证成功时 |
+| warning | 警告状态 | 需要注意的选择 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Checkbox label="同意条款和条件" />
+
+// 不同变体
+<Checkbox variant="default" label="默认复选框" />
+<Checkbox variant="error" error="请选择此项" label="错误状态" />
+<Checkbox variant="success" label="成功状态" />
+<Checkbox variant="warning" label="警告状态" />
+
+// 不同尺寸
+<Checkbox size="sm" label="小尺寸" />
+<Checkbox size="md" label="中等尺寸" />
+<Checkbox size="lg" label="大尺寸" />
+
+// 带描述
+<Checkbox 
+  label="接收营销邮件" 
+  description="我们会定期发送有关新功能和优惠的信息"
+/>
+
+// 禁用状态
+<Checkbox disabled label="禁用状态" />
+
+// 默认选中
+<Checkbox defaultChecked label="默认选中" />
+
+// 受控组件
+<Checkbox 
+  checked={isChecked} 
+  onChange={(e) => setIsChecked(e.target.checked)}
+  label="受控复选框"
+/>
+
+// 带错误信息
+<Checkbox 
+  label="必须同意条款" 
+  error="请同意条款才能继续"
+/>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。

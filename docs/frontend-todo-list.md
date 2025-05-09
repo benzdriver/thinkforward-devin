@@ -19,7 +19,7 @@
 - [ ] 添加缺失的原子组件：
   - [x] Alert（已完成实现）
   - [x] Input
-  - [ ] Checkbox
+  - [x] Checkbox
   - [ ] Radio
   - [ ] Toggle
   - [ ] Textarea
