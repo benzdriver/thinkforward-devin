@@ -26,7 +26,7 @@
   - [x] Select
   - [x] Modal
   - [x] Tooltip
-  - [ ] Badge
+  - [x] Badge
   - [ ] Avatar
   - [ ] Progress
   - [ ] Tabs

@@ -1129,6 +1129,106 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 </Tooltip>
 ```
 
+### Badge 徽章
+
+徽章组件用于显示状态、计数或标签信息，通常用于突出显示项目的状态或分类。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 浅灰色背景，深灰色文字 | 一般标签或状态 |
+| primary | 主题色背景 | 强调重要标签 |
+| secondary | 次要色背景 | 次要信息标签 |
+| destructive | 危险色背景 | 错误或警告状态 |
+| success | 成功色背景 | 成功或完成状态 |
+| warning | 警告色背景 | 需要注意的状态 |
+| info | 信息色背景 | 提供信息的标签 |
+| outline | 透明背景，带边框 | 低强调度标签 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸，适合紧凑布局 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸，适合更多内容 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Badge>默认徽章</Badge>
+
+// 不同变体
+<Badge variant="default">默认</Badge>
+<Badge variant="primary">主要</Badge>
+<Badge variant="secondary">次要</Badge>
+<Badge variant="destructive">危险</Badge>
+<Badge variant="success">成功</Badge>
+<Badge variant="warning">警告</Badge>
+<Badge variant="info">信息</Badge>
+<Badge variant="outline">轮廓</Badge>
+
+// 不同尺寸
+<Badge size="sm">小尺寸</Badge>
+<Badge size="md">中等尺寸</Badge>
+<Badge size="lg">大尺寸</Badge>
+
+// 带图标
+<Badge icon={<CheckIcon className="h-3 w-3" />}>已完成</Badge>
+
+// 可交互
+<Badge interactive onClick={() => console.log('点击了徽章')}>
+  可点击徽章
+</Badge>
+
+// 可移除
+<Badge 
+  onRemove={() => console.log('移除了徽章')}
+>
+  可移除徽章
+</Badge>
+
+// 带图标且可移除
+<Badge 
+  icon={<UserIcon className="h-3 w-3" />}
+  onRemove={() => console.log('移除了徽章')}
+>
+  用户标签
+</Badge>
+
+// 组合使用
+<div className="flex flex-wrap gap-2">
+  <Badge variant="primary">标签1</Badge>
+  <Badge variant="secondary">标签2</Badge>
+  <Badge variant="success">标签3</Badge>
+</div>
+
+// 计数徽章
+<Badge variant="destructive">99+</Badge>
+
+// 状态徽章
+<Badge variant="success">在线</Badge>
+<Badge variant="warning">离开</Badge>
+<Badge variant="destructive">离线</Badge>
+
+// 分类徽章
+<Badge variant="primary">前端</Badge>
+<Badge variant="info">后端</Badge>
+<Badge variant="secondary">设计</Badge>
+
+// 可筛选的标签
+<Badge 
+  variant="outline"
+  interactive
+  onClick={() => console.log('筛选')}
+  onRemove={() => console.log('移除筛选')}
+>
+  筛选条件
+</Badge>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
