@@ -22,7 +22,7 @@
   - [x] Checkbox
   - [x] Radio
   - [x] Toggle
-  - [ ] Textarea
+  - [x] Textarea
   - [ ] Select
   - [ ] Modal
   - [ ] Tooltip

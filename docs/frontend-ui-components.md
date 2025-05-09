@@ -556,6 +556,79 @@ ThinkForward AI 前端UI组件库是基于 Tailwind CSS 和 class-variance-autho
 />
 ```
 
+### Textarea 多行文本输入框
+
+多行文本输入框组件用于收集用户输入的长文本信息。
+
+#### 变体
+
+| 变体名 | 描述 | 用途 |
+|--------|------|------|
+| default | 默认文本框 | 一般文本输入 |
+| error | 错误状态 | 表单验证失败时 |
+| success | 成功状态 | 表单验证成功时 |
+| warning | 警告状态 | 需要注意的输入 |
+
+#### 尺寸
+
+| 尺寸名 | 描述 |
+|--------|------|
+| sm | 小尺寸 |
+| md | 中等尺寸（默认） |
+| lg | 大尺寸 |
+
+#### 调整大小选项
+
+| 选项名 | 描述 |
+|--------|------|
+| none | 不可调整大小 |
+| vertical | 可垂直调整大小（默认） |
+| horizontal | 可水平调整大小 |
+| both | 可自由调整大小 |
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Textarea placeholder="请输入详细描述" />
+
+// 不同变体
+<Textarea variant="default" placeholder="默认文本框" />
+<Textarea variant="error" error="请输入有效内容" placeholder="错误状态" />
+<Textarea variant="success" placeholder="成功状态" />
+<Textarea variant="warning" placeholder="警告状态" />
+
+// 不同尺寸
+<Textarea size="sm" placeholder="小尺寸" />
+<Textarea size="md" placeholder="中等尺寸" />
+<Textarea size="lg" placeholder="大尺寸" />
+
+// 不同调整大小选项
+<Textarea resize="none" placeholder="不可调整大小" />
+<Textarea resize="vertical" placeholder="可垂直调整大小" />
+<Textarea resize="horizontal" placeholder="可水平调整大小" />
+<Textarea resize="both" placeholder="可自由调整大小" />
+
+// 带标签
+<Textarea label="反馈意见" placeholder="请输入您的反馈意见" />
+
+// 带帮助文本
+<Textarea 
+  label="个人简介" 
+  placeholder="请简要介绍自己" 
+  helperText="最多500字"
+/>
+
+// 禁用状态
+<Textarea disabled placeholder="禁用状态" />
+
+// 只读状态
+<Textarea readOnly value="只读内容" />
+
+// 设置行数
+<Textarea rows={5} placeholder="五行高度" />
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
