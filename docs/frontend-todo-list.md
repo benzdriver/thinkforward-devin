@@ -28,7 +28,7 @@
   - [x] Tooltip
   - [x] Badge
   - [x] Avatar
-  - [ ] Progress
+  - [x] Progress
   - [ ] Tabs
   - [ ] Accordion
 - [ ] 创建分子组件：

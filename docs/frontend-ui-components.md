@@ -1385,6 +1385,156 @@ Avatar 头像组件用于展示用户或实体的图像标识，支持图片、�
 </div>
 ```
 
+### Progress 进度条
+
+Progress 进度条组件用于显示操作的完成进度或加载状态，支持多种样式、尺寸和动画效果，以及多步骤进度指示器。
+
+#### 变体与尺寸
+
+| 尺寸 | 描述 | 用途 |
+|------|------|------|
+| xs | 超小尺寸 (4px) | 紧凑布局、微妙提示 |
+| sm | 小尺寸 (8px) | 次要操作、内联显示 |
+| md | 中等尺寸 (12px) | 标准布局（默认） |
+| lg | 大尺寸 (16px) | 重要操作、突出显示 |
+
+| 变体 | 描述 | 用途 |
+|------|------|------|
+| default | 默认灰色 | 一般加载状态 |
+| primary | 主题色 | 主要操作进度 |
+| secondary | 次要色 | 次要操作进度 |
+| destructive | 危险色 | 危险或警告操作 |
+| success | 成功色 | 成功或完成操作 |
+| warning | 警告色 | 需要注意的操作 |
+| info | 信息色 | 信息性操作 |
+
+| 动画 | 描述 |
+|------|------|
+| none | 无动画（默认） |
+| pulse | 脉冲动画 |
+| indeterminate | 不确定进度动画 |
+
+#### 特性
+
+- **进度显示**：支持百分比或自定义格式的进度显示
+- **值位置**：可在进度条内部或外部显示进度值
+- **动画效果**：支持多种动画效果，包括脉冲和不确定进度动画
+- **多步骤进度**：支持显示多步骤流程的进度
+- **垂直/水平方向**：步骤进度支持垂直和水平方向
+- **可访问性**：包含适当的ARIA属性，确保屏幕阅读器可以正确解读进度信息
+
+#### 使用示例
+
+```jsx
+// 基本用法
+<Progress value={60} />
+
+// 不同尺寸
+<Progress size="xs" value={60} />
+<Progress size="sm" value={60} />
+<Progress size="md" value={60} />
+<Progress size="lg" value={60} />
+
+// 不同变体
+<Progress variant="default" value={60} />
+<Progress variant="primary" value={60} />
+<Progress variant="secondary" value={60} />
+<Progress variant="destructive" value={60} />
+<Progress variant="success" value={60} />
+<Progress variant="warning" value={60} />
+<Progress variant="info" value={60} />
+
+// 显示进度值
+<Progress value={60} showValue />
+
+// 进度值位置
+<Progress value={60} showValue valuePosition="outside" />
+<Progress value={60} showValue valuePosition="inside" />
+
+// 自定义进度值格式
+<Progress 
+  value={60} 
+  max={100} 
+  showValue 
+  valueFormat={(value, max) => `${value}/${max} 完成`} 
+/>
+
+// 带标签
+<Progress value={60} showValue>
+  上传进度
+</Progress>
+
+// 动画效果
+<Progress value={60} animation="pulse" />
+
+// 不确定进度
+<Progress animation="indeterminate" />
+
+// 多步骤进度 - 水平方向
+<ProgressSteps 
+  steps={5} 
+  currentStep={3} 
+  variant="primary" 
+  showLabels 
+  labels={["步骤1", "步骤2", "步骤3", "步骤4", "步骤5"]} 
+/>
+
+// 多步骤进度 - 垂直方向
+<ProgressSteps 
+  steps={5} 
+  currentStep={3} 
+  variant="primary" 
+  orientation="vertical" 
+  showLabels 
+  labels={["步骤1", "步骤2", "步骤3", "步骤4", "步骤5"]} 
+/>
+
+// 实际应用场景 - 文件上传
+<div className="space-y-2">
+  <div className="flex justify-between">
+    <span className="text-sm font-medium">上传文件</span>
+    <span className="text-sm text-neutral-500">3.2MB / 10MB</span>
+  </div>
+  <Progress value={32} variant="primary" />
+</div>
+
+// 实际应用场景 - 多步骤表单
+<div className="mb-8">
+  <ProgressSteps 
+    steps={4} 
+    currentStep={2} 
+    variant="primary" 
+    showLabels 
+    labels={["个人信息", "联系方式", "职业背景", "确认提交"]} 
+  />
+</div>
+
+// 实际应用场景 - 加载状态
+<div className="flex flex-col items-center justify-center p-8">
+  <Progress animation="indeterminate" variant="primary" className="w-48" />
+  <p className="mt-4 text-sm text-neutral-500">正在加载数据，请稍候...</p>
+</div>
+
+// 实际应用场景 - 任务完成度
+<div className="space-y-4">
+  <div>
+    <Progress value={100} variant="success" showValue>
+      已完成任务
+    </Progress>
+  </div>
+  <div>
+    <Progress value={50} variant="warning" showValue>
+      进行中任务
+    </Progress>
+  </div>
+  <div>
+    <Progress value={0} variant="destructive" showValue>
+      未开始任务
+    </Progress>
+  </div>
+</div>
+```
+
 ## 组件设计原则
 
 1. **一致性**：所有组件遵循相同的设计语言和交互模式。
