@@ -8,8 +8,8 @@
 - [x] 配置next-i18next国际化支持
 - [x] 配置TypeScript（解决当前的类型错误）
 - [x] 设置状态管理架构（Context API + Zustand）
-- [ ] 配置API请求客户端（使用React Query）
-- [ ] 创建环境变量配置文件
+- [x] 配置API请求客户端（使用React Query）
+- [x] 创建环境变量配置文件
 
 ## 2. 设计系统完善
 
