@@ -69,7 +69,7 @@
 - [x] 初始评估页 (`/assessment/start`)
 - [x] 评估步骤页 (`/assessment/[step]`)
 - [x] 评估结果页 (`/assessment/result/[id]`)
-- [ ] 路径选择页 (`/pathways/select`)
+- [x] 路径选择页 (`/pathways/select`)
 - [ ] 资料收集页 - 对话式 (`/profile/build/conversation`)
 - [ ] 资料收集页 - 表单式 (`/profile/build/form`)
 - [ ] 模式切换组件
