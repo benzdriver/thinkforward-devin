@@ -71,7 +71,7 @@
 - [x] 评估结果页 (`/assessment/result/[id]`)
 - [x] 路径选择页 (`/pathways/select`)
 - [x] 资料收集页 - 对话式 (`/profile/build/conversation`)
-- [ ] 资料收集页 - 表单式 (`/profile/build/form`)
+- [x] 资料收集页 - 表单式 (`/profile/build/form`)
 - [ ] 模式切换组件
 - [ ] 文档上传页 (`/documents/upload`)
 - [ ] 文档管理页 (`/documents/manage`)
@@ -104,10 +104,10 @@
   - [x] 消息历史管理
   - [x] AI响应处理
   - [x] 数据提取逻辑
-- [ ] 表单式数据收集模块
-  - [ ] 动态表单生成
-  - [ ] 表单验证（使用Zod）
-  - [ ] 表单数据持久化
+- [x] 表单式数据收集模块
+  - [x] 动态表单生成
+  - [x] 表单验证（使用Zod）
+  - [x] 表单数据持久化
 - [ ] 模式切换功能
   - [ ] 数据映射逻辑
   - [ ] 状态保持机制
