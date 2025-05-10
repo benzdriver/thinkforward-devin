@@ -65,7 +65,7 @@
 
 ## 5. 客户页面实现
 
-- [ ] 客户仪表盘 (`/dashboard`)
+- [x] 客户仪表盘 (`/dashboard`)
 - [ ] 初始评估页 (`/assessment/start`)
 - [ ] 评估步骤页 (`/assessment/[step]`)
 - [ ] 评估结果页 (`/assessment/result/[id]`)
