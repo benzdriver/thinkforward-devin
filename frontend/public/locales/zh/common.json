@@ -123,5 +123,94 @@
     "ctaText": "选择适合您需求的方案，迈出实现移民目标的第一步。",
     "startFreeTrial": "开始免费试用",
     "contactSales": "联系销售"
+  },
+  "dashboard": {
+    "title": "仪表盘",
+    "description": "查看您的移民进度和下一步操作。",
+    "welcome": "欢迎，{{name}}",
+    "currentPath": "当前移民路径",
+    "profileCompletion": "个人资料完成度",
+    "continueProfile": "继续完善资料",
+    "assessmentResults": "评估结果",
+    "viewDetails": "查看详情",
+    "points": "分数",
+    "lastUpdated": "最后更新",
+    "scoreBreakdown": "分数明细",
+    "nextSteps": "下一步操作",
+    "viewAll": "查看全部",
+    "dueDate": "截止日期",
+    "addTask": "添加任务",
+    "statusCompleted": "已完成",
+    "statusInProgress": "进行中",
+    "statusPending": "待处理",
+    "recentDocuments": "最近文档",
+    "updated": "已更新",
+    "uploadDocument": "上传文档",
+    "upcomingAppointments": "即将到来的预约",
+    "scheduleNew": "安排新预约",
+    "reschedule": "重新安排",
+    "joinMeeting": "加入会议",
+    "noAppointments": "没有即将到来的预约",
+    "scheduleAppointment": "安排预约",
+    "quickLinks": "快速链接",
+    "startAssessment": "开始评估",
+    "uploadDocuments": "上传文档",
+    "generateForms": "生成表格",
+    "findConsultant": "寻找顾问"
+  },
+  "assessment": {
+    "startPage": {
+      "title": "开始您的移民评估",
+      "metaDescription": "使用ThinkForward AI的智能评估工具开始您的个性化移民资格评估。",
+      "description": "我们的评估将分析您的个人资料并确定最适合您的移民途径。选择最符合您需求的评估类型。",
+      "disclaimer": "您的回答是保密的，仅用于提供个性化的移民指导。"
+    },
+    "types": {
+      "comprehensive": {
+        "title": "全面评估",
+        "description": "对所有可用移民项目的资格进行详细评估。",
+        "duration": "15-20分钟"
+      },
+      "express": {
+        "title": "快速评估",
+        "description": "专注于最常见移民途径的快速评估。",
+        "duration": "5-10分钟"
+      },
+      "targeted": {
+        "title": "定向评估",
+        "description": "针对特定移民项目或国家的评估。",
+        "duration": "10-15分钟"
+      }
+    },
+    "howItWorks": {
+      "title": "评估流程",
+      "step1": {
+        "title": "回答问题",
+        "description": "提供有关您的教育、工作经验、语言技能和其他相关因素的信息。"
+      },
+      "step2": {
+        "title": "获取结果",
+        "description": "我们的AI分析您的个人资料并计算您在各种移民项目中的资格分数。"
+      },
+      "step3": {
+        "title": "探索选项",
+        "description": "查看您的结果并探索根据您的个人资料量身定制的推荐移民途径。"
+      }
+    },
+    "faq": {
+      "title": "常见问题",
+      "question1": "评估的准确性如何？",
+      "answer1": "我们的评估使用最新的移民标准，并定期更新以反映政策变化。虽然准确性很高，但它仅作为指导，不保证申请一定被接受。",
+      "question2": "我可以保存评估并稍后继续吗？",
+      "answer2": "是的，您可以随时保存进度并稍后返回完成评估。",
+      "question3": "我的评估结果有效期是多久？",
+      "answer3": "您的结果有效期为6个月。之后，我们建议您进行新的评估，因为移民政策和您的个人情况可能已经发生变化。",
+      "question4": "我可以评估多个国家的资格吗？",
+      "answer4": "是的，我们的全面评估同时评估您在多个国家和项目中的资格。",
+      "question5": "完成评估后会发生什么？",
+      "answer5": "您将收到一份详细报告，包括您的资格分数、推荐途径和下一步操作。您还可以预约移民专家咨询，讨论您的结果。"
+    },
+    "startAssessment": "开始评估",
+    "questions": "问题"
   }
 }

@@ -123,5 +123,94 @@
     "ctaText": "Choisissez un plan qui correspond à vos besoins et faites le premier pas vers vos objectifs d'immigration.",
     "startFreeTrial": "Commencer l'Essai Gratuit",
     "contactSales": "Contacter les Ventes"
+  },
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "description": "Consultez votre progression d'immigration et les prochaines étapes.",
+    "welcome": "Bienvenue, {{name}}",
+    "currentPath": "Parcours d'Immigration Actuel",
+    "profileCompletion": "Complétion du Profil",
+    "continueProfile": "Continuer le Profil",
+    "assessmentResults": "Résultats de l'Évaluation",
+    "viewDetails": "Voir les Détails",
+    "points": "Points",
+    "lastUpdated": "Dernière Mise à Jour",
+    "scoreBreakdown": "Répartition des Scores",
+    "nextSteps": "Prochaines Étapes",
+    "viewAll": "Voir Tout",
+    "dueDate": "Date d'Échéance",
+    "addTask": "Ajouter une Tâche",
+    "statusCompleted": "Terminé",
+    "statusInProgress": "En Cours",
+    "statusPending": "En Attente",
+    "recentDocuments": "Documents Récents",
+    "updated": "Mis à Jour",
+    "uploadDocument": "Télécharger un Document",
+    "upcomingAppointments": "Rendez-vous à Venir",
+    "scheduleNew": "Planifier Nouveau",
+    "reschedule": "Reprogrammer",
+    "joinMeeting": "Rejoindre la Réunion",
+    "noAppointments": "Aucun rendez-vous à venir",
+    "scheduleAppointment": "Planifier un Rendez-vous",
+    "quickLinks": "Liens Rapides",
+    "startAssessment": "Commencer l'Évaluation",
+    "uploadDocuments": "Télécharger des Documents",
+    "generateForms": "Générer des Formulaires",
+    "findConsultant": "Trouver un Consultant"
+  },
+  "assessment": {
+    "startPage": {
+      "title": "Commencez Votre Évaluation d'Immigration",
+      "metaDescription": "Commencez votre évaluation personnalisée d'éligibilité à l'immigration avec l'outil d'évaluation intelligent de ThinkForward AI.",
+      "description": "Notre évaluation analysera votre profil et identifiera les meilleures voies d'immigration pour vous. Choisissez le type d'évaluation qui correspond le mieux à vos besoins.",
+      "disclaimer": "Vos réponses sont confidentielles et ne seront utilisées que pour fournir des conseils d'immigration personnalisés."
+    },
+    "types": {
+      "comprehensive": {
+        "title": "Évaluation Complète",
+        "description": "Une évaluation détaillée de votre éligibilité à tous les programmes d'immigration disponibles.",
+        "duration": "15-20 minutes"
+      },
+      "express": {
+        "title": "Évaluation Express",
+        "description": "Une évaluation rapide axée sur les voies d'immigration les plus courantes.",
+        "duration": "5-10 minutes"
+      },
+      "targeted": {
+        "title": "Évaluation Ciblée",
+        "description": "Une évaluation axée sur un programme d'immigration ou un pays spécifique.",
+        "duration": "10-15 minutes"
+      }
+    },
+    "howItWorks": {
+      "title": "Comment Ça Fonctionne",
+      "step1": {
+        "title": "Répondre aux Questions",
+        "description": "Fournissez des informations sur votre éducation, votre expérience professionnelle, vos compétences linguistiques et d'autres facteurs pertinents."
+      },
+      "step2": {
+        "title": "Obtenez Vos Résultats",
+        "description": "Notre IA analyse votre profil et calcule vos scores d'éligibilité pour divers programmes d'immigration."
+      },
+      "step3": {
+        "title": "Explorez les Options",
+        "description": "Examinez vos résultats et explorez les voies d'immigration recommandées adaptées à votre profil."
+      }
+    },
+    "faq": {
+      "title": "Questions Fréquemment Posées",
+      "question1": "Quelle est la précision de l'évaluation?",
+      "answer1": "Notre évaluation utilise les critères d'immigration les plus récents et est régulièrement mise à jour pour refléter les changements de politique. Bien que très précise, elle est destinée à servir de guide et non de garantie d'acceptation.",
+      "question2": "Puis-je sauvegarder mon évaluation et continuer plus tard?",
+      "answer2": "Oui, vous pouvez sauvegarder votre progression à tout moment et revenir pour terminer votre évaluation plus tard.",
+      "question3": "Combien de temps mes résultats d'évaluation sont-ils valides?",
+      "answer3": "Vos résultats sont valables pendant 6 mois. Après cela, nous vous recommandons de faire une nouvelle évaluation car les politiques d'immigration et votre situation personnelle peuvent avoir changé.",
+      "question4": "Puis-je évaluer l'éligibilité pour plusieurs pays?",
+      "answer4": "Oui, notre évaluation complète évalue simultanément votre éligibilité pour plusieurs pays et programmes.",
+      "question5": "Que se passe-t-il après avoir terminé l'évaluation?",
+      "answer5": "Vous recevrez un rapport détaillé avec vos scores d'éligibilité, les voies recommandées et les prochaines étapes. Vous pouvez également réserver une consultation avec un expert en immigration pour discuter de vos résultats."
+    },
+    "startAssessment": "Commencer l'Évaluation",
+    "questions": "questions"
   }
 }
