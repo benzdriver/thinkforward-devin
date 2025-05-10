@@ -316,4 +316,191 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 ## 评估结果页面 (`/assessment/result/[id]`)
 
-此页面将在后续实现，用于展示评估完成后的详细结果和推荐移民途径。
+### 页面概述
+
+评估结果页面是用户完成移民资格评估后查看结果的页面。该页面展示用户的评估总分、推荐的移民途径、分数明细和常见问题解答。页面采用选项卡式设计，允许用户在不同内容区域之间切换，并提供清晰的视觉反馈。
+
+### 页面结构
+
+页面由以下几个主要部分组成：
+
+1. **总分卡片**：顶部展示用户的总评估分数和资格级别（高、中、低）
+2. **内容选项卡**：允许用户在推荐途径、分数明细和常见问题之间切换
+3. **推荐途径**：展示适合用户的移民途径，包括分数、要求和下一步操作
+4. **分数明细**：详细展示各评估类别的得分情况
+5. **常见问题**：解答用户关于评估结果的常见问题
+
+### 使用的组件
+
+- `DashboardLayout`：提供带侧边栏和顶部导航的布局结构
+- `PageHeader`：用于页面标题和描述
+- `SectionContainer`：用于内容分区和布局
+- `Card`：用于各内容区块的容器
+- `Badge`：用于显示资格级别标签
+- `Progress`：用于显示分数进度条
+- `Tabs`：用于内容区域切换
+- `Accordion`：用于常见问题的展开/折叠
+- `Button`：用于各种操作按钮
+
+### 国际化支持
+
+页面使用`next-i18next`实现国际化，所有文本内容都通过翻译键从语言文件中获取。翻译键位于`common.json`文件的`assessment.results`部分。
+
+```json
+"assessment": {
+  "results": {
+    "title": "您的评估结果",
+    "description": "根据您提供的信息，以下是我们对您移民资格的评估。",
+    "overallScore": "总评分",
+    "scoreDescription": "此分数基于您在评估中提供的信息计算得出。",
+    "eligibility": {
+      "high": "高度符合资格",
+      "medium": "中度符合资格",
+      "low": "低度符合资格"
+    },
+    ...
+  }
+}
+```
+
+### 数据结构
+
+评估结果数据结构：
+
+```typescript
+// 评估结果
+interface AssessmentResult {
+  id: string;
+  score: number;
+  date: string;
+  eligibility: 'high' | 'medium' | 'low';
+  recommendedPathways: Pathway[];
+  scoreBreakdown: ScoreCategory[];
+  faqs: FAQ[];
+}
+
+// 移民途径
+interface Pathway {
+  id: string;
+  name: string;
+  score: number;
+  maxScore: number;
+  eligibility: 'high' | 'medium' | 'low';
+  description: string; // 翻译键
+  requirements: string; // 翻译键
+  timeframe: string;
+  nextSteps: string[]; // 翻译键数组
+}
+
+// 分数类别
+interface ScoreCategory {
+  category: string;
+  score: number;
+  maxScore: number;
+  details: string; // 翻译键
+}
+
+// 常见问题
+interface FAQ {
+  question: string; // 翻译键
+  answer: string; // 翻译键
+}
+```
+
+### 后端集成点
+
+评估结果页面需要与以下后端API端点集成：
+
+1. **获取评估结果**：
+   - 端点：`/api/assessments/{id}/results`
+   - 方法：`GET`
+   - 返回：包含评估总分、推荐途径、分数明细和常见问题的完整结果数据
+
+2. **获取推荐途径详情**：
+   - 端点：`/api/pathways/{pathwayId}`
+   - 方法：`GET`
+   - 返回：特定移民途径的详细信息
+
+3. **保存用户选择的途径**：
+   - 端点：`/api/users/me/selected-pathway`
+   - 方法：`POST`
+   - 数据：`{ pathwayId: string }`
+   - 返回：保存状态
+
+### 状态管理
+
+评估结果页面使用React的`useState`钩子管理选项卡状态：
+
+```typescript
+// 选项卡状态
+const [activeTab, setActiveTab] = useState('pathways');
+```
+
+在实际应用中，评估结果数据应该从API获取并使用React Query进行缓存和状态管理。
+
+### 视觉反馈
+
+页面使用颜色编码提供直观的视觉反馈：
+
+- 高度符合资格：绿色
+- 中度符合资格：橙色
+- 低度符合资格：红色
+
+这些颜色应用于徽章、进度条和圆形进度指示器，帮助用户快速理解其资格状态。
+
+### 服务器端渲染
+
+页面使用Next.js的`getServerSideProps`进行服务器端渲染，确保页面内容是基于用户的语言偏好。这也允许验证评估ID的有效性：
+
+```typescript
+export const getServerSideProps: GetServerSideProps = async ({
+  locale,
+  query,
+}) => {
+  const { id } = query;
+  
+  // 在实际应用中，这里会验证评估ID是否有效
+  // 如果是预览模式，允许访问
+  if (id !== 'preview') {
+    // 这里可以添加API调用来验证ID
+  }
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
+    },
+  };
+};
+```
+
+### 用户操作
+
+页面提供以下主要用户操作：
+
+1. **查看不同内容区域**：通过选项卡切换查看推荐途径、分数明细和常见问题
+2. **探索移民途径**：点击"探索途径"按钮查看特定途径的详细信息
+3. **寻找顾问**：点击"寻找顾问"按钮根据选定的途径匹配合适的顾问
+4. **重新评估**：点击"重新评估"按钮重新开始评估流程
+5. **返回仪表盘**：点击"返回仪表盘"按钮导航回用户仪表盘
+
+### 性能优化
+
+1. **条件渲染**：根据活动选项卡条件渲染不同的内容区域，减少不必要的DOM元素
+2. **组件分割**：将大型组件分割为更小的函数组件，提高可维护性和性能
+3. **服务器端验证**：在服务器端验证评估ID参数，避免无效路由
+
+### 可访问性
+
+页面遵循WCAG 2.1标准，确保：
+- 颜色不是唯一的信息传达方式（使用徽章和文本标签）
+- 选项卡可通过键盘访问
+- 适当的ARIA属性用于选项卡和手风琴组件
+- 足够的颜色对比度
+
+### 待完成事项
+
+- 实现与后端API的集成
+- 添加结果分享功能
+- 实现结果PDF导出
+- 添加与顾问预约的直接集成
+- 实现结果历史查看功能
