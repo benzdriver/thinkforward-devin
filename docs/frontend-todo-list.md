@@ -67,7 +67,7 @@
 
 - [x] 客户仪表盘 (`/dashboard`)
 - [x] 初始评估页 (`/assessment/start`)
-- [ ] 评估步骤页 (`/assessment/[step]`)
+- [x] 评估步骤页 (`/assessment/[step]`)
 - [ ] 评估结果页 (`/assessment/result/[id]`)
 - [ ] 路径选择页 (`/pathways/select`)
 - [ ] 资料收集页 - 对话式 (`/profile/build/conversation`)
