@@ -70,7 +70,7 @@
 - [x] 评估步骤页 (`/assessment/[step]`)
 - [x] 评估结果页 (`/assessment/result/[id]`)
 - [x] 路径选择页 (`/pathways/select`)
-- [ ] 资料收集页 - 对话式 (`/profile/build/conversation`)
+- [x] 资料收集页 - 对话式 (`/profile/build/conversation`)
 - [ ] 资料收集页 - 表单式 (`/profile/build/form`)
 - [ ] 模式切换组件
 - [ ] 文档上传页 (`/documents/upload`)
@@ -99,11 +99,11 @@
 
 ## 8. 功能模块实现
 
-- [ ] 对话式数据收集模块
-  - [ ] 对话界面组件
-  - [ ] 消息历史管理
-  - [ ] AI响应处理
-  - [ ] 数据提取逻辑
+- [x] 对话式数据收集模块
+  - [x] 对话界面组件
+  - [x] 消息历史管理
+  - [x] AI响应处理
+  - [x] 数据提取逻辑
 - [ ] 表单式数据收集模块
   - [ ] 动态表单生成
   - [ ] 表单验证（使用Zod）
