@@ -60,7 +60,7 @@
 - [x] 注册页 (`/auth/register`)
 - [x] 密码重置页 (`/auth/reset-password`)
 - [x] 忘记密码页 (`/auth/forgot-password`)
-- [ ] 关于我们页 (`/about`)
+- [x] 关于我们页 (`/about`)
 - [ ] 定价页 (`/pricing`)
 
 ## 5. 客户页面实现

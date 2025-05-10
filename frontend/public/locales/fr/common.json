@@ -28,5 +28,33 @@
     "loading": "Chargement...",
     "error": "Une erreur est survenue",
     "success": "Succès !"
+  },
+  "about": {
+    "pageTitle": "À Propos de Nous",
+    "metaDescription": "Découvrez ThinkForward AI, notre mission, nos valeurs et l'équipe derrière notre plateforme innovante de conseil en immigration.",
+    "heroTitle": "Transformer le Conseil en Immigration avec l'IA",
+    "heroSubtitle": "Notre mission est de rendre les processus d'immigration plus accessibles, efficaces et réussis pour tous.",
+    "contactUs": "Contactez-Nous",
+    "missionTitle": "Notre Mission",
+    "missionSubtitle": "Pourquoi nous existons et ce qui nous pousse à avancer",
+    "missionText1": "Chez ThinkForward AI, nous croyons que chacun mérite d'avoir accès à des conseils d'immigration clairs et personnalisés. Notre mission est de démocratiser le conseil en immigration en combinant l'expertise humaine avec une technologie d'IA de pointe.",
+    "missionText2": "Nous nous engageons à réduire la complexité, le coût et l'incertitude des processus d'immigration, aidant les individus et les familles à naviguer dans leur parcours avec confiance et clarté.",
+    "missionText3": "Notre plateforme comble le fossé entre les services de conseil traditionnels et les options en libre-service, offrant une approche hybride qui offre le meilleur des deux mondes.",
+    "imagePlaceholder": "Emplacement d'image",
+    "missionImageAlt": "L'équipe ThinkForward AI travaillant avec des clients",
+    "valuesTitle": "Nos Valeurs",
+    "valuesSubtitle": "Les principes qui guident notre travail",
+    "value1Title": "Confiance et Transparence",
+    "value1Text": "Nous croyons en l'établissement de la confiance grâce à des processus transparents, une communication claire et des conseils honnêtes à chaque étape du parcours d'immigration.",
+    "value2Title": "Innovation et Accessibilité",
+    "value2Text": "Nous nous engageons à exploiter la technologie pour rendre les services d'immigration plus accessibles, abordables et efficaces pour tous.",
+    "value3Title": "Approche Centrée sur l'Humain",
+    "value3Text": "Bien que nous adoptions l'IA, nous ne perdons jamais de vue l'élément humain. Notre technologie améliore plutôt que remplace le contact personnel des consultants experts.",
+    "teamTitle": "Notre Équipe",
+    "teamSubtitle": "Les personnes derrière ThinkForward AI",
+    "contactTitle": "Prêt à Commencer Votre Parcours d'Immigration?",
+    "contactText": "Planifiez une consultation avec l'un de nos experts en immigration et découvrez comment ThinkForward AI peut vous aider à atteindre vos objectifs d'immigration.",
+    "scheduleConsultation": "Planifier une Consultation",
+    "learnMore": "En Savoir Plus sur Nos Services"
   }
 }

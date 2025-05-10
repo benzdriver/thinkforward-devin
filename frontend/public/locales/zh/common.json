@@ -28,5 +28,33 @@
     "loading": "加载中...",
     "error": "发生错误",
     "success": "成功！"
+  },
+  "about": {
+    "pageTitle": "关于我们",
+    "metaDescription": "了解ThinkForward AI，我们的使命、价值观以及我们创新移民咨询平台背后的团队。",
+    "heroTitle": "用AI变革移民咨询",
+    "heroSubtitle": "我们的使命是让移民流程对每个人都更加便捷、高效和成功。",
+    "contactUs": "联系我们",
+    "missionTitle": "我们的使命",
+    "missionSubtitle": "我们存在的原因和推动我们前进的动力",
+    "missionText1": "在ThinkForward AI，我们相信每个人都应该获得清晰、个性化的移民指导。我们的使命是通过结合人类专业知识和前沿AI技术，使移民咨询服务民主化。",
+    "missionText2": "我们致力于降低移民流程的复杂性、成本和不确定性，帮助个人和家庭充满信心和清晰地规划他们的移民之旅。",
+    "missionText3": "我们的平台弥合了传统咨询服务和自助服务选项之间的差距，提供结合两者优势的混合方法。",
+    "imagePlaceholder": "图片占位符",
+    "missionImageAlt": "ThinkForward AI团队与客户合作",
+    "valuesTitle": "我们的价值观",
+    "valuesSubtitle": "指导我们工作的原则",
+    "value1Title": "信任与透明",
+    "value1Text": "我们相信通过透明的流程、清晰的沟通和诚实的指导在移民旅程的每一步建立信任。",
+    "value2Title": "创新与可及性",
+    "value2Text": "我们致力于利用技术使移民服务对每个人都更加便捷、经济实惠和高效。",
+    "value3Title": "以人为本的方法",
+    "value3Text": "虽然我们拥抱AI技术，但我们从不忽视人的因素。我们的技术增强而非替代专家顾问的个人接触。",
+    "teamTitle": "我们的团队",
+    "teamSubtitle": "ThinkForward AI背后的人才",
+    "contactTitle": "准备开始您的移民之旅？",
+    "contactText": "与我们的移民专家预约咨询，了解ThinkForward AI如何帮助您实现移民目标。",
+    "scheduleConsultation": "预约咨询",
+    "learnMore": "了解更多关于我们的服务"
   }
 }
