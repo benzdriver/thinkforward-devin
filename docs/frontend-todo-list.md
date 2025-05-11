@@ -80,7 +80,7 @@
 - [x] 顾问匹配页 (`/consultants/match`)
 - [x] 顾问预约页 (`/consultants/book/[id]`)
 - [x] 协作空间页 (`/workspace/[id]`)
-- [ ] 个人资料页 (`/profile/settings`)
+- [x] 个人资料页 (`/profile/settings`)
 
 ## 6. 顾问页面实现
 

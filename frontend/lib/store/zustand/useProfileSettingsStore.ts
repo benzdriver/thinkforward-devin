@@ -81,9 +81,19 @@ export interface NotificationSettings {
 
 export interface PrivacySettings {
   userId: string;
-  profileVisibility: 'public' | 'private' | 'contacts_only';
-  activityVisibility: 'public' | 'private' | 'contacts_only';
-  searchable: boolean;
+  profileVisibility: 'public' | 'private' | 'connections';
+  activityVisibility: 'public' | 'private' | 'connections';
+  documentVisibility: 'public' | 'private' | 'connections';
+  shareDataWithPartners: boolean;
+  allowPersonalizedRecommendations: boolean;
+  allowAnonymousDataCollection: boolean;
+  allowSearchEngineIndexing: boolean;
+  cookies: {
+    essential: boolean;
+    preferences: boolean;
+    analytics: boolean;
+    marketing: boolean;
+  };
   dataSharing: {
     analytics: boolean;
     thirdParty: boolean;
@@ -92,11 +102,28 @@ export interface PrivacySettings {
   updatedAt: string;
 }
 
+export interface SecuritySettings {
+  userId: string;
+  twoFactorEnabled: boolean;
+  twoFactorMethod?: 'sms' | 'app' | 'email';
+  loginAlertsEnabled: boolean;
+  activeSessions: {
+    id: string;
+    device: string;
+    location: string;
+    lastActive: string;
+    current: boolean;
+  }[];
+  lastPasswordChange: string;
+  updatedAt: string;
+}
+
 interface ProfileSettingsState {
   profile: UserProfile | null;
   accountSettings: AccountSettings | null;
   notificationSettings: NotificationSettings | null;
   privacySettings: PrivacySettings | null;
+  securitySettings: SecuritySettings | null;
   activeTab: 'personal' | 'account' | 'notifications' | 'privacy' | 'security' | 'deletion';
   isLoading: boolean;
   error: string | null;
@@ -113,6 +140,9 @@ interface ProfileSettingsState {
   setPrivacySettings: (settings: PrivacySettings) => void;
   updatePrivacySettings: (updates: Partial<PrivacySettings>) => void;
   
+  setSecuritySettings: (settings: SecuritySettings) => void;
+  updateSecuritySettings: (updates: Partial<SecuritySettings>) => void;
+  
   setActiveTab: (tab: 'personal' | 'account' | 'notifications' | 'privacy' | 'security' | 'deletion') => void;
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
@@ -124,6 +154,7 @@ const initialState = {
   accountSettings: null,
   notificationSettings: null,
   privacySettings: null,
+  securitySettings: null,
   activeTab: 'personal' as const,
   isLoading: false,
   error: null,
@@ -185,6 +216,24 @@ export const useProfileSettingsStore = create<ProfileSettingsState>()(
                 ...state.privacySettings.dataSharing,
                 ...(updates.dataSharing || {}),
               },
+              cookies: {
+                ...state.privacySettings.cookies,
+                ...(updates.cookies || {}),
+              },
+            },
+          };
+        }),
+        
+        setSecuritySettings: (settings) => set({ securitySettings: settings }),
+        
+        updateSecuritySettings: (updates) => set((state) => {
+          if (!state.securitySettings) return { securitySettings: null };
+          
+          return {
+            securitySettings: {
+              ...state.securitySettings,
+              ...updates,
+              activeSessions: updates.activeSessions || state.securitySettings.activeSessions,
             },
           };
         }),
@@ -204,6 +253,7 @@ export const useProfileSettingsStore = create<ProfileSettingsState>()(
           accountSettings: state.accountSettings,
           notificationSettings: state.notificationSettings,
           privacySettings: state.privacySettings,
+          securitySettings: state.securitySettings,
           activeTab: state.activeTab,
         }),
       }

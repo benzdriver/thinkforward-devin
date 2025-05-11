@@ -4,7 +4,8 @@ import {
   UserProfile, 
   AccountSettings, 
   NotificationSettings, 
-  PrivacySettings 
+  PrivacySettings,
+  SecuritySettings
 } from '../../store/zustand/useProfileSettingsStore';
 
 export const mockUserProfile: UserProfile = {
@@ -111,14 +112,55 @@ export const mockNotificationSettings: NotificationSettings = {
 
 export const mockPrivacySettings: PrivacySettings = {
   userId: 'user-1',
-  profileVisibility: 'contacts_only',
+  profileVisibility: 'private',
   activityVisibility: 'private',
-  searchable: true,
+  documentVisibility: 'private',
+  shareDataWithPartners: false,
+  allowPersonalizedRecommendations: true,
+  allowAnonymousDataCollection: true,
+  allowSearchEngineIndexing: false,
+  cookies: {
+    essential: true,
+    preferences: true,
+    analytics: true,
+    marketing: false,
+  },
   dataSharing: {
     analytics: true,
     thirdParty: false,
     improvementProgram: true,
   },
+  updatedAt: '2023-05-15T14:30:00Z',
+};
+
+export const mockSecuritySettings: SecuritySettings = {
+  userId: 'user-1',
+  twoFactorEnabled: false,
+  loginAlertsEnabled: true,
+  activeSessions: [
+    {
+      id: 'session-1',
+      device: 'Chrome on Windows',
+      location: '北京, 中国',
+      lastActive: '2023-05-15T14:30:00Z',
+      current: true,
+    },
+    {
+      id: 'session-2',
+      device: 'Safari on iPhone',
+      location: '上海, 中国',
+      lastActive: '2023-05-14T10:15:00Z',
+      current: false,
+    },
+    {
+      id: 'session-3',
+      device: 'Firefox on MacOS',
+      location: '广州, 中国',
+      lastActive: '2023-05-10T08:45:00Z',
+      current: false,
+    },
+  ],
+  lastPasswordChange: '2023-04-01T09:20:00Z',
   updatedAt: '2023-05-15T14:30:00Z',
 };
 
@@ -385,9 +427,102 @@ export const useUpdatePrivacySettings = (userId: string) => {
   });
 };
 
-export const useChangePassword = (userId: string) => {
+export const useGetSecuritySettings = (userId: string) => {
+  return useQuery({
+    queryKey: ['security-settings', userId],
+    queryFn: async () => {
+      try {
+        return mockSecuritySettings;
+      } catch (error) {
+        console.error('Error fetching security settings:', error);
+        throw error;
+      }
+    },
+  });
+};
+
+export const useUpdateSecuritySettings = (userId: string) => {
+  const queryClient = useQueryClient();
+  
   return useMutation({
-    mutationFn: async (data: { currentPassword: string; newPassword: string }) => {
+    mutationFn: async (updates: Partial<SecuritySettings>) => {
+      try {
+        const updatedSettings = { 
+          ...mockSecuritySettings,
+          ...updates,
+          updatedAt: new Date().toISOString() 
+        };
+        return updatedSettings;
+      } catch (error) {
+        console.error('Error updating security settings:', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['security-settings', userId] });
+    },
+  });
+};
+
+export const useRevokeSession = (userId: string) => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (sessionId: string) => {
+      try {
+        const updatedSessions = mockSecuritySettings.activeSessions.filter(
+          session => session.id !== sessionId
+        );
+        
+        const updatedSettings = {
+          ...mockSecuritySettings,
+          activeSessions: updatedSessions,
+          updatedAt: new Date().toISOString()
+        };
+        
+        return updatedSettings;
+      } catch (error) {
+        console.error('Error revoking session:', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['security-settings', userId] });
+    },
+  });
+};
+
+export const useRevokeAllSessions = (userId: string) => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async () => {
+      try {
+        const currentSession = mockSecuritySettings.activeSessions.find(
+          session => session.current
+        );
+        
+        const updatedSettings = {
+          ...mockSecuritySettings,
+          activeSessions: currentSession ? [currentSession] : [],
+          updatedAt: new Date().toISOString()
+        };
+        
+        return updatedSettings;
+      } catch (error) {
+        console.error('Error revoking all sessions:', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['security-settings', userId] });
+    },
+  });
+};
+
+export const useChangePassword = () => {
+  return useMutation({
+    mutationFn: async (data: { userId: string; currentPassword: string; newPassword: string }) => {
       try {
         return { success: true, message: '密码已成功更改' };
       } catch (error) {
