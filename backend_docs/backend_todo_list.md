@@ -155,16 +155,19 @@ Based on analysis of the frontend code and structure, this document outlines the
   - Fields: name, code, country, category, description, eligibilityCriteria, processingTime, applicationFee, requiredDocuments, steps, officialLink, isActive, popularity, successRate, translations, metadata
   - Methods: getTranslation, checkEligibility
 
-- **PathwayApplication Model** (To be implemented)
-  - Fields: userId, pathwayId, status, submittedAt, notes
+- **PathwayApplication Model** (Already Implemented)
+  - Fields: userId, pathwayId, status, submittedAt, lastUpdatedAt, notes, documents, timeline, feedback, metadata
+  - Methods: updateStatus, submit, addDocument, updateDocumentStatus, addFeedback
   - Relationships: Belongs to User, Belongs to Pathway
 
-- **Consultant Model** (To be implemented)
-  - Fields: name, specialization, experience, languages, rating
+- **Consultant Model** (Already Implemented)
+  - Fields: name, email, phone, profileImage, specialization, countries, experience, languages, credentials, rating, reviews, availability, fees, bio, website, socialMedia, location, isVerified, isActive, metadata
+  - Methods: addReview, updateAvailability, findBySpecialization, findByLanguage, findByLocation
   - Relationships: Has many ConsultantMatches
 
-- **ConsultantMatch Model** (To be implemented)
-  - Fields: userId, consultantId, pathwayId, status, createdAt
+- **ConsultantMatch Model** (Already Implemented)
+  - Fields: userId, consultantId, pathwayId, status, matchScore, requestDetails, consultantResponse, appointment, communication, feedback, createdAt, updatedAt, metadata
+  - Methods: updateStatus, addConsultantResponse, scheduleAppointment, addMessage, addUserFeedback, addConsultantFeedback, findByUser, findByConsultant, findByPathway
   - Relationships: Belongs to User, Belongs to Consultant, Belongs to Pathway
 
 ### Controllers
