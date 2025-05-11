@@ -158,6 +158,17 @@
     "generateForms": "生成表格",
     "findConsultant": "寻找顾问"
   },
+  "profile": {
+    "modeSwitcher": {
+      "title": "资料收集模式",
+      "conversationMode": "对话模式",
+      "formMode": "表单模式",
+      "conversationDescription": "通过自然对话方式收集您的信息，更加轻松自然。",
+      "formDescription": "通过结构化表单填写您的信息，更加系统全面。",
+      "switchToForm": "切换到表单模式",
+      "switchToConversation": "切换到对话模式"
+    }
+  },
   "assessment": {
     "startPage": {
       "title": "开始您的移民评估",

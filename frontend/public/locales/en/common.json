@@ -158,6 +158,17 @@
     "generateForms": "Generate Forms",
     "findConsultant": "Find Consultant"
   },
+r  "profile": {
+    "modeSwitcher": {
+      "title": "Profile Collection Mode",
+      "conversationMode": "Conversation Mode",
+      "formMode": "Form Mode",
+      "conversationDescription": "Collect your information through natural conversation, more relaxed and natural.",
+      "formDescription": "Fill in your information through structured forms, more systematic and comprehensive.",
+      "switchToForm": "Switch to Form Mode",
+      "switchToConversation": "Switch to Conversation Mode"
+    }
+  },
   "assessment": {
     "startPage": {
       "title": "Start Your Immigration Assessment",

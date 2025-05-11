@@ -158,6 +158,17 @@
     "generateForms": "Générer des Formulaires",
     "findConsultant": "Trouver un Consultant"
   },
+  "profile": {
+    "modeSwitcher": {
+      "title": "Mode de Collecte de Profil",
+      "conversationMode": "Mode Conversation",
+      "formMode": "Mode Formulaire",
+      "conversationDescription": "Collectez vos informations par conversation naturelle, plus détendue et naturelle.",
+      "formDescription": "Remplissez vos informations via des formulaires structurés, plus systématiques et complets.",
+      "switchToForm": "Passer au Mode Formulaire",
+      "switchToConversation": "Passer au Mode Conversation"
+    }
+  },
   "assessment": {
     "startPage": {
       "title": "Commencez Votre Évaluation d'Immigration",
