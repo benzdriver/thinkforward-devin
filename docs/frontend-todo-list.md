@@ -84,7 +84,7 @@
 
 ## 6. 顾问页面实现
 
-- [ ] 顾问仪表盘 (`/consultant/dashboard`)
+- [x] 顾问仪表盘 (`/consultant/dashboard`)
 - [ ] 客户管理页 (`/consultant/clients`)
 - [ ] 客户详情页 (`/consultant/clients/[id]`)
 - [ ] 案例管理页 (`/consultant/cases`)
