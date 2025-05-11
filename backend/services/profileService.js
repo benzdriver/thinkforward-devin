@@ -120,7 +120,7 @@ exports.updatePersonalInfo = async (userId, personalInfo, locale = 'en') => {
 /**
  * Update education information
  * @param {string} userId - User ID
- * @param {Array} educationInfo - Education information data
+ * @param {Object} educationInfo - Education information data
  * @param {string} locale - User locale
  * @returns {Promise<Object>} - Updated profile
  */
@@ -131,7 +131,7 @@ exports.updateEducationInfo = async (userId, educationInfo, locale = 'en') => {
 /**
  * Update work experience
  * @param {string} userId - User ID
- * @param {Array} workExperience - Work experience data
+ * @param {Object} workExperience - Work experience data
  * @param {string} locale - User locale
  * @returns {Promise<Object>} - Updated profile
  */
@@ -142,7 +142,7 @@ exports.updateWorkExperience = async (userId, workExperience, locale = 'en') => 
 /**
  * Update language skills
  * @param {string} userId - User ID
- * @param {Array} languageSkills - Language skills data
+ * @param {Object} languageSkills - Language skills data
  * @param {string} locale - User locale
  * @returns {Promise<Object>} - Updated profile
  */
