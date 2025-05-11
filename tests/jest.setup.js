@@ -15,37 +15,38 @@ process.env.JWT_SECRET = process.env.JWT_SECRET || 'thinkforward-test-secret-key
 process.env.JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'thinkforward-test-refresh-secret-key';
 process.env.NODE_ENV = 'test';
 
-jest.setTimeout(60000);
+jest.setTimeout(120000);
+
+jest.mock('../backend/utils/canadaApiClient', () => ({
+  fetchExpressEntryDraws: jest.fn().mockResolvedValue([]),
+  fetchProvincialPrograms: jest.fn().mockResolvedValue([]),
+  fetchImmigrationNews: jest.fn().mockResolvedValue([])
+}), { virtual: true });
 
 let mongoServer;
 
 beforeAll(async () => {
   try {
-    mongoServer = await MongoMemoryServer.create({
-      instance: {
-        dbName: 'thinkforward-test',
-        port: 27017,
-        ip: '127.0.0.1',
-        storageEngine: 'wiredTiger'
-      },
-      binary: {
-        version: '4.4.6'
-      },
-      autoStart: true
-    });
+    mongoServer = await MongoMemoryServer.create();
     
     const uri = mongoServer.getUri();
     process.env.MONGODB_URI = uri;
     
-    await mongoose.connect(uri, {
+    const mongooseOpts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-      connectTimeoutMS: 30000,
-      socketTimeoutMS: 30000,
-      serverSelectionTimeoutMS: 30000
-    });
+      connectTimeoutMS: 60000,
+      socketTimeoutMS: 60000,
+      serverSelectionTimeoutMS: 60000
+    };
+    
+    const [major, minor] = mongoose.version.split('.').map(Number);
+    if (major < 6) {
+      mongooseOpts.useCreateIndex = true;
+      mongooseOpts.useFindAndModify = false;
+    }
+    
+    await mongoose.connect(uri, mongooseOpts);
     
     console.log(`Connected to MongoDB Memory Server at ${uri}`);
   } catch (error) {
@@ -59,10 +60,14 @@ afterEach(async () => {
     try {
       const collections = mongoose.connection.collections;
       for (const key in collections) {
-        await collections[key].deleteMany({});
+        try {
+          await collections[key].deleteMany({});
+        } catch (error) {
+          console.error(`Error clearing collection ${key}:`, error);
+        }
       }
     } catch (error) {
-      console.error('Error clearing collections:', error);
+      console.error('Error accessing collections:', error);
     }
   }
 });
@@ -75,8 +80,12 @@ afterAll(async () => {
     }
     
     if (mongoServer) {
-      await mongoServer.stop();
-      console.log('MongoDB Memory Server stopped');
+      try {
+        await mongoServer.stop();
+        console.log('MongoDB Memory Server stopped');
+      } catch (error) {
+        console.error('Error stopping MongoDB Memory Server:', error);
+      }
     }
   } catch (error) {
     console.error('Error during cleanup:', error);

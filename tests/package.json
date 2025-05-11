@@ -11,6 +11,7 @@
     "install-backend-deps": "npm install express mongoose jsonwebtoken bcryptjs dotenv cors helmet morgan express-validator"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
