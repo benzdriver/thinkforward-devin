@@ -10,6 +10,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const authRoutes = require('./routes/authRoutes');
 const expressEntryRoutes = require('./routes/canada/expressEntryRoutes');
 
 const app = express();
@@ -29,6 +30,7 @@ app.use(morgan('dev')); // Logging
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
+app.use('/api/auth', authRoutes);
 app.use('/api/canada/express-entry', expressEntryRoutes);
 
 app.get('/health', (req, res) => {
