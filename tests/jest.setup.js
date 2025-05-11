@@ -23,16 +23,15 @@ jest.mock('../backend/utils/canadaApiClient', () => ({
   fetchImmigrationNews: jest.fn().mockResolvedValue([])
 }), { virtual: true });
 
-// Create a ValidationError class for mongoose validation errors
-class ValidationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'ValidationError';
-    this.errors = {};
-  }
-}
-
 jest.mock('mongoose', () => {
+  // Create a ValidationError class for mongoose validation errors
+  class ValidationError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'ValidationError';
+      this.errors = {};
+    }
+  }
   // Create a mock ObjectId class
   class MockObjectId {
     constructor(id) {
