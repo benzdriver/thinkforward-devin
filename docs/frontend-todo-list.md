@@ -75,8 +75,8 @@
 - [x] 模式切换组件
 - [x] 文档上传页 (`/documents/upload`)
 - [x] 文档管理页 (`/documents/manage`)
-- [ ] 表格生成页 (`/forms/generate`)
-- [ ] 表格预览页 (`/forms/preview/[id]`)
+- [x] 表格生成页 (`/forms/generate`)
+- [x] 表格预览页 (`/forms/preview/[id]`)
 - [ ] 顾问匹配页 (`/consultants/match`)
 - [ ] 顾问预约页 (`/consultants/book/[id]`)
 - [ ] 协作空间页 (`/workspace/[id]`)
@@ -115,10 +115,10 @@
   - [x] 文件上传组件
   - [x] 文档预览
   - [x] 文档分类管理
-- [ ] 表格生成模块
-  - [ ] 表格模板渲染
-  - [ ] 数据填充逻辑
-  - [ ] PDF生成和下载
+- [x] 表格生成模块
+  - [x] 表格模板渲染
+  - [x] 数据填充逻辑
+  - [x] PDF生成和下载
 - [ ] 顾问匹配模块
   - [ ] 顾问搜索和筛选
   - [ ] 匹配算法前端展示
