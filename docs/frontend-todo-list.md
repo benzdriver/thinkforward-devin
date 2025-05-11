@@ -86,7 +86,7 @@
 
 - [x] 顾问仪表盘 (`/consultant/dashboard`)
 - [x] 客户管理页 (`/consultant/clients`)
-- [ ] 客户详情页 (`/consultant/clients/[id]`)
+- [x] 客户详情页 (`/consultant/clients/[id]`)
 - [ ] 案例管理页 (`/consultant/cases`)
 - [ ] 日程管理页 (`/consultant/schedule`)
 - [ ] 顾问资料页 (`/consultant/profile`)
