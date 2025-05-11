@@ -1,0 +1,33 @@
+{
+  "name": "thinkforward-ai-tests",
+  "version": "1.0.0",
+  "description": "Tests for ThinkForward AI backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.7",
+    "jsonwebtoken": "^8.5.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "supertest": "^6.1.4",
+    "mongodb-memory-server": "^7.3.6",
+    "faker": "^5.5.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ]
+  }
+}
