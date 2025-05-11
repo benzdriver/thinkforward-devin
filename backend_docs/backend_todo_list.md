@@ -608,7 +608,67 @@ Based on analysis of the frontend code and structure, this document outlines the
      - GET /api/consultant/:consultantId/clients/:clientId/notes - 获取客户笔记
      - GET /api/consultant/:consultantId/clients/:clientId/activities - 获取客户活动
 
-## 13. Technical Requirements
+## 13. 顾问案例管理模块 (新增)
+   - ⬜ Models
+     - ⬜ Case Model
+       - 字段: id, title, clientId, consultantId, type, description, status, priority, progress, dueDate, createdAt, updatedAt
+     - ⬜ CaseTask Model
+       - 字段: id, caseId, title, description, assigneeId, status, priority, dueDate, completedAt, createdAt, updatedAt
+     - ⬜ CaseNote Model
+       - 字段: id, caseId, authorId, content, isPrivate, createdAt, updatedAt
+     - ⬜ CaseDocument Model
+       - 字段: id, caseId, name, type, size, url, uploadedBy, category, status, notes, createdAt, updatedAt
+     - ⬜ CaseTimeline Model
+       - 字段: id, caseId, type, description, userId, metadata, timestamp
+   - ⬜ Controllers
+     - ⬜ consultantCaseController
+       - getCases: 获取案例列表
+       - getCaseStats: 获取案例统计数据
+       - getCaseTypes: 获取案例类型
+       - createCase: 创建新案例
+       - getCaseById: 获取案例详情
+       - updateCase: 更新案例
+       - getCaseTasks: 获取案例任务
+       - createCaseTask: 创建案例任务
+       - updateCaseTask: 更新案例任务
+       - getCaseNotes: 获取案例笔记
+       - createCaseNote: 添加案例笔记
+       - getCaseDocuments: 获取案例文档
+       - uploadCaseDocument: 上传案例文档
+       - getCaseTimeline: 获取案例时间线
+   - ⬜ Services
+     - ⬜ consultantCaseService
+       - getCases: 获取案例列表
+       - getCaseStats: 获取案例统计数据
+       - getCaseTypes: 获取案例类型
+       - createCase: 创建新案例
+       - getCaseById: 获取案例详情
+       - updateCase: 更新案例
+       - getCaseTasks: 获取案例任务
+       - createCaseTask: 创建案例任务
+       - updateCaseTask: 更新案例任务
+       - getCaseNotes: 获取案例笔记
+       - createCaseNote: 添加案例笔记
+       - getCaseDocuments: 获取案例文档
+       - uploadCaseDocument: 上传案例文档
+       - getCaseTimeline: 获取案例时间线
+   - ⬜ Routes
+     - GET /api/consultant/:consultantId/cases - 获取案例列表
+     - GET /api/consultant/:consultantId/cases/stats - 获取案例统计数据
+     - GET /api/consultant/:consultantId/cases/types - 获取案例类型
+     - POST /api/consultant/:consultantId/cases - 创建新案例
+     - GET /api/consultant/:consultantId/cases/:caseId - 获取案例详情
+     - PATCH /api/consultant/:consultantId/cases/:caseId - 更新案例
+     - GET /api/consultant/:consultantId/cases/:caseId/tasks - 获取案例任务
+     - POST /api/consultant/:consultantId/cases/:caseId/tasks - 创建案例任务
+     - PATCH /api/consultant/:consultantId/cases/:caseId/tasks/:taskId - 更新案例任务
+     - GET /api/consultant/:consultantId/cases/:caseId/notes - 获取案例笔记
+     - POST /api/consultant/:consultantId/cases/:caseId/notes - 添加案例笔记
+     - GET /api/consultant/:consultantId/cases/:caseId/documents - 获取案例文档
+     - POST /api/consultant/:consultantId/cases/:caseId/documents - 上传案例文档
+     - GET /api/consultant/:consultantId/cases/:caseId/timeline - 获取案例时间线
+
+## 14. Technical Requirements
 
 - Node.js with Express framework
 - MongoDB database with Mongoose ODM
