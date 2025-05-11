@@ -6,14 +6,20 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "setup": "npm install && npm run install-backend-deps",
+    "install-backend-deps": "npm install express mongoose jsonwebtoken bcryptjs dotenv cors helmet morgan express-validator"
   },
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.13.7",
     "jsonwebtoken": "^8.5.1",
     "bcryptjs": "^2.4.3",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "cors": "^2.8.5",
+    "helmet": "^4.6.0",
+    "morgan": "^1.10.0",
+    "express-validator": "^6.12.1"
   },
   "devDependencies": {
     "jest": "^27.0.6",
@@ -28,6 +34,7 @@
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.js"
-    ]
+    ],
+    "testTimeout": 30000
   }
 }

@@ -14,66 +14,108 @@ Cannot find module 'express-validator' from '../backend/controllers/authControll
 
 ## 解决方案
 
-要成功运行测试，需要安装后端所需的所有依赖项。有两种方法可以解决这个问题：
+我们已经实现了一个自动化设置脚本，可以快速配置测试环境。该脚本会安装所有必要的依赖项并设置环境变量。
 
-### 方法 1：在测试目录中安装所有后端依赖项
+### 使用自动化设置脚本
 
 ```bash
 cd ~/repos/thinkforward-devin/tests
-npm install express mongoose express-validator bcryptjs jsonwebtoken cors helmet dotenv
+chmod +x setup.sh
+./setup.sh
 ```
 
-这种方法的优点是不需要修改后端代码，但缺点是可能会导致依赖项版本不一致。
+这个脚本会：
+1. 安装测试依赖项
+2. 安装后端所需的依赖项
+3. 创建 `.env.test` 文件（如果不存在）
+4. 配置测试环境
 
-### 方法 2：将测试目录移动到后端目录中
+### 手动设置（如果自动脚本失败）
+
+如果自动脚本不起作用，可以按照以下步骤手动设置：
 
 ```bash
-# 备份当前测试
-cp -r ~/repos/thinkforward-devin/tests ~/repos/thinkforward-devin/tests_backup
-
-# 移动测试到后端目录
-mkdir -p ~/repos/thinkforward-devin/backend/tests
-cp -r ~/repos/thinkforward-devin/tests/* ~/repos/thinkforward-devin/backend/tests/
-
-# 更新测试中的导入路径
-# 将所有 '../backend/' 替换为 '../'
+cd ~/repos/thinkforward-devin/tests
+npm install
+npm run install-backend-deps
 ```
 
-这种方法的优点是可以使用后端的依赖项，但缺点是需要修改测试代码中的导入路径。
+## 测试环境配置
 
-## 推荐的测试执行步骤
+### 依赖项
 
-1. 安装后端依赖项：
-   ```bash
-   cd ~/repos/thinkforward-devin/backend
-   npm install
-   ```
+测试环境需要以下依赖项：
 
-2. 安装测试依赖项：
-   ```bash
-   cd ~/repos/thinkforward-devin/tests
-   npm install
-   npm install express mongoose express-validator bcryptjs jsonwebtoken cors helmet dotenv
-   ```
+```json
+"dependencies": {
+  "express": "^4.17.1",
+  "mongoose": "^5.13.7",
+  "jsonwebtoken": "^8.5.1",
+  "bcryptjs": "^2.4.3",
+  "dotenv": "^10.0.0",
+  "cors": "^2.8.5",
+  "helmet": "^4.6.0",
+  "morgan": "^1.10.0",
+  "express-validator": "^6.12.1"
+},
+"devDependencies": {
+  "jest": "^27.0.6",
+  "supertest": "^6.1.4",
+  "mongodb-memory-server": "^7.3.6",
+  "faker": "^5.5.3"
+}
+```
 
-3. 运行测试：
-   ```bash
-   npm test
-   ```
+这些依赖项已经添加到 `package.json` 文件中，可以通过运行 `npm install` 安装。
 
-4. 生成测试覆盖率报告：
-   ```bash
-   npm run test:coverage
-   ```
-
-## 环境变量配置
+### 环境变量
 
 测试需要以下环境变量：
 
 ```
-JWT_SECRET=thinkforward-secret-key
-JWT_REFRESH_SECRET=thinkforward-refresh-secret-key
+JWT_SECRET=thinkforward-test-secret-key
+JWT_REFRESH_SECRET=thinkforward-test-refresh-secret-key
 MONGODB_URI=mongodb://localhost:27017/thinkforward-test
+NODE_ENV=test
+PORT=5001
 ```
 
-可以在运行测试前设置这些环境变量，或者在 `jest.setup.js` 文件中设置默认值。
+这些环境变量已经在 `.env.test` 文件中设置，并在 `jest.setup.js` 文件中加载。
+
+### MongoDB 内存服务器
+
+测试使用 MongoDB 内存服务器，这样就不需要安装和配置实际的 MongoDB 数据库。MongoDB 内存服务器会在测试开始前自动启动，并在测试结束后自动停止。
+
+## 运行测试
+
+安装依赖项并配置环境后，可以使用以下命令运行测试：
+
+```bash
+cd ~/repos/thinkforward-devin/tests
+npm test
+```
+
+要生成测试覆盖率报告，可以使用：
+
+```bash
+npm run test:coverage
+```
+
+## 故障排除
+
+如果遇到问题，请检查：
+
+1. 所有依赖项是否已正确安装
+2. 环境变量是否已正确设置
+3. MongoDB 内存服务器是否正常工作
+
+如果测试仍然失败，可以尝试：
+
+```bash
+cd ~/repos/thinkforward-devin/tests
+rm -rf node_modules
+rm package-lock.json
+./setup.sh
+```
+
+这将重新安装所有依赖项并重置环境。
