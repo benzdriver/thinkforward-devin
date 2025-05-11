@@ -1,5 +1,14 @@
 export * from './auth';
 export * from './profile';
-export * from './profile-settings';
+
+import * as ProfileSettings from './profile-settings';
+export {
+  useUpdateUserProfile,
+  useUpdateNotificationSettings,
+  useUpdatePrivacySettings,
+  useDeleteAccount
+} from './profile-settings';
+
 export * from './consultant-dashboard';
-// export * from './consultant-clients';
+export * from './consultant-clients';
+export * from './client-detail';
