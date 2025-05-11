@@ -242,6 +242,27 @@ jest.mock('mongoose', () => {
     return mockModel;
   };
 
+  // Create a proper Schema constructor
+  const Schema = function(definition, options) {
+    const schema = mockSchemaConstructor();
+    schema.definition = definition;
+    schema.options = options;
+    return schema;
+  };
+  
+  Schema.Types = {
+    ObjectId: MockObjectId,
+    String: String,
+    Number: Number,
+    Boolean: Boolean,
+    Date: Date,
+    Map: Map,
+    Mixed: {},
+    Buffer: Buffer,
+    Decimal128: Number,
+    Array: Array
+  };
+  
   return {
     connect: jest.fn().mockResolvedValue({}),
     connection: {
@@ -255,7 +276,7 @@ jest.mock('mongoose', () => {
         pathways: { deleteMany: jest.fn().mockResolvedValue({ deletedCount: 0 }) }
       }
     },
-    Schema: mockSchemaConstructor,
+    Schema: Schema,
     model: jest.fn().mockImplementation((name) => createMockModel(name)),
     Types: {
       ObjectId: MockObjectId,
@@ -267,20 +288,6 @@ jest.mock('mongoose', () => {
       Mixed: {},
       Buffer: Buffer,
       Array: Array
-    },
-    Schema: {
-      Types: {
-        ObjectId: MockObjectId,
-        String: String,
-        Number: Number,
-        Boolean: Boolean,
-        Date: Date,
-        Map: Map,
-        Mixed: {},
-        Buffer: Buffer,
-        Decimal128: Number,
-        Array: Array
-      }
     },
     set: jest.fn()
   };
