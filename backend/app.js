@@ -7,6 +7,10 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const path = require('path');
+
+const { localeMiddleware } = require('./middleware/localeMiddleware');
+const { handleErrors, handle404, handleValidationErrors } = require('./middleware/errorMiddleware');
 
 dotenv.config();
 
@@ -32,6 +36,11 @@ app.use(cors()); // Enable CORS
 app.use(morgan('dev')); // Logging
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(localeMiddleware); // Set locale based on request
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/locales', express.static(path.join(__dirname, 'locales')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
@@ -40,24 +49,22 @@ app.use('/api/assessment', assessmentRoutes);
 app.use('/api/pathway', pathwayRoutes);
 
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
-  
-  res.status(statusCode).json({
-    success: false,
-    message
+  res.status(200).json({ 
+    status: 'ok',
+    version: process.env.npm_package_version || '1.0.0',
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
+app.use(handle404);
+
+app.use(handleValidationErrors);
+
+app.use(handleErrors);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
 });
 
 module.exports = app;
