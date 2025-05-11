@@ -521,4 +521,130 @@ interface ProfileFormData extends ProfileData {
 }
 ```
 
+## 文档管理功能的API集成
+
+ThinkForward AI平台支持文档上传、管理和分类功能，允许用户上传、查看和组织与其移民申请相关的文件。以下是后端需要支持的API集成点：
+
+### 1. 数据结构
+
+文档管理功能使用以下数据结构：
+
+```typescript
+// 文档数据结构
+interface Document {
+  id: string;
+  name: string;
+  type: string;
+  size: number;
+  category: string;
+  uploadDate: string;
+  status: 'pending' | 'processing' | 'approved' | 'rejected';
+  url?: string;
+  thumbnailUrl?: string;
+  notes?: string;
+}
+
+// 文档类别数据结构
+interface DocumentCategory {
+  id: string;
+  name: string;
+  description?: string;
+  required: boolean;
+  maxFiles?: number;
+  acceptedFileTypes?: string[];
+}
+```
+
+### 2. API端点
+
+后端需要提供以下API端点支持文档管理功能：
+
+1. **获取文档**：
+   - `GET /api/documents/:userId` - 获取用户的所有文档
+   - `GET /api/documents/:userId/category/:categoryId` - 获取特定类别的文档
+   - `GET /api/documents/:userId/:documentId` - 获取特定文档详情
+
+2. **文档操作**：
+   - `POST /api/documents/:userId/upload` - 上传新文档
+   - `PUT /api/documents/:userId/:documentId` - 更新文档信息
+   - `DELETE /api/documents/:userId/:documentId` - 删除文档
+
+3. **文档类别**：
+   - `GET /api/document-categories` - 获取所有文档类别
+   - `POST /api/document-categories` - 创建新文档类别
+   - `PUT /api/document-categories/:categoryId` - 更新文档类别
+   - `DELETE /api/document-categories/:categoryId` - 删除文档类别
+
+### 3. API钩子函数
+
+前端使用以下钩子函数与文档API交互：
+
+```typescript
+// 获取文档
+useGetDocuments(userId: string)
+useGetDocumentsByCategory(userId: string, categoryId: string)
+useGetDocument(userId: string, documentId: string)
+
+// 文档操作
+useUploadDocument(userId: string)
+useUpdateDocument(userId: string, documentId: string)
+useDeleteDocument(userId: string)
+
+// 类别操作
+useGetDocumentCategories()
+useCreateDocumentCategory()
+useUpdateDocumentCategory(categoryId: string)
+useDeleteDocumentCategory()
+```
+
+### 4. 文件上传处理
+
+后端需要实现以下文件上传处理逻辑：
+
+1. **文件验证**：
+   - 验证文件类型（基于MIME类型和扩展名）
+   - 验证文件大小（根据类别设置的限制）
+   - 验证文件数量（根据类别设置的限制）
+
+2. **文件存储**：
+   - 安全存储上传的文件
+   - 生成唯一的文件标识符
+   - 为图像文件生成缩略图
+
+3. **文件处理**：
+   - 扫描文件是否存在病毒或恶意内容
+   - 根据需要转换文件格式
+   - 提取文件元数据
+
+### 5. 状态管理
+
+后端需要支持以下文档状态管理功能：
+
+1. **状态流转**：
+   - 待处理（pending）：文件刚上传，等待审核
+   - 处理中（processing）：文件正在被处理或审核
+   - 已批准（approved）：文件已通过审核
+   - 已拒绝（rejected）：文件被拒绝
+
+2. **状态更新通知**：
+   - 当文档状态变更时通知用户
+   - 提供状态变更的原因和后续步骤
+
+### 6. 错误处理
+
+文档管理相关的错误响应应包含：
+
+```json
+{
+  "error": {
+    "code": "DOCUMENT_ERROR",
+    "message": "文档操作失败",
+    "details": {
+      "reason": "文件类型不支持",
+      "acceptedTypes": ["pdf", "jpg", "png"]
+    }
+  }
+}
+```
+
 通过以上API客户端架构，ThinkForward AI前端应用能够高效地与后端API交互，提供流畅的用户体验和可靠的数据流。
