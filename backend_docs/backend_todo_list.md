@@ -668,7 +668,69 @@ Based on analysis of the frontend code and structure, this document outlines the
      - POST /api/consultant/:consultantId/cases/:caseId/documents - 上传案例文档
      - GET /api/consultant/:consultantId/cases/:caseId/timeline - 获取案例时间线
 
-## 14. Technical Requirements
+## 14. 顾问日程管理模块 (新增)
+   - ⬜ Models
+     - ⬜ ScheduleEvent Model
+       - 字段: id, consultantId, title, description, startTime, endTime, type, status, clientId, location, isOnline, meetingLink, notes, color, createdAt, updatedAt
+     - ⬜ EventRecurrence Model
+       - 字段: id, eventId, pattern, intervalValue, endDate, daysOfWeek, dayOfMonth, monthOfYear, count, createdAt, updatedAt
+     - ⬜ EventReminder Model
+       - 字段: id, eventId, timeBefore, type, sent, createdAt, updatedAt
+     - ⬜ ConsultantWorkingHours Model
+       - 字段: id, consultantId, weekday, isWorking, timezone, createdAt, updatedAt
+     - ⬜ WorkingHourSlot Model
+       - 字段: id, workingHourId, startTime, endTime, createdAt, updatedAt
+     - ⬜ WorkingHourException Model
+       - 字段: id, consultantId, exceptionDate, isWorking, note, createdAt, updatedAt
+     - ⬜ ExceptionSlot Model
+       - 字段: id, exceptionId, startTime, endTime, createdAt, updatedAt
+     - ⬜ AppointmentRequest Model
+       - 字段: id, consultantId, clientId, purpose, notes, status, createdAt, updatedAt
+     - ⬜ ProposedAppointmentTime Model
+       - 字段: id, requestId, startTime, endTime, isSelected, createdAt, updatedAt
+   - ⬜ Controllers
+     - ⬜ scheduleController
+       - getEvents: 获取日程事件列表
+       - createEvent: 创建新事件
+       - getEventById: 获取单个事件详情
+       - updateEvent: 更新事件
+       - deleteEvent: 删除事件
+       - getWorkingHours: 获取工作时间设置
+       - updateWorkingHours: 更新工作时间设置
+       - getAppointmentRequests: 获取预约请求列表
+       - acceptAppointmentRequest: 接受预约请求
+       - rejectAppointmentRequest: 拒绝预约请求
+       - rescheduleAppointmentRequest: 重新安排预约
+       - getScheduleStats: 获取日程统计数据
+   - ⬜ Services
+     - ⬜ scheduleService
+       - getEvents: 获取日程事件列表
+       - createEvent: 创建新事件
+       - getEventById: 获取单个事件详情
+       - updateEvent: 更新事件
+       - deleteEvent: 删除事件
+       - getWorkingHours: 获取工作时间设置
+       - updateWorkingHours: 更新工作时间设置
+       - getAppointmentRequests: 获取预约请求列表
+       - acceptAppointmentRequest: 接受预约请求
+       - rejectAppointmentRequest: 拒绝预约请求
+       - rescheduleAppointmentRequest: 重新安排预约
+       - getScheduleStats: 获取日程统计数据
+   - ⬜ Routes
+     - GET /api/consultant/:consultantId/schedule/events - 获取日程事件列表
+     - POST /api/consultant/:consultantId/schedule/events - 创建新事件
+     - GET /api/consultant/:consultantId/schedule/events/:eventId - 获取单个事件详情
+     - PATCH /api/consultant/:consultantId/schedule/events/:eventId - 更新事件
+     - DELETE /api/consultant/:consultantId/schedule/events/:eventId - 删除事件
+     - GET /api/consultant/:consultantId/schedule/working-hours - 获取工作时间设置
+     - PATCH /api/consultant/:consultantId/schedule/working-hours - 更新工作时间设置
+     - GET /api/consultant/:consultantId/schedule/appointment-requests - 获取预约请求列表
+     - POST /api/consultant/:consultantId/schedule/appointment-requests/:requestId/accept - 接受预约请求
+     - POST /api/consultant/:consultantId/schedule/appointment-requests/:requestId/reject - 拒绝预约请求
+     - POST /api/consultant/:consultantId/schedule/appointment-requests/:requestId/reschedule - 重新安排预约
+     - GET /api/consultant/:consultantId/schedule/stats - 获取日程统计数据
+
+## 15. Technical Requirements
 
 - Node.js with Express framework
 - MongoDB database with Mongoose ODM
