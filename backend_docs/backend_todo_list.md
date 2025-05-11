@@ -248,3 +248,4 @@ Based on analysis of the frontend code and structure, this document outlines the
 - Internationalization support (i18n)
 - Error handling and validation
 - API documentation
+- Axios for external API requests
