@@ -521,7 +521,43 @@ Based on analysis of the frontend code and structure, this document outlines the
       - POST /api/profile-settings/:userId/deactivate - 停用账户
       - POST /api/profile-settings/:userId/delete - 删除账户
 
-## 11. Technical Requirements
+## 11. Consultant Dashboard Module (新增)
+   - ⬜ Models
+     - ⬜ ConsultantTask Model
+       - 字段: id, consultantId, title, dueDate, priority, status, relatedId, relatedType, createdAt, updatedAt
+     - ⬜ ConsultantActivity Model
+       - 字段: consultantId, type, timestamp, description, relatedId, relatedType, isRead, createdAt
+   - ⬜ Controllers
+     - ⬜ consultantDashboardController
+       - getConsultantDashboard: 获取顾问仪表盘数据
+       - updateConsultantStatus: 更新顾问状态
+       - getConsultantAppointments: 获取顾问预约列表
+       - getConsultantTasks: 获取顾问任务列表
+       - updateTaskStatus: 更新任务状态
+       - getConsultantActivities: 获取顾问活动列表
+       - confirmAppointment: 确认预约
+       - cancelAppointment: 取消预约
+   - ⬜ Services
+     - ⬜ consultantDashboardService
+       - getConsultantDashboard: 获取顾问仪表盘数据
+       - updateConsultantStatus: 更新顾问状态
+       - getConsultantAppointments: 获取顾问预约列表
+       - getConsultantTasks: 获取顾问任务列表
+       - updateTaskStatus: 更新任务状态
+       - getConsultantActivities: 获取顾问活动列表
+       - confirmAppointment: 确认预约
+       - cancelAppointment: 取消预约
+   - ⬜ Routes
+     - GET /api/consultant/:consultantId/dashboard - 获取顾问仪表盘数据
+     - PATCH /api/consultant/:consultantId/status - 更新顾问状态
+     - GET /api/consultant/:consultantId/appointments - 获取顾问预约列表
+     - GET /api/consultant/:consultantId/tasks - 获取顾问任务列表
+     - PATCH /api/tasks/:taskId/status - 更新任务状态
+     - GET /api/consultant/:consultantId/activities - 获取顾问活动列表
+     - PATCH /api/appointments/:appointmentId/confirm - 确认预约
+     - PATCH /api/appointments/:appointmentId/cancel - 取消预约
+
+## 12. Technical Requirements
 
 - Node.js with Express framework
 - MongoDB database with Mongoose ODM
