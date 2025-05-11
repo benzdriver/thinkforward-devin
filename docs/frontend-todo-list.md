@@ -73,8 +73,8 @@
 - [x] 资料收集页 - 对话式 (`/profile/build/conversation`)
 - [x] 资料收集页 - 表单式 (`/profile/build/form`)
 - [x] 模式切换组件
-- [ ] 文档上传页 (`/documents/upload`)
-- [ ] 文档管理页 (`/documents/manage`)
+- [x] 文档上传页 (`/documents/upload`)
+- [x] 文档管理页 (`/documents/manage`)
 - [ ] 表格生成页 (`/forms/generate`)
 - [ ] 表格预览页 (`/forms/preview/[id]`)
 - [ ] 顾问匹配页 (`/consultants/match`)
@@ -111,10 +111,10 @@
 - [x] 模式切换功能
   - [x] 数据映射逻辑
   - [x] 状态保持机制
-- [ ] 文档管理模块
-  - [ ] 文件上传组件
-  - [ ] 文档预览
-  - [ ] 文档分类管理
+- [x] 文档管理模块
+  - [x] 文件上传组件
+  - [x] 文档预览
+  - [x] 文档分类管理
 - [ ] 表格生成模块
   - [ ] 表格模板渲染
   - [ ] 数据填充逻辑
