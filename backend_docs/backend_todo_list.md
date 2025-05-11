@@ -148,49 +148,62 @@ Based on analysis of the frontend code and structure, this document outlines the
 - GET /api/assessment/:id/result
 - GET /api/assessment/user/:userId
 
-## 5. Pathways Module
+## 5. Pathways Module (Already Implemented)
 
 ### Models
 - **Pathway Model**
-  - Fields: name, category, description, eligibility, processingTime, requirements, benefits, steps
-  - Relationships: Has many PathwayApplications
+  - Fields: name, code, country, category, description, eligibilityCriteria, processingTime, applicationFee, requiredDocuments, steps, officialLink, isActive, popularity, successRate, translations, metadata
+  - Methods: getTranslation, checkEligibility
 
-- **PathwayApplication Model**
+- **PathwayApplication Model** (To be implemented)
   - Fields: userId, pathwayId, status, submittedAt, notes
   - Relationships: Belongs to User, Belongs to Pathway
 
-- **Consultant Model**
+- **Consultant Model** (To be implemented)
   - Fields: name, specialization, experience, languages, rating
   - Relationships: Has many ConsultantMatches
 
-- **ConsultantMatch Model**
+- **ConsultantMatch Model** (To be implemented)
   - Fields: userId, consultantId, pathwayId, status, createdAt
   - Relationships: Belongs to User, Belongs to Consultant, Belongs to Pathway
 
 ### Controllers
 - **pathwayController**
-  - listPathways: Get all immigration pathways
-  - getPathwayDetails: Fetch specific pathway information
-  - filterPathways: Filter pathways by criteria
-  - applyForPathway: Submit pathway application
-  - getUserApplications: Get user's pathway applications
-  - matchConsultants: Find consultants for specific pathway
+  - getAllPathways: Get all immigration pathways
+  - getPathwayById: Fetch pathway by ID
+  - getPathwayByCode: Fetch pathway by code
+  - checkEligibility: Check user eligibility for pathway
+  - getRecommendedPathways: Get personalized pathway recommendations
+  - getPathwayCategories: Get pathway categories
+  - getPathwayCountries: Get countries with pathways
+  - createPathway: Create new pathway (admin only)
+  - updatePathway: Update pathway (admin only)
+  - deletePathway: Delete pathway (admin only)
 
 ### Services
 - **pathwayService**
-  - fetchPathways: Get pathways with filtering
-  - getPathwayById: Retrieve specific pathway
-  - createApplication: Submit new application
-  - updateApplicationStatus: Change application status
-  - findConsultantMatches: Match consultants to user needs
+  - getAllPathways: Get pathways with filtering
+  - getPathwayById: Retrieve pathway by ID
+  - getPathwayByCode: Retrieve pathway by code
+  - checkEligibility: Check user eligibility for pathway
+  - getRecommendedPathways: Get personalized pathway recommendations
+  - getPathwayCategories: Get pathway categories
+  - getPathwayCountries: Get countries with pathways
+  - createPathway: Create new pathway (admin only)
+  - updatePathway: Update pathway (admin only)
+  - deletePathway: Delete pathway (admin only)
 
 ### Routes
-- GET /api/pathways
-- GET /api/pathways/:id
-- POST /api/pathways/filter
-- POST /api/pathways/:id/apply
-- GET /api/pathways/applications/user/:userId
-- GET /api/consultants/match?pathway=:pathwayId
+- GET /api/pathway - Get all pathways
+- GET /api/pathway/categories - Get pathway categories
+- GET /api/pathway/countries - Get pathway countries
+- GET /api/pathway/id/:id - Get pathway by ID
+- GET /api/pathway/code/:code - Get pathway by code
+- POST /api/pathway/eligibility/:id - Check pathway eligibility
+- POST /api/pathway/recommendations - Get recommended pathways
+- POST /api/pathway - Create new pathway (admin only)
+- PUT /api/pathway/:id - Update pathway (admin only)
+- DELETE /api/pathway/:id - Delete pathway (admin only)
 
 ## 6. Utilities and Middleware
 
