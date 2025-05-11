@@ -19,10 +19,11 @@ import { Radio } from '../../../components/ui/radio';
 import { Checkbox } from '../../../components/ui/checkbox';
 import { Progress } from '../../../components/ui/progress';
 import { Badge } from '../../../components/ui/badge';
-import { Tabs } from '../../../components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../../components/ui/tabs';
 import { FormField } from '../../../components/form/form-field';
 import { DatePicker } from '../../../components/form/date-picker';
 import { ModeSwitcher } from '../../../components/profile/mode-switcher';
+import { TabsSimple } from '../../../components/profile/tabs-simple';
 import { useProfileStore } from '../../../lib/store/zustand/useProfileStore';
 
 const personalInfoSchema = z.object({
@@ -175,7 +176,7 @@ const FormProfilePage = () => {
         if (workExp) {
           updateWorkExperience({
             occupation: workExp.occupation,
-            yearsOfExperience: parseInt(workExp.yearsOfExperience) || 0,
+            yearsOfExperience: parseInt(workExp.yearsOfExperience || '0') || 0,
             currentEmployer: workExp.currentEmployer,
             jobTitle: workExp.jobTitle
           });
@@ -227,7 +228,7 @@ const FormProfilePage = () => {
     
     updateWorkExperience({
       occupation: data.workExperience.occupation,
-      yearsOfExperience: parseInt(data.workExperience.yearsOfExperience) || 0,
+      yearsOfExperience: parseInt(data.workExperience.yearsOfExperience || '0') || 0,
       currentEmployer: data.workExperience.currentEmployer || '',
       jobTitle: data.workExperience.jobTitle || ''
     });
@@ -259,10 +260,10 @@ const FormProfilePage = () => {
     ];
 
     return (
-      <Tabs
+      <TabsSimple
         tabs={tabs}
         activeTab={activeTab}
-        onChange={(tabId) => setActiveTab(tabId)}
+        onChange={(tabId: string) => setActiveTab(tabId)}
       />
     );
   };
@@ -272,8 +273,9 @@ const FormProfilePage = () => {
       <div className={`space-y-6 ${activeTab !== 'personalInfo' ? 'hidden' : ''}`}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
+            id="personalInfo.firstName"
             label={t('profile.form.firstName') as string}
-            error={errors.personalInfo?.firstName?.message}
+            message={errors.personalInfo?.firstName?.message}
           >
             <Controller
               name="personalInfo.firstName"
@@ -285,8 +287,9 @@ const FormProfilePage = () => {
           </FormField>
 
           <FormField
+            id="personalInfo.lastName"
             label={t('profile.form.lastName') as string}
-            error={errors.personalInfo?.lastName?.message}
+            message={errors.personalInfo?.lastName?.message}
           >
             <Controller
               name="personalInfo.lastName"
@@ -300,8 +303,9 @@ const FormProfilePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
+            id="personalInfo.email"
             label={t('profile.form.email') as string}
-            error={errors.personalInfo?.email?.message}
+            message={errors.personalInfo?.email?.message}
           >
             <Controller
               name="personalInfo.email"
@@ -313,8 +317,9 @@ const FormProfilePage = () => {
           </FormField>
 
           <FormField
+            id="personalInfo.phone"
             label={t('profile.form.phone') as string}
-            error={errors.personalInfo?.phone?.message}
+            message={errors.personalInfo?.phone?.message}
           >
             <Controller
               name="personalInfo.phone"
@@ -327,25 +332,32 @@ const FormProfilePage = () => {
         </div>
 
         <FormField
+          id="personalInfo.dateOfBirth"
           label={t('profile.form.dateOfBirth') as string}
-          error={errors.personalInfo?.dateOfBirth?.message}
+          message={errors.personalInfo?.dateOfBirth?.message}
         >
           <Controller
             name="personalInfo.dateOfBirth"
             control={control}
             render={({ field }) => (
-              <DatePicker
-                selected={field.value}
-                onChange={(date) => field.onChange(date)}
-                placeholderText={t('profile.form.dateOfBirthPlaceholder') as string}
+              <input
+                type="date"
+                className="w-full p-2 border rounded"
+                value={field.value ? field.value.toISOString().split('T')[0] : ''}
+                onChange={(e) => {
+                  const date = e.target.value ? new Date(e.target.value) : null;
+                  field.onChange(date);
+                }}
+                placeholder={t('profile.form.dateOfBirthPlaceholder') as string}
               />
             )}
           />
         </FormField>
 
         <FormField
+          id="personalInfo.nationality"
           label={t('profile.form.nationality') as string}
-          error={errors.personalInfo?.nationality?.message}
+          message={errors.personalInfo?.nationality?.message}
         >
           <Controller
             name="personalInfo.nationality"
@@ -357,8 +369,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="personalInfo.address"
           label={t('profile.form.address') as string}
-          error={errors.personalInfo?.address?.message}
+          message={errors.personalInfo?.address?.message}
         >
           <Controller
             name="personalInfo.address"
@@ -371,8 +384,9 @@ const FormProfilePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <FormField
+            id="personalInfo.city"
             label={t('profile.form.city') as string}
-            error={errors.personalInfo?.city?.message}
+            message={errors.personalInfo?.city?.message}
           >
             <Controller
               name="personalInfo.city"
@@ -384,8 +398,9 @@ const FormProfilePage = () => {
           </FormField>
 
           <FormField
+            id="personalInfo.province"
             label={t('profile.form.province') as string}
-            error={errors.personalInfo?.province?.message}
+            message={errors.personalInfo?.province?.message}
           >
             <Controller
               name="personalInfo.province"
@@ -397,8 +412,9 @@ const FormProfilePage = () => {
           </FormField>
 
           <FormField
+            id="personalInfo.postalCode"
             label={t('profile.form.postalCode') as string}
-            error={errors.personalInfo?.postalCode?.message}
+            message={errors.personalInfo?.postalCode?.message}
           >
             <Controller
               name="personalInfo.postalCode"
@@ -411,8 +427,9 @@ const FormProfilePage = () => {
         </div>
 
         <FormField
+          id="personalInfo.country"
           label={t('profile.form.country') as string}
-          error={errors.personalInfo?.country?.message}
+          message={errors.personalInfo?.country?.message}
         >
           <Controller
             name="personalInfo.country"
@@ -439,8 +456,9 @@ const FormProfilePage = () => {
     return (
       <div className={`space-y-6 ${activeTab !== 'education' ? 'hidden' : ''}`}>
         <FormField
+          id="education.highestDegree"
           label={t('profile.form.highestDegree') as string}
-          error={errors.education?.highestDegree?.message}
+          message={errors.education?.highestDegree?.message}
         >
           <Controller
             name="education.highestDegree"
@@ -457,8 +475,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="education.fieldOfStudy"
           label={t('profile.form.fieldOfStudy') as string}
-          error={errors.education?.fieldOfStudy?.message}
+          message={errors.education?.fieldOfStudy?.message}
         >
           <Controller
             name="education.fieldOfStudy"
@@ -470,8 +489,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="education.institution"
           label={t('profile.form.institution') as string}
-          error={errors.education?.institution?.message}
+          message={errors.education?.institution?.message}
         >
           <Controller
             name="education.institution"
@@ -483,8 +503,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="education.graduationYear"
           label={t('profile.form.graduationYear') as string}
-          error={errors.education?.graduationYear?.message}
+          message={errors.education?.graduationYear?.message}
         >
           <Controller
             name="education.graduationYear"
@@ -496,8 +517,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="education.otherEducation"
           label={t('profile.form.otherEducation') as string}
-          error={errors.education?.otherEducation?.message}
+          message={errors.education?.otherEducation?.message}
         >
           <Controller
             name="education.otherEducation"
@@ -515,8 +537,9 @@ const FormProfilePage = () => {
     return (
       <div className={`space-y-6 ${activeTab !== 'workExperience' ? 'hidden' : ''}`}>
         <FormField
+          id="workExperience.occupation"
           label={t('profile.form.occupation') as string}
-          error={errors.workExperience?.occupation?.message}
+          message={errors.workExperience?.occupation?.message}
         >
           <Controller
             name="workExperience.occupation"
@@ -528,8 +551,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="workExperience.yearsOfExperience"
           label={t('profile.form.yearsOfExperience') as string}
-          error={errors.workExperience?.yearsOfExperience?.message}
+          message={errors.workExperience?.yearsOfExperience?.message}
         >
           <Controller
             name="workExperience.yearsOfExperience"
@@ -541,8 +565,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="workExperience.currentEmployer"
           label={t('profile.form.currentEmployer') as string}
-          error={errors.workExperience?.currentEmployer?.message}
+          message={errors.workExperience?.currentEmployer?.message}
         >
           <Controller
             name="workExperience.currentEmployer"
@@ -554,8 +579,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="workExperience.jobTitle"
           label={t('profile.form.jobTitle') as string}
-          error={errors.workExperience?.jobTitle?.message}
+          message={errors.workExperience?.jobTitle?.message}
         >
           <Controller
             name="workExperience.jobTitle"
@@ -567,8 +593,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="workExperience.skills"
           label={t('profile.form.skills') as string}
-          error={errors.workExperience?.skills?.message}
+          message={errors.workExperience?.skills?.message}
         >
           <Controller
             name="workExperience.skills"
@@ -608,8 +635,9 @@ const FormProfilePage = () => {
     return (
       <div className={`space-y-6 ${activeTab !== 'language' ? 'hidden' : ''}`}>
         <FormField
+          id="language.englishProficiency"
           label={t('profile.form.englishProficiency') as string}
-          error={errors.language?.englishProficiency?.message}
+          message={errors.language?.englishProficiency?.message}
         >
           <Controller
             name="language.englishProficiency"
@@ -627,8 +655,9 @@ const FormProfilePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
+            id="language.englishTest"
             label={t('profile.form.englishTest') as string}
-            error={errors.language?.englishTest?.message}
+            message={errors.language?.englishTest?.message}
           >
             <Controller
               name="language.englishTest"
@@ -646,8 +675,9 @@ const FormProfilePage = () => {
 
           {watch('language.englishTest') !== 'none' && (
             <FormField
+              id="language.englishTestScore"
               label={t('profile.form.englishTestScore') as string}
-              error={errors.language?.englishTestScore?.message}
+              message={errors.language?.englishTestScore?.message}
             >
               <Controller
                 name="language.englishTestScore"
@@ -661,8 +691,9 @@ const FormProfilePage = () => {
         </div>
 
         <FormField
+          id="language.frenchProficiency"
           label={t('profile.form.frenchProficiency') as string}
-          error={errors.language?.frenchProficiency?.message}
+          message={errors.language?.frenchProficiency?.message}
         >
           <Controller
             name="language.frenchProficiency"
@@ -680,8 +711,9 @@ const FormProfilePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
+            id="language.frenchTest"
             label={t('profile.form.frenchTest') as string}
-            error={errors.language?.frenchTest?.message}
+            message={errors.language?.frenchTest?.message}
           >
             <Controller
               name="language.frenchTest"
@@ -699,8 +731,9 @@ const FormProfilePage = () => {
 
           {watch('language.frenchTest') !== 'none' && (
             <FormField
+              id="language.frenchTestScore"
               label={t('profile.form.frenchTestScore') as string}
-              error={errors.language?.frenchTestScore?.message}
+              message={errors.language?.frenchTestScore?.message}
             >
               <Controller
                 name="language.frenchTestScore"
@@ -714,8 +747,9 @@ const FormProfilePage = () => {
         </div>
 
         <FormField
+          id="language.otherLanguages"
           label={t('profile.form.otherLanguages') as string}
-          error={errors.language?.otherLanguages?.message}
+          message={errors.language?.otherLanguages?.message}
         >
           <Controller
             name="language.otherLanguages"
@@ -742,8 +776,9 @@ const FormProfilePage = () => {
     return (
       <div className={`space-y-6 ${activeTab !== 'immigration' ? 'hidden' : ''}`}>
         <FormField
+          id="immigration.targetCountry"
           label={t('profile.form.targetCountry') as string}
-          error={errors.immigration?.targetCountry?.message}
+          message={errors.immigration?.targetCountry?.message}
         >
           <Controller
             name="immigration.targetCountry"
@@ -755,8 +790,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="immigration.targetProvince"
           label={t('profile.form.targetProvince') as string}
-          error={errors.immigration?.targetProvince?.message}
+          message={errors.immigration?.targetProvince?.message}
         >
           <Controller
             name="immigration.targetProvince"
@@ -768,8 +804,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="immigration.immigrationPurpose"
           label={t('profile.form.immigrationPurpose') as string}
-          error={errors.immigration?.immigrationPurpose?.message}
+          message={errors.immigration?.immigrationPurpose?.message}
         >
           <Controller
             name="immigration.immigrationPurpose"
@@ -787,8 +824,9 @@ const FormProfilePage = () => {
 
         <div className="space-y-4">
           <FormField
+            id="immigration.hasJobOffer"
             label={t('profile.form.hasJobOffer') as string}
-            error={errors.immigration?.hasJobOffer?.message}
+            message={errors.immigration?.hasJobOffer?.message}
           >
             <Controller
               name="immigration.hasJobOffer"
@@ -796,8 +834,8 @@ const FormProfilePage = () => {
               render={({ field }) => (
                 <div className="flex items-center space-x-2">
                   <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
+                    checked={field.value || false}
+                    onCheckedChange={(checked) => field.onChange(checked)}
                     id="hasJobOffer"
                   />
                   <label htmlFor="hasJobOffer" className="text-sm">
@@ -809,8 +847,9 @@ const FormProfilePage = () => {
           </FormField>
 
           <FormField
+            id="immigration.hasFamilyInTargetCountry"
             label={t('profile.form.hasFamilyInTargetCountry') as string}
-            error={errors.immigration?.hasFamilyInTargetCountry?.message}
+            message={errors.immigration?.hasFamilyInTargetCountry?.message}
           >
             <Controller
               name="immigration.hasFamilyInTargetCountry"
@@ -818,8 +857,8 @@ const FormProfilePage = () => {
               render={({ field }) => (
                 <div className="flex items-center space-x-2">
                   <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
+                    checked={field.value || false}
+                    onCheckedChange={(checked) => field.onChange(checked)}
                     id="hasFamilyInTargetCountry"
                   />
                   <label htmlFor="hasFamilyInTargetCountry" className="text-sm">
@@ -832,8 +871,9 @@ const FormProfilePage = () => {
         </div>
 
         <FormField
+          id="immigration.preferredImmigrationProgram"
           label={t('profile.form.preferredImmigrationProgram') as string}
-          error={errors.immigration?.preferredImmigrationProgram?.message}
+          message={errors.immigration?.preferredImmigrationProgram?.message}
         >
           <Controller
             name="immigration.preferredImmigrationProgram"
@@ -845,8 +885,9 @@ const FormProfilePage = () => {
         </FormField>
 
         <FormField
+          id="immigration.additionalInformation"
           label={t('profile.form.additionalInformation') as string}
-          error={errors.immigration?.additionalInformation?.message}
+          message={errors.immigration?.additionalInformation?.message}
         >
           <Controller
             name="immigration.additionalInformation"
