@@ -729,6 +729,10 @@ Based on analysis of the frontend code and structure, this document outlines the
      - POST /api/consultant/:consultantId/schedule/appointment-requests/:requestId/reject - 拒绝预约请求
      - POST /api/consultant/:consultantId/schedule/appointment-requests/:requestId/reschedule - 重新安排预约
      - GET /api/consultant/:consultantId/schedule/stats - 获取日程统计数据
+     - GET /api/consultant/:consultantId/schedule/available-slots - 获取可用时间段
+     - POST /api/consultant/:consultantId/schedule/block-time - 阻塞时间段
+     - POST /api/consultant/:consultantId/schedule/events/:eventId/reminders - 添加事件提醒
+     - DELETE /api/consultant/:consultantId/schedule/events/:eventId/reminders/:reminderId - 删除事件提醒
 
 ## 15. Technical Requirements
 
