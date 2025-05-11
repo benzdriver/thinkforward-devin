@@ -199,6 +199,69 @@ export function useUpdateProfile(userId: string) {
     }
   );
 }
+
+// 获取用户档案（对话模式）
+export function useGetProfileConversation(userId: string) {
+  return useApiQuery<ProfileConversationData>(
+    ['profile', userId, 'conversation'],
+    `/profile/${userId}/conversation`
+  );
+}
+
+// 更新用户档案（对话模式）
+export function useUpdateProfileConversation(userId: string) {
+  return useApiPatchMutation<ProfileConversationData, Partial<ProfileConversationData>>(
+    `/profile/${userId}/conversation`,
+    {
+      ...optimisticUpdate<ProfileConversationData, Partial<ProfileConversationData>>(
+        ['profile', userId, 'conversation'],
+        (oldData, newData) => ({
+          ...oldData,
+          ...newData,
+        })
+      ),
+    }
+  );
+}
+
+// 获取用户档案（表单模式）
+export function useGetProfileForm(userId: string) {
+  return useApiQuery<ProfileFormData>(
+    ['profile', userId, 'form'],
+    `/profile/${userId}/form`
+  );
+}
+
+// 更新用户档案（表单模式）
+export function useUpdateProfileForm(userId: string) {
+  return useApiPatchMutation<ProfileFormData, Partial<ProfileFormData>>(
+    `/profile/${userId}/form`,
+    {
+      ...optimisticUpdate<ProfileFormData, Partial<ProfileFormData>>(
+        ['profile', userId, 'form'],
+        (oldData, newData) => ({
+          ...oldData,
+          ...newData,
+        })
+      ),
+    }
+  );
+}
+
+// 切换档案模式
+export function useSwitchProfileMode(userId: string) {
+  return useApiMutation<{ mode: 'conversation' | 'form' }, { mode: 'conversation' | 'form' }>(
+    `/profile/${userId}/switch-mode`,
+    {
+      onSuccess: () => {
+        // 切换成功后使相关查询失效，触发重新获取
+        queryClient.invalidateQueries(['profile', userId]);
+        queryClient.invalidateQueries(['profile', userId, 'conversation']);
+        queryClient.invalidateQueries(['profile', userId, 'form']);
+      }
+    }
+  );
+}
 ```
 
 ## 使用示例
@@ -334,6 +397,128 @@ function PersonalInfoForm({ userId }) {
 
 ```
 GET /api/users/123?include=profile,posts
+```
+
+## 模式切换功能的API集成
+
+ThinkForward AI平台支持两种资料收集模式：对话式和表单式。前端实现了模式切换组件，允许用户在这两种模式之间无缝切换。以下是后端需要支持的API集成点：
+
+### 1. 数据结构
+
+两种模式使用相同的基础数据结构，但有不同的表示方式：
+
+```typescript
+// 基础档案数据结构
+interface ProfileData {
+  personalInfo: {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    nationality: string;
+    // 其他个人信息字段
+  };
+  education: {
+    highestDegree: string;
+    institution: string;
+    graduationYear: number;
+    // 其他教育信息字段
+  };
+  workExperience: {
+    occupation: string;
+    yearsOfExperience: number;
+    // 其他工作经验字段
+  };
+  language: {
+    englishProficiency: string;
+    frenchProficiency: string;
+    // 其他语言能力字段
+  };
+  immigration: {
+    targetCountry: string;
+    immigrationPurpose: string;
+    // 其他移民信息字段
+  };
+}
+
+// 对话模式特有数据
+interface ProfileConversationData extends ProfileData {
+  conversation: {
+    messages: Array<{
+      id: string;
+      role: 'user' | 'assistant';
+      content: string;
+      timestamp: string;
+    }>;
+    extractedData: Record<string, any>; // 从对话中提取的结构化数据
+  };
+}
+
+// 表单模式特有数据
+interface ProfileFormData extends ProfileData {
+  form: {
+    completionStatus: Record<string, boolean>; // 各部分完成状态
+    validationErrors: Record<string, string[]>; // 验证错误信息
+    lastUpdated: string; // 最后更新时间
+  };
+}
+```
+
+### 2. API端点
+
+后端需要提供以下API端点支持模式切换功能：
+
+1. **获取用户档案**：
+   - `GET /api/profile/:userId` - 获取完整档案数据
+   - `GET /api/profile/:userId/conversation` - 获取对话模式数据
+   - `GET /api/profile/:userId/form` - 获取表单模式数据
+
+2. **更新用户档案**：
+   - `PATCH /api/profile/:userId` - 更新完整档案数据
+   - `PATCH /api/profile/:userId/conversation` - 更新对话模式数据
+   - `PATCH /api/profile/:userId/form` - 更新表单模式数据
+   - `POST /api/profile/:userId/conversation/messages` - 添加新对话消息
+
+3. **模式切换**：
+   - `POST /api/profile/:userId/switch-mode` - 切换档案模式
+     - 请求体：`{ mode: 'conversation' | 'form' }`
+     - 响应：`{ mode: 'conversation' | 'form', status: 'success' }`
+
+### 3. 数据映射逻辑
+
+后端需要实现以下数据映射逻辑：
+
+1. **对话到表单映射**：
+   - 从对话内容中提取结构化数据
+   - 使用NLP技术识别关键信息
+   - 将提取的数据映射到表单字段
+
+2. **表单到对话映射**：
+   - 将表单数据转换为自然语言描述
+   - 生成对话历史记录，反映表单中填写的信息
+
+### 4. 状态保持机制
+
+后端需要确保：
+
+1. 两种模式之间的数据同步
+2. 模式切换时不丢失用户数据
+3. 提供数据版本控制，处理可能的冲突
+
+### 5. 错误处理
+
+模式切换相关的错误响应应包含：
+
+```json
+{
+  "error": {
+    "code": "MODE_SWITCH_ERROR",
+    "message": "模式切换失败",
+    "details": {
+      "reason": "数据映射错误",
+      "fields": ["personalInfo.dateOfBirth"]
+    }
+  }
+}
 ```
 
 通过以上API客户端架构，ThinkForward AI前端应用能够高效地与后端API交互，提供流畅的用户体验和可靠的数据流。
