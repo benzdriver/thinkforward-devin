@@ -69,7 +69,7 @@ Based on analysis of the frontend code and structure, this document outlines the
 - PATCH /api/profile/:userId/language-skills
 - PATCH /api/profile/:userId/immigration-info
 
-## 3. Express Entry Module (Already Implemented)
+## 3. Express Entry Module
 
 ### Models
 - **ExpressEntryProfile Model**
@@ -148,24 +148,24 @@ Based on analysis of the frontend code and structure, this document outlines the
 - GET /api/assessment/:id/result
 - GET /api/assessment/user/:userId
 
-## 5. Pathways Module (Already Implemented)
+## 5. Pathways Module
 
 ### Models
 - **Pathway Model**
   - Fields: name, code, country, category, description, eligibilityCriteria, processingTime, applicationFee, requiredDocuments, steps, officialLink, isActive, popularity, successRate, translations, metadata
   - Methods: getTranslation, checkEligibility
 
-- **PathwayApplication Model** (Already Implemented)
+- **PathwayApplication Model**
   - Fields: userId, pathwayId, status, submittedAt, lastUpdatedAt, notes, documents, timeline, feedback, metadata
   - Methods: updateStatus, submit, addDocument, updateDocumentStatus, addFeedback
   - Relationships: Belongs to User, Belongs to Pathway
 
-- **Consultant Model** (Already Implemented)
+- **Consultant Model**
   - Fields: name, email, phone, profileImage, specialization, countries, experience, languages, credentials, rating, reviews, availability, fees, bio, website, socialMedia, location, isVerified, isActive, metadata
   - Methods: addReview, updateAvailability, findBySpecialization, findByLanguage, findByLocation
   - Relationships: Has many ConsultantMatches
 
-- **ConsultantMatch Model** (Already Implemented)
+- **ConsultantMatch Model**
   - Fields: userId, consultantId, pathwayId, status, matchScore, requestDetails, consultantResponse, appointment, communication, feedback, createdAt, updatedAt, metadata
   - Methods: updateStatus, addConsultantResponse, scheduleAppointment, addMessage, addUserFeedback, addConsultantFeedback, findByUser, findByConsultant, findByPathway
   - Relationships: Belongs to User, Belongs to Consultant, Belongs to Pathway
@@ -232,7 +232,144 @@ Based on analysis of the frontend code and structure, this document outlines the
 - **errorMiddleware**
   - handleErrors: Global error handling
 
-## 7. Database Schema
+## 7. Form Generation Module
+
+### Models
+- **Form Model**
+  - Fields: userId, formType, formData, status, validationResults, generatedDate, lastUpdated, downloadUrl, version
+  - Methods: getValidationErrors, getValidationWarnings, hasValidationErrors, addValidationResult, clearValidationResults
+
+- **FormType Model**
+  - Fields: id, name, description, category, country, templateId, isActive, metadata
+  - Methods: findActiveFormTypes, findByCategory, findByCountry
+
+- **FormTemplate Model**
+  - Fields: id, name, structure, version, validationRules, pdfTemplate, fieldMappings, isActive, metadata
+  - Methods: getStructure, getValidationRules, getFieldMappings, findByTemplateId, findLatestVersion
+
+### Controllers
+- **formController**
+  - getFormTypes: List available form types
+  - getUserForms: Get user's forms
+  - getForm: Get specific form
+  - generateForm: Create new form
+  - updateForm: Update entire form
+  - updateFormField: Update specific form field
+  - getFormDownload: Get form download link
+
+### Services
+- **formService**
+  - getFormTypes: Get form types with filtering
+  - getUserForms: Get forms by userId
+  - getFormById: Get form by ID
+  - generateForm: Create new form
+  - updateForm: Update form data
+  - updateFormField: Update specific form field
+  - getFormDownloadUrl: Generate form download URL
+
+- **formValidationService**
+  - validateForm: Validate form data against rules
+  - validateField: Validate specific field
+  - getValidationRules: Get validation rules for form type
+
+- **pdfGenerationService**
+  - generatePdf: Generate PDF from form data
+  - savePdfAndGetUrl: Save PDF and return URL
+
+- **dataMappingService**
+  - mapUserDataToForm: Map user profile data to form fields
+  - getNestedValue: Get value from nested object
+  - setNestedValue: Set value in nested object
+  - applyTransform: Apply transformation to field value
+
+### Routes
+- GET /api/forms/types - Get form types
+- GET /api/forms/:userId - Get user's forms
+- GET /api/forms/:userId/:formId - Get specific form
+- POST /api/forms/:userId/generate - Generate new form
+- PUT /api/forms/:userId/:formId - Update form
+- PATCH /api/forms/:userId/:formId/field - Update form field
+- GET /api/forms/:userId/:formId/download - Get form download
+
+## 8. Consultant Matching Module
+
+### Models
+- **Consultant Model** (扩展现有模型)
+  - 新增字段: avatar, title, company, specialties, languages, experience, rating, successRate, price, availability, bio, education, certifications, reviewCount, reviews
+  - 新增方法: getAvailability, getReviews, updateAvailability, addReview
+
+- **ConsultantReview Model**
+  - Fields: consultantId, userId, userName, rating, comment, date, isVerified, isActive
+  - Methods: verifyReview, findByConsultant, findByUser
+
+- **ConsultantAvailability Model**
+  - Fields: consultantId, date, slots, isRecurring, recurringPattern, createdAt, updatedAt
+  - Methods: findAvailableSlots, addSlot, removeSlot, updateSlot
+
+- **MatchResult Model**
+  - Fields: userId, consultantId, score, matchReasons, createdAt
+  - Methods: findByUser, findByConsultant
+
+- **Booking Model**
+  - Fields: userId, consultantId, date, startTime, endTime, type, status, topic, questions, notes, paymentStatus, paymentAmount, paymentCurrency, meetingLink, createdAt, updatedAt
+  - Methods: updateStatus, cancel, reschedule, addMeetingLink, findByUser, findByConsultant
+
+### Controllers
+- **consultantController**
+  - getConsultants: Get consultants with filtering
+  - getConsultant: Get consultant by ID
+  - getConsultantAvailability: Get consultant availability
+  - getConsultantReviews: Get consultant reviews
+  - matchConsultants: Match consultants to user
+  - updateConsultant: Update consultant (admin only)
+  - addConsultantReview: Add review for consultant
+
+- **bookingController**
+  - getUserBookings: Get user's bookings
+  - getBooking: Get booking by ID
+  - createBooking: Create new booking
+  - updateBooking: Update booking
+  - cancelBooking: Cancel booking
+  - getBookingStatus: Check booking status
+
+### Services
+- **consultantService**
+  - getConsultants: Get consultants with filtering
+  - getConsultantById: Get consultant by ID
+  - getConsultantAvailability: Get consultant availability
+  - getConsultantReviews: Get consultant reviews
+  - updateConsultant: Update consultant information
+  - addConsultantReview: Add review for consultant
+
+- **consultantMatchingService**
+  - matchConsultantsToUser: Match consultants based on user profile
+  - calculateMatchScore: Calculate match score
+  - generateMatchReasons: Generate match reasons
+  - saveMatchResults: Save match results
+
+- **bookingService**
+  - getUserBookings: Get bookings by userId
+  - getBookingById: Get booking by ID
+  - createBooking: Create new booking
+  - updateBooking: Update booking details
+  - cancelBooking: Cancel booking
+  - checkAvailability: Check slot availability
+  - sendBookingNotifications: Send booking notifications
+
+### Routes
+- GET /api/consultants - Get consultants with filtering
+- GET /api/consultants/:consultantId - Get consultant by ID
+- GET /api/consultants/:consultantId/availability - Get consultant availability
+- GET /api/consultants/:consultantId/reviews - Get consultant reviews
+- POST /api/consultants/match - Match consultants to user
+- POST /api/consultants/:consultantId/reviews - Add review for consultant
+- GET /api/bookings - Get user's bookings
+- GET /api/bookings/:bookingId - Get booking by ID
+- POST /api/bookings - Create new booking
+- PUT /api/bookings/:bookingId - Update booking
+- POST /api/bookings/:bookingId/cancel - Cancel booking
+
+## 9. Database Schema
 
 ### Collections/Tables
 - Users
@@ -245,9 +382,15 @@ Based on analysis of the frontend code and structure, this document outlines the
 - Pathways
 - PathwayApplications
 - Consultants
-- ConsultantMatches
+- ConsultantReviews
+- ConsultantAvailability
+- MatchResults
+- Bookings
+- Forms
+- FormTypes
+- FormTemplates
 
-## 8. Implementation Status
+## 10. Implementation Status
 
 ### 已完成模块
 
@@ -258,7 +401,7 @@ Based on analysis of the frontend code and structure, this document outlines the
 5. ✅ Pathways Module (Immigration options)
    - ✅ Pathway Model
    - ✅ PathwayApplication Model
-   - ✅ Consultant Model
+   - ✅ Consultant Model (基础版本)
    - ✅ ConsultantMatch Model
 6. ✅ Utilities and Middleware (Support components)
    - ✅ Error Handler
@@ -267,21 +410,34 @@ Based on analysis of the frontend code and structure, this document outlines the
    - ✅ Auth Middleware
    - ✅ Locale Middleware
    - ✅ Error Middleware
+7. ✅ Form Generation Module
+   - ✅ Form Model
+   - ✅ FormType Model
+   - ✅ FormTemplate Model
+   - ✅ Form Service
+   - ✅ Form Validation Service
+   - ✅ PDF Generation Service
+   - ✅ Data Mapping Service
+   - ✅ Form Controller
+   - ✅ Form Routes
 
 ### 待实现模块
 
-7. ⬜ Form Generation Module (新增)
-   - ⬜ Form Model
-   - ⬜ FormType Model
-   - ⬜ FormTemplate Model
-   - ⬜ Form Service
-   - ⬜ Form Validation Service
-   - ⬜ PDF Generation Service
-   - ⬜ Data Mapping Service
-   - ⬜ Form Controller
-   - ⬜ Form Routes
+8. ⬜ Consultant Matching Module (新增)
+   - ⬜ Consultant Model (扩展)
+   - ⬜ ConsultantReview Model
+   - ⬜ ConsultantAvailability Model
+   - ⬜ MatchResult Model
+   - ⬜ Booking Model
+   - ⬜ Consultant Service
+   - ⬜ Consultant Matching Service
+   - ⬜ Booking Service
+   - ⬜ Consultant Controller
+   - ⬜ Booking Controller
+   - ⬜ Consultant Routes
+   - ⬜ Booking Routes
 
-## 9. Technical Requirements
+## 11. Technical Requirements
 
 - Node.js with Express framework
 - MongoDB database with Mongoose ODM
