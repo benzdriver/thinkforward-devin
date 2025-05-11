@@ -14,6 +14,7 @@ const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const expressEntryRoutes = require('./routes/canada/expressEntryRoutes');
 const assessmentRoutes = require('./routes/assessment/assessmentRoutes');
+const pathwayRoutes = require('./routes/pathway/pathwayRoutes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/canada/express-entry', expressEntryRoutes);
 app.use('/api/assessment', assessmentRoutes);
+app.use('/api/pathway', pathwayRoutes);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
