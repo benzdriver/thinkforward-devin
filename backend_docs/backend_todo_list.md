@@ -557,7 +557,58 @@ Based on analysis of the frontend code and structure, this document outlines the
      - PATCH /api/appointments/:appointmentId/confirm - 确认预约
      - PATCH /api/appointments/:appointmentId/cancel - 取消预约
 
-## 12. Technical Requirements
+## 12. 顾问客户管理模块 (新增)
+   - ⬜ Models
+     - ⬜ Client Model
+       - 字段: id, userId, firstName, lastName, displayName, email, phone, avatar, status, assignedConsultantId, lastContactDate, source, createdAt, updatedAt
+     - ⬜ ClientTag Model
+       - 字段: id, clientId, tag
+     - ⬜ ClientNote Model
+       - 字段: id, clientId, consultantId, content, createdAt, updatedAt
+     - ⬜ ClientActivity Model
+       - 字段: id, clientId, consultantId, type, description, timestamp, relatedId, relatedType, createdAt
+   - ⬜ Controllers
+     - ⬜ consultantClientController
+       - getClients: 获取客户列表
+       - getClientStats: 获取客户统计数据
+       - getClientById: 获取单个客户详情
+       - createClient: 创建新客户
+       - updateClient: 更新客户信息
+       - deleteClient: 删除客户
+       - addClientTag: 添加客户标签
+       - removeClientTag: 移除客户标签
+       - addClientNote: 添加客户笔记
+       - getClientNotes: 获取客户笔记
+       - addClientActivity: 记录客户活动
+       - getClientActivities: 获取客户活动
+   - ⬜ Services
+     - ⬜ consultantClientService
+       - getClients: 获取客户列表
+       - getClientStats: 获取客户统计数据
+       - getClientById: 获取单个客户详情
+       - createClient: 创建新客户
+       - updateClient: 更新客户信息
+       - deleteClient: 删除客户
+       - addClientTag: 添加客户标签
+       - removeClientTag: 移除客户标签
+       - addClientNote: 添加客户笔记
+       - getClientNotes: 获取客户笔记
+       - addClientActivity: 记录客户活动
+       - getClientActivities: 获取客户活动
+   - ⬜ Routes
+     - GET /api/consultant/:consultantId/clients - 获取客户列表
+     - GET /api/consultant/:consultantId/clients/stats - 获取客户统计数据
+     - GET /api/consultant/:consultantId/clients/:clientId - 获取单个客户详情
+     - POST /api/consultant/:consultantId/clients - 创建新客户
+     - PATCH /api/consultant/:consultantId/clients/:clientId - 更新客户信息
+     - DELETE /api/consultant/:consultantId/clients/:clientId - 删除客户
+     - POST /api/consultant/:consultantId/clients/:clientId/tags - 添加客户标签
+     - DELETE /api/consultant/:consultantId/clients/:clientId/tags/:tag - 移除客户标签
+     - POST /api/consultant/:consultantId/clients/:clientId/notes - 添加客户笔记
+     - GET /api/consultant/:consultantId/clients/:clientId/notes - 获取客户笔记
+     - GET /api/consultant/:consultantId/clients/:clientId/activities - 获取客户活动
+
+## 13. Technical Requirements
 
 - Node.js with Express framework
 - MongoDB database with Mongoose ODM
