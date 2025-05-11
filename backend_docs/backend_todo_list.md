@@ -420,22 +420,33 @@ Based on analysis of the frontend code and structure, this document outlines the
    - ✅ Data Mapping Service
    - ✅ Form Controller
    - ✅ Form Routes
+8. ✅ Consultant Matching Module
+   - ✅ Consultant Model (扩展)
+   - ✅ ConsultantReview Model
+   - ✅ ConsultantAvailability Model
+   - ✅ MatchResult Model
+   - ✅ Booking Model
+   - ✅ Consultant Service
+   - ✅ Consultant Matching Service
+   - ✅ Booking Service
+   - ✅ Consultant Controller
+   - ✅ Booking Controller
+   - ✅ Consultant Routes
+   - ✅ Booking Routes
 
 ### 待实现模块
 
-8. ⬜ Consultant Matching Module (新增)
-   - ⬜ Consultant Model (扩展)
-   - ⬜ ConsultantReview Model
-   - ⬜ ConsultantAvailability Model
-   - ⬜ MatchResult Model
-   - ⬜ Booking Model
-   - ⬜ Consultant Service
-   - ⬜ Consultant Matching Service
-   - ⬜ Booking Service
-   - ⬜ Consultant Controller
-   - ⬜ Booking Controller
-   - ⬜ Consultant Routes
-   - ⬜ Booking Routes
+9. ⬜ Profile Data Structure Alignment (新增)
+   - ⬜ 更新 Profile Model 以匹配前端数据结构
+     - ⬜ 添加 passportNumber 字段到 personalInfo
+     - ⬜ 添加 email 字段到 personalInfo
+     - ⬜ 修改 educationInfo 从数组改为对象结构
+     - ⬜ 修改 workExperience 从数组改为对象结构
+     - ⬜ 修改 languageSkills 从数组改为对象结构
+     - ⬜ 更新 immigrationInfo 字段以匹配前端结构
+   - ⬜ 更新 profileController 以处理新的数据结构
+   - ⬜ 更新 profileService 以支持新的数据结构
+   - ⬜ 更新 profileRoutes 中的验证规则
 
 ## 11. Technical Requirements
 
