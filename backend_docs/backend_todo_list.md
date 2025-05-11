@@ -448,6 +448,79 @@ Based on analysis of the frontend code and structure, this document outlines the
    - ⬜ 更新 profileService 以支持新的数据结构
    - ⬜ 更新 profileRoutes 中的验证规则
 
+10. ⬜ Profile Settings Module (新增)
+    - ⬜ Models
+      - ⬜ AccountSettings Model
+        - 字段: userId, email, emailVerified, phone, phoneVerified, language, timezone, dateFormat, timeFormat, currency, twoFactorEnabled, twoFactorMethod, updatedAt
+      - ⬜ NotificationSettings Model
+        - 字段: userId, email (marketing, updates, security, reminders), push (messages, taskUpdates, appointments, documentUpdates), sms (security, appointments, importantUpdates), updatedAt
+      - ⬜ PrivacySettings Model
+        - 字段: userId, profileVisibility, activityVisibility, documentVisibility, shareDataWithPartners, allowPersonalizedRecommendations, allowAnonymousDataCollection, allowSearchEngineIndexing, cookies, dataSharing, updatedAt
+      - ⬜ SecuritySettings Model
+        - 字段: userId, twoFactorEnabled, twoFactorMethod, loginAlertsEnabled, activeSessions, lastPasswordChange, updatedAt
+    - ⬜ Controllers
+      - ⬜ profileSettingsController
+        - getUserProfile: 获取用户个人资料
+        - updateUserProfile: 更新用户个人资料
+        - uploadAvatar: 上传头像
+        - deleteAvatar: 删除头像
+        - getAccountSettings: 获取账户设置
+        - updateAccountSettings: 更新账户设置
+        - sendEmailVerification: 发送邮箱验证
+        - sendPhoneVerification: 发送手机验证
+        - getNotificationSettings: 获取通知设置
+        - updateNotificationSettings: 更新通知设置
+        - getPrivacySettings: 获取隐私设置
+        - updatePrivacySettings: 更新隐私设置
+        - getSecuritySettings: 获取安全设置
+        - updateSecuritySettings: 更新安全设置
+        - revokeSession: 撤销会话
+        - revokeAllSessions: 撤销所有会话
+        - changePassword: 修改密码
+        - deactivateAccount: 停用账户
+        - deleteAccount: 删除账户
+    - ⬜ Services
+      - ⬜ profileSettingsService
+        - getUserProfile: 获取用户个人资料
+        - updateUserProfile: 更新用户个人资料
+        - uploadAvatar: 上传头像
+        - deleteAvatar: 删除头像
+        - getAccountSettings: 获取账户设置
+        - updateAccountSettings: 更新账户设置
+        - sendEmailVerification: 发送邮箱验证
+        - sendPhoneVerification: 发送手机验证
+        - getNotificationSettings: 获取通知设置
+        - updateNotificationSettings: 更新通知设置
+        - getPrivacySettings: 获取隐私设置
+        - updatePrivacySettings: 更新隐私设置
+        - getSecuritySettings: 获取安全设置
+        - updateSecuritySettings: 更新安全设置
+        - revokeSession: 撤销会话
+        - revokeAllSessions: 撤销所有会话
+        - changePassword: 修改密码
+        - deactivateAccount: 停用账户
+        - deleteAccount: 删除账户
+    - ⬜ Routes
+      - GET /api/profile-settings/:userId/profile - 获取用户个人资料
+      - PUT /api/profile-settings/:userId/profile - 更新用户个人资料
+      - POST /api/profile-settings/:userId/avatar - 上传头像
+      - DELETE /api/profile-settings/:userId/avatar - 删除头像
+      - GET /api/profile-settings/:userId/account - 获取账户设置
+      - PUT /api/profile-settings/:userId/account - 更新账户设置
+      - POST /api/profile-settings/:userId/verify-email - 发送邮箱验证
+      - POST /api/profile-settings/:userId/verify-phone - 发送手机验证
+      - GET /api/profile-settings/:userId/notifications - 获取通知设置
+      - PUT /api/profile-settings/:userId/notifications - 更新通知设置
+      - GET /api/profile-settings/:userId/privacy - 获取隐私设置
+      - PUT /api/profile-settings/:userId/privacy - 更新隐私设置
+      - GET /api/profile-settings/:userId/security - 获取安全设置
+      - PUT /api/profile-settings/:userId/security - 更新安全设置
+      - POST /api/profile-settings/:userId/sessions/:sessionId/revoke - 撤销会话
+      - POST /api/profile-settings/:userId/sessions/revoke-all - 撤销所有会话
+      - POST /api/profile-settings/:userId/change-password - 修改密码
+      - POST /api/profile-settings/:userId/deactivate - 停用账户
+      - POST /api/profile-settings/:userId/delete - 删除账户
+
 ## 11. Technical Requirements
 
 - Node.js with Express framework
