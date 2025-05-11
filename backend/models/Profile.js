@@ -30,6 +30,14 @@ const profileSchema = new mongoose.Schema({
       type: String,
       trim: true
     },
+    passportNumber: {
+      type: String,
+      trim: true
+    },
+    email: {
+      type: String,
+      trim: true
+    },
     address: {
       street: String,
       city: String,
@@ -42,7 +50,7 @@ const profileSchema = new mongoose.Schema({
       trim: true
     }
   },
-  educationInfo: [{
+  educationInfo: {
     highestDegree: {
       type: String,
       enum: ['high_school', 'associate', 'bachelor', 'master', 'doctorate', 'other'],
@@ -53,124 +61,69 @@ const profileSchema = new mongoose.Schema({
       trim: true
     },
     graduationYear: {
-      type: Number
+      type: String,
+      trim: true
     },
     fieldOfStudy: {
       type: String,
       trim: true
-    },
-    country: {
+    }
+  },
+  workExperience: {
+    occupation: {
       type: String,
       trim: true
     },
-    completed: {
-      type: Boolean,
-      default: true
+    yearsOfExperience: {
+      type: Number,
+      default: 0
     },
-    additionalInfo: {
+    currentEmployer: {
+      type: String,
+      trim: true
+    },
+    jobTitle: {
       type: String,
       trim: true
     }
-  }],
-  workExperience: [{
-    company: {
+  },
+  languageSkills: {
+    englishProficiency: {
+      type: String,
+      enum: ['beginner', 'intermediate', 'advanced', 'native', 'none'],
+      default: 'none'
+    },
+    frenchProficiency: {
+      type: String,
+      enum: ['beginner', 'intermediate', 'advanced', 'native', 'none'],
+      default: 'none'
+    },
+    otherLanguages: [{
+      type: String,
+      trim: true
+    }]
+  },
+  immigrationInfo: {
+    desiredCountry: {
       type: String,
       trim: true
     },
-    position: {
+    desiredProvince: {
       type: String,
       trim: true
     },
-    startDate: {
-      type: Date
+    immigrationPath: {
+      type: String,
+      trim: true
     },
-    endDate: {
-      type: Date
-    },
-    isCurrentJob: {
+    hasJobOffer: {
       type: Boolean,
       default: false
     },
-    description: {
-      type: String,
-      trim: true
-    },
-    country: {
-      type: String,
-      trim: true
-    },
-    nocCode: {
-      type: String,
-      trim: true
+    hasFamilyInCountry: {
+      type: Boolean,
+      default: false
     }
-  }],
-  languageSkills: [{
-    language: {
-      type: String,
-      trim: true
-    },
-    proficiencyLevel: {
-      type: String,
-      enum: ['beginner', 'intermediate', 'advanced', 'native'],
-      default: 'intermediate'
-    },
-    readingScore: {
-      type: Number,
-      min: 0,
-      max: 12
-    },
-    writingScore: {
-      type: Number,
-      min: 0,
-      max: 12
-    },
-    speakingScore: {
-      type: Number,
-      min: 0,
-      max: 12
-    },
-    listeningScore: {
-      type: Number,
-      min: 0,
-      max: 12
-    },
-    testType: {
-      type: String,
-      enum: ['ielts', 'celpip', 'tef', 'tcf', 'other'],
-      default: 'ielts'
-    },
-    testDate: {
-      type: Date
-    }
-  }],
-  immigrationInfo: {
-    interestedPrograms: [{
-      type: String,
-      trim: true
-    }],
-    preferredDestination: {
-      type: String,
-      trim: true
-    },
-    immigrationStatus: {
-      type: String,
-      enum: ['citizen', 'permanent_resident', 'work_permit', 'study_permit', 'visitor', 'none'],
-      default: 'none'
-    },
-    previousApplications: [{
-      program: {
-        type: String,
-        trim: true
-      },
-      year: {
-        type: Number
-      },
-      status: {
-        type: String,
-        enum: ['approved', 'rejected', 'in_progress', 'withdrawn'],
-        default: 'in_progress'
-      }
-    }]
   },
   completionStatus: {
     personalInfo: {
@@ -223,42 +176,32 @@ profileSchema.methods.updateCompletionStatus = function() {
     this.personalInfo.firstName &&
     this.personalInfo.lastName &&
     this.personalInfo.dateOfBirth &&
-    this.personalInfo.nationality &&
-    this.personalInfo.countryOfResidence
+    this.personalInfo.nationality
   );
   
   this.completionStatus.educationInfo = !!(
-    this.educationInfo.length > 0 &&
-    this.educationInfo.every(edu => 
-      edu.highestDegree && 
-      edu.institution && 
-      edu.graduationYear && 
-      edu.fieldOfStudy
-    )
+    this.educationInfo.highestDegree &&
+    this.educationInfo.institution &&
+    this.educationInfo.graduationYear &&
+    this.educationInfo.fieldOfStudy
   );
   
   this.completionStatus.workExperience = !!(
-    this.workExperience.length > 0 &&
-    this.workExperience.every(work => 
-      work.company && 
-      work.position && 
-      work.startDate && 
-      (work.isCurrentJob || work.endDate)
-    )
+    this.workExperience.occupation &&
+    this.workExperience.yearsOfExperience &&
+    this.workExperience.currentEmployer &&
+    this.workExperience.jobTitle
   );
   
   this.completionStatus.languageSkills = !!(
-    this.languageSkills.length > 0 &&
-    this.languageSkills.every(lang => 
-      lang.language && 
-      lang.proficiencyLevel
-    )
+    this.languageSkills.englishProficiency &&
+    this.languageSkills.englishProficiency !== 'none'
   );
   
   this.completionStatus.immigrationInfo = !!(
-    this.immigrationInfo.interestedPrograms.length > 0 &&
-    this.immigrationInfo.preferredDestination &&
-    this.immigrationInfo.immigrationStatus
+    this.immigrationInfo.desiredCountry &&
+    this.immigrationInfo.desiredProvince &&
+    this.immigrationInfo.immigrationPath
   );
 };
 
