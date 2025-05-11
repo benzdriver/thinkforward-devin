@@ -13,6 +13,7 @@ dotenv.config();
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const expressEntryRoutes = require('./routes/canada/expressEntryRoutes');
+const assessmentRoutes = require('./routes/assessment/assessmentRoutes');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/canada/express-entry', expressEntryRoutes);
+app.use('/api/assessment', assessmentRoutes);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
