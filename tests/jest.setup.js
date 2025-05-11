@@ -23,7 +23,17 @@ jest.mock('../backend/utils/canadaApiClient', () => ({
   fetchImmigrationNews: jest.fn().mockResolvedValue([])
 }), { virtual: true });
 
+// Create a ValidationError class for mongoose validation errors
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ValidationError';
+    this.errors = {};
+  }
+}
+
 jest.mock('mongoose', () => {
+  // Create a mock ObjectId class
   class MockObjectId {
     constructor(id) {
       this.id = id || 'mock-id-' + Math.random().toString(36).substring(2, 15);
@@ -31,21 +41,120 @@ jest.mock('mongoose', () => {
     }
   }
 
-  const createMockDocument = (data = {}) => {
-    return {
-      ...data,
-      _id: data._id || new MockObjectId(),
-      save: jest.fn().mockResolvedValue({ ...data }),
-      comparePassword: jest.fn().mockImplementation((password) => {
-        return Promise.resolve(password === 'password123');
-      }),
-      generateAuthToken: jest.fn().mockReturnValue('mock-auth-token'),
-      generateRefreshToken: jest.fn().mockReturnValue('mock-refresh-token'),
-      toObject: jest.fn().mockReturnValue({ ...data }),
-      toJSON: jest.fn().mockReturnValue({ ...data })
+  // Create a mock document with common methods
+  const createMockDocument = (data = {}, modelType = 'default') => {
+    // Default values for assessment model
+    const defaults = {
+      status: 'started',
+      progress: 0,
+      currentStep: 1,
+      responses: [],
+      totalSteps: data.totalSteps || 5
     };
+
+    // Merge defaults with provided data
+    const docData = { ...defaults, ...data };
+    
+    // Base document with common methods
+    const doc = {
+      ...docData,
+      _id: docData._id || new MockObjectId(),
+      save: jest.fn().mockResolvedValue(docData),
+      toObject: jest.fn().mockReturnValue({ ...docData }),
+      toJSON: jest.fn().mockReturnValue({ ...docData })
+    };
+    
+    // Add model-specific methods based on modelType
+    if (modelType === 'User' || modelType === 'default') {
+      doc.comparePassword = jest.fn().mockImplementation((password) => {
+        return Promise.resolve(password === 'password123');
+      });
+      doc.generateAuthToken = jest.fn().mockReturnValue('mock-auth-token');
+      doc.generateRefreshToken = jest.fn().mockReturnValue('mock-refresh-token');
+    }
+    
+    if (modelType === 'Assessment' || modelType === 'default') {
+      // Assessment model specific methods
+      doc.responses = doc.responses || [];
+      
+      doc.addResponse = jest.fn().mockImplementation((responseData) => {
+        doc.responses.push(responseData);
+        doc.currentStep = (doc.currentStep || 1) + 1;
+        doc.progress = doc.calculateProgress();
+        
+        if (doc.progress >= 100) {
+          doc.status = 'completed';
+          doc.completedAt = new Date();
+        } else if (doc.progress > 0) {
+          doc.status = 'in_progress';
+        }
+        
+        return doc;
+      });
+      
+      doc.getResponse = jest.fn().mockImplementation((questionId) => {
+        const response = doc.responses.find(r => 
+          r.questionId && r.questionId.toString() === questionId.toString()
+        );
+        return response || null;
+      });
+      
+      doc.calculateProgress = jest.fn().mockImplementation(() => {
+        if (!doc.totalSteps || doc.totalSteps === 0) return 0;
+        const completedSteps = doc.responses.length;
+        const progress = Math.floor((completedSteps / doc.totalSteps) * 100);
+        doc.progress = progress;
+        return progress;
+      });
+      
+      doc.isComplete = jest.fn().mockImplementation(() => {
+        return doc.status === 'completed';
+      });
+    }
+    
+    // Add validate method to all models
+    doc.validate = jest.fn().mockImplementation(() => {
+      // Validate required fields
+      if (modelType === 'Assessment') {
+        if (!doc.userId) {
+          const error = new ValidationError('Assessment validation failed');
+          error.errors.userId = { message: 'Path `userId` is required.' };
+          return Promise.reject(error);
+        }
+        
+        if (!doc.type) {
+          const error = new ValidationError('Assessment validation failed');
+          error.errors.type = { message: 'Path `type` is required.' };
+          return Promise.reject(error);
+        }
+        
+        // Validate enum fields
+        const validTypes = ['comprehensive', 'express', 'targeted'];
+        if (doc.type && !validTypes.includes(doc.type)) {
+          const error = new ValidationError('Assessment validation failed');
+          error.errors.type = { 
+            message: `\`${doc.type}\` is not a valid enum value for path \`type\`.`
+          };
+          return Promise.reject(error);
+        }
+        
+        const validStatuses = ['started', 'in_progress', 'completed', 'abandoned'];
+        if (doc.status && !validStatuses.includes(doc.status)) {
+          const error = new ValidationError('Assessment validation failed');
+          error.errors.status = { 
+            message: `\`${doc.status}\` is not a valid enum value for path \`status\`.`
+          };
+          return Promise.reject(error);
+        }
+      }
+      
+      return Promise.resolve(doc);
+    });
+    
+    return doc;
   };
 
+  // Create mock Schema
   const mockSchema = {
     pre: jest.fn().mockReturnThis(),
     post: jest.fn().mockReturnThis(),
@@ -58,6 +167,7 @@ jest.mock('mongoose', () => {
 
   const mockSchemaConstructor = jest.fn().mockImplementation(() => mockSchema);
   
+  // Add Schema.Types property
   mockSchemaConstructor.Types = {
     ObjectId: MockObjectId,
     String: String,
@@ -70,25 +180,27 @@ jest.mock('mongoose', () => {
     Array: Array
   };
   
-  const createMockModel = () => {
+  // Create mock model with all required methods
+  const createMockModel = (modelName) => {
     const mockModel = function(data) {
-      return createMockDocument(data);
+      return createMockDocument(data, modelName);
     };
     
+    // Static methods
     mockModel.findOne = jest.fn().mockImplementation(() => ({
-      select: jest.fn().mockResolvedValue(createMockDocument()),
+      select: jest.fn().mockResolvedValue(createMockDocument({}, modelName)),
       populate: jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(createMockDocument())
+        exec: jest.fn().mockResolvedValue(createMockDocument({}, modelName))
       }),
-      exec: jest.fn().mockResolvedValue(createMockDocument())
+      exec: jest.fn().mockResolvedValue(createMockDocument({}, modelName))
     }));
     
     mockModel.findById = jest.fn().mockImplementation(() => ({
-      select: jest.fn().mockResolvedValue(createMockDocument()),
+      select: jest.fn().mockResolvedValue(createMockDocument({}, modelName)),
       populate: jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(createMockDocument())
+        exec: jest.fn().mockResolvedValue(createMockDocument({}, modelName))
       }),
-      exec: jest.fn().mockResolvedValue(createMockDocument())
+      exec: jest.fn().mockResolvedValue(createMockDocument({}, modelName))
     }));
     
     mockModel.find = jest.fn().mockImplementation(() => ({
@@ -97,14 +209,29 @@ jest.mock('mongoose', () => {
       sort: jest.fn().mockReturnThis(),
       limit: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
-      exec: jest.fn().mockResolvedValue([createMockDocument()])
+      exec: jest.fn().mockResolvedValue([createMockDocument({}, modelName)])
     }));
     
     mockModel.create = jest.fn().mockImplementation((data) => {
-      if (Array.isArray(data)) {
-        return Promise.resolve(data.map(item => createMockDocument(item)));
+      // Handle validation for required fields
+      if (modelName === 'Assessment' && data && typeof data === 'object' && !Array.isArray(data)) {
+        if (!data.userId) {
+          const error = new ValidationError('Assessment validation failed');
+          error.errors.userId = { message: 'Path `userId` is required.' };
+          return Promise.reject(error);
+        }
+        
+        if (!data.type) {
+          const error = new ValidationError('Assessment validation failed');
+          error.errors.type = { message: 'Path `type` is required.' };
+          return Promise.reject(error);
+        }
       }
-      return Promise.resolve(createMockDocument(data));
+      
+      if (Array.isArray(data)) {
+        return Promise.resolve(data.map(item => createMockDocument(item, modelName)));
+      }
+      return Promise.resolve(createMockDocument(data, modelName));
     });
     
     mockModel.updateOne = jest.fn().mockResolvedValue({ modifiedCount: 1 });
@@ -130,7 +257,7 @@ jest.mock('mongoose', () => {
       }
     },
     Schema: mockSchemaConstructor,
-    model: jest.fn().mockImplementation(() => createMockModel()),
+    model: jest.fn().mockImplementation((name) => createMockModel(name)),
     Types: {
       ObjectId: MockObjectId,
       String: String,
@@ -141,6 +268,20 @@ jest.mock('mongoose', () => {
       Mixed: {},
       Buffer: Buffer,
       Array: Array
+    },
+    Schema: {
+      Types: {
+        ObjectId: MockObjectId,
+        String: String,
+        Number: Number,
+        Boolean: Boolean,
+        Date: Date,
+        Map: Map,
+        Mixed: {},
+        Buffer: Buffer,
+        Decimal128: Number,
+        Array: Array
+      }
     },
     set: jest.fn()
   };
