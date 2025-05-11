@@ -13,3 +13,4 @@ export * from './consultant-dashboard';
 export * from './consultant-clients';
 export * from './client-detail';
 export * from './cases';
+export * from './schedule';
