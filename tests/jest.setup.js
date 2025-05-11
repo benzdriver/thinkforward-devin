@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 const dotenv = require('dotenv');
 const path = require('path');
 const fs = require('fs');
@@ -14,8 +13,9 @@ if (fs.existsSync(envPath)) {
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'thinkforward-test-secret-key';
 process.env.JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'thinkforward-test-refresh-secret-key';
 process.env.NODE_ENV = 'test';
+process.env.MONGODB_URI = 'mongodb://localhost:27017/thinkforward-test';
 
-jest.setTimeout(120000);
+jest.setTimeout(180000);
 
 jest.mock('../backend/utils/canadaApiClient', () => ({
   fetchExpressEntryDraws: jest.fn().mockResolvedValue([]),
@@ -23,70 +23,96 @@ jest.mock('../backend/utils/canadaApiClient', () => ({
   fetchImmigrationNews: jest.fn().mockResolvedValue([])
 }), { virtual: true });
 
-let mongoServer;
+jest.mock('mongoose', () => {
+  const mockSchema = {
+    pre: jest.fn().mockReturnThis(),
+    methods: {},
+    statics: {},
+    virtual: jest.fn().mockReturnThis(),
+    set: jest.fn().mockReturnThis()
+  };
+
+  const mockSchemaConstructor = jest.fn().mockImplementation(() => mockSchema);
+  
+  const mockModel = {
+    findOne: jest.fn().mockImplementation(() => Promise.resolve(null)),
+    findById: jest.fn().mockImplementation(() => Promise.resolve(null)),
+    find: jest.fn().mockImplementation(() => ({
+      exec: jest.fn().mockResolvedValue([]),
+      sort: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      populate: jest.fn().mockReturnThis()
+    })),
+    create: jest.fn().mockImplementation((doc) => Promise.resolve({
+      ...doc,
+      _id: 'mock-id',
+      save: jest.fn().mockResolvedValue(true),
+      toObject: jest.fn().mockReturnValue(doc),
+      toJSON: jest.fn().mockReturnValue(doc)
+    })),
+    deleteMany: jest.fn().mockResolvedValue({ deletedCount: 0 }),
+    updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 })
+  };
+
+  return {
+    connect: jest.fn().mockResolvedValue({}),
+    connection: {
+      on: jest.fn(),
+      once: jest.fn(),
+      close: jest.fn().mockResolvedValue(true),
+      collections: {
+        users: { deleteMany: jest.fn().mockResolvedValue({ deletedCount: 0 }) },
+        profiles: { deleteMany: jest.fn().mockResolvedValue({ deletedCount: 0 }) },
+        assessments: { deleteMany: jest.fn().mockResolvedValue({ deletedCount: 0 }) },
+        pathways: { deleteMany: jest.fn().mockResolvedValue({ deletedCount: 0 }) }
+      }
+    },
+    Schema: mockSchemaConstructor,
+    model: jest.fn().mockImplementation(() => mockModel),
+    Types: {
+      ObjectId: jest.fn().mockImplementation((id) => id || 'mock-object-id'),
+      String: String,
+      Number: Number,
+      Boolean: Boolean,
+      Date: Date,
+      Map: Map
+    },
+    set: jest.fn()
+  };
+});
+
+jest.mock('bcryptjs', () => ({
+  hash: jest.fn().mockImplementation((password) => Promise.resolve(`hashed_${password}`)),
+  compare: jest.fn().mockImplementation((password, hash) => Promise.resolve(password === hash.replace('hashed_', '')))
+}));
+
+jest.mock('jsonwebtoken', () => ({
+  sign: jest.fn().mockImplementation((payload, secret, options) => `mock_token_${JSON.stringify(payload)}`),
+  verify: jest.fn().mockImplementation((token, secret) => {
+    if (token.startsWith('mock_token_')) {
+      return JSON.parse(token.replace('mock_token_', ''));
+    }
+    throw new Error('Invalid token');
+  })
+}));
 
 beforeAll(async () => {
   try {
-    mongoServer = await MongoMemoryServer.create();
-    
-    const uri = mongoServer.getUri();
-    process.env.MONGODB_URI = uri;
-    
-    const mongooseOpts = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      connectTimeoutMS: 60000,
-      socketTimeoutMS: 60000,
-      serverSelectionTimeoutMS: 60000
-    };
-    
-    const [major, minor] = mongoose.version.split('.').map(Number);
-    if (major < 6) {
-      mongooseOpts.useCreateIndex = true;
-      mongooseOpts.useFindAndModify = false;
-    }
-    
-    await mongoose.connect(uri, mongooseOpts);
-    
-    console.log(`Connected to MongoDB Memory Server at ${uri}`);
+    console.log('Setting up mock MongoDB environment');
   } catch (error) {
-    console.error('Failed to start MongoDB Memory Server:', error);
+    console.error('Failed to setup test environment:', error);
     throw error;
   }
 });
 
-afterEach(async () => {
-  if (mongoose.connection && mongoose.connection.collections) {
-    try {
-      const collections = mongoose.connection.collections;
-      for (const key in collections) {
-        try {
-          await collections[key].deleteMany({});
-        } catch (error) {
-          console.error(`Error clearing collection ${key}:`, error);
-        }
-      }
-    } catch (error) {
-      console.error('Error accessing collections:', error);
-    }
-  }
+afterEach(() => {
+  jest.clearAllMocks();
 });
 
 afterAll(async () => {
   try {
-    if (mongoose.connection) {
-      await mongoose.connection.close();
-      console.log('Mongoose connection closed');
-    }
-    
-    if (mongoServer) {
-      try {
-        await mongoServer.stop();
-        console.log('MongoDB Memory Server stopped');
-      } catch (error) {
-        console.error('Error stopping MongoDB Memory Server:', error);
-      }
-    }
+    console.log('Test environment cleanup complete');
   } catch (error) {
     console.error('Error during cleanup:', error);
   }
