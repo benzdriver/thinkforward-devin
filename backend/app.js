@@ -19,6 +19,9 @@ const profileRoutes = require('./routes/profileRoutes');
 const expressEntryRoutes = require('./routes/canada/expressEntryRoutes');
 const assessmentRoutes = require('./routes/assessment/assessmentRoutes');
 const pathwayRoutes = require('./routes/pathway/pathwayRoutes');
+const formRoutes = require('./routes/forms/formRoutes');
+const consultantRoutes = require('./routes/consultant/consultantRoutes');
+const bookingRoutes = require('./routes/consultant/bookingRoutes');
 
 const app = express();
 
@@ -47,6 +50,9 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/canada/express-entry', expressEntryRoutes);
 app.use('/api/assessment', assessmentRoutes);
 app.use('/api/pathway', pathwayRoutes);
+app.use('/api/forms', formRoutes);
+app.use('/api/consultants', consultantRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ 
