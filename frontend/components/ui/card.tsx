@@ -33,11 +33,11 @@ export interface CardProps
     VariantProps<typeof cardVariants> {}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, ...props }, ref) => {
+  ({ className, variant, hover, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={cn(cardVariants({ variant, className }))}
+        className={cn(cardVariants({ variant, hover, className }))}
         {...props}
       />
     );

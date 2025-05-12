@@ -25,23 +25,30 @@ describe('Button 组件', () => {
 
   it('应用不同的变体样式', () => {
     const { rerender } = render(<Button variant="primary">主要按钮</Button>);
-    expect(screen.getByText('主要按钮')).toHaveClass('bg-primary-500');
+    expect(screen.getByText('主要按钮')).toHaveClass('bg-primary');
 
     rerender(<Button variant="secondary">次要按钮</Button>);
-    expect(screen.getByText('次要按钮')).toHaveClass('bg-secondary-500');
+    expect(screen.getByText('次要按钮')).toHaveClass('bg-secondary-100');
 
     rerender(<Button variant="destructive">危险按钮</Button>);
-    expect(screen.getByText('危险按钮')).toHaveClass('bg-destructive-500');
+    expect(screen.getByText('危险按钮')).toHaveClass('bg-destructive');
   });
 
   it('应用不同的尺寸样式', () => {
     const { rerender } = render(<Button size="sm">小按钮</Button>);
-    expect(screen.getByText('小按钮')).toHaveClass('px-3 py-1 text-sm');
+    expect(screen.getByText('小按钮')).toHaveClass('h-8');
+    expect(screen.getByText('小按钮')).toHaveClass('px-3');
+    expect(screen.getByText('小按钮')).toHaveClass('text-xs');
 
     rerender(<Button size="md">中按钮</Button>);
-    expect(screen.getByText('中按钮')).toHaveClass('px-4 py-2');
+    expect(screen.getByText('中按钮')).toHaveClass('h-10');
+    expect(screen.getByText('中按钮')).toHaveClass('px-4');
+    expect(screen.getByText('中按钮')).toHaveClass('py-2');
 
     rerender(<Button size="lg">大按钮</Button>);
-    expect(screen.getByText('大按钮')).toHaveClass('px-6 py-3 text-lg');
+    expect(screen.getByText('大按钮')).toHaveClass('h-12');
+    expect(screen.getByText('大按钮')).toHaveClass('px-6');
+    expect(screen.getByText('大按钮')).toHaveClass('py-3');
+    expect(screen.getByText('大按钮')).toHaveClass('text-base');
   });
 });
