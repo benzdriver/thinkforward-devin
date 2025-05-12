@@ -504,7 +504,43 @@ Based on analysis of the frontend code and structure, this document outlines the
 
 ### 待实现模块
 
-## 11. Consultant Dashboard Module (新增)
+## 11. Admin Settings Module (新增)
+   - ⬜ Models
+     - ⬜ SystemSettings Model
+       - 字段: general (站点信息、本地化设置、功能开关), security (认证配置、会话超时、密码策略), notifications (邮件通知、应用内通知), integrations (API密钥、支付集成、社交登录), appearance (颜色方案、主题色、界面选项), advanced (维护模式、缓存、日志级别)
+     - ⬜ SettingsHistory Model
+       - 字段: id, userId, userName, changes, timestamp
+   - ⬜ Controllers
+     - ⬜ adminSettingsController
+       - getSystemSettings: 获取系统设置
+       - updateSystemSettings: 更新系统设置
+       - resetSystemSettings: 重置系统设置为默认值
+       - getSettingsHistory: 获取设置历史记录
+       - exportSettings: 导出系统设置
+       - importSettings: 导入系统设置
+       - testEmailConfig: 测试邮件配置
+       - clearSystemCache: 清除系统缓存
+   - ⬜ Services
+     - ⬜ adminSettingsService
+       - getSystemSettings: 获取系统设置
+       - updateSystemSettings: 更新系统设置
+       - resetSystemSettings: 重置系统设置为默认值
+       - getSettingsHistory: 获取设置历史记录
+       - exportSettings: 导出系统设置
+       - importSettings: 导入系统设置
+       - testEmailConfig: 测试邮件配置
+       - clearSystemCache: 清除系统缓存
+   - ⬜ Routes
+     - GET /api/admin/settings - 获取系统设置
+     - PATCH /api/admin/settings - 更新系统设置
+     - POST /api/admin/settings/reset - 重置系统设置为默认值
+     - GET /api/admin/settings/history - 获取设置历史记录
+     - GET /api/admin/settings/export - 导出系统设置
+     - POST /api/admin/settings/import - 导入系统设置
+     - POST /api/admin/settings/test-email - 测试邮件配置
+     - POST /api/admin/settings/clear-cache - 清除系统缓存
+
+## 12. Consultant Dashboard Module (新增)
    - ⬜ Models
      - ⬜ ConsultantTask Model
        - 字段: id, consultantId, title, dueDate, priority, status, relatedId, relatedType, createdAt, updatedAt
