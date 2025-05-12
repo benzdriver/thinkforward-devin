@@ -16,3 +16,4 @@ export * from './cases';
 export * from './schedule';
 export * from './consultant-profile';
 export * from './admin-dashboard';
+export * from './admin-users';
