@@ -504,12 +504,18 @@ Based on analysis of the frontend code and structure, this document outlines the
 
 ### 待实现模块
 
-## 11. Admin Settings Module (新增)
+## 14. 顾问案例管理模块 (新增)
    - ⬜ Models
-     - ⬜ SystemSettings Model
-       - 字段: general (站点信息、本地化设置、功能开关), security (认证配置、会话超时、密码策略), notifications (邮件通知、应用内通知), integrations (API密钥、支付集成、社交登录), appearance (颜色方案、主题色、界面选项), advanced (维护模式、缓存、日志级别)
-     - ⬜ SettingsHistory Model
-       - 字段: id, userId, userName, changes, timestamp
+     - ⬜ Case Model
+       - 字段: id, title, clientId, consultantId, type, description, status, priority, progress, dueDate, createdAt, updatedAt
+     - ⬜ CaseTask Model
+       - 字段: id, caseId, title, description, assigneeId, status, priority, dueDate, completedAt, createdAt, updatedAt
+     - ⬜ CaseNote Model
+       - 字段: id, caseId, authorId, content, isPrivate, createdAt, updatedAt
+     - ⬜ CaseDocument Model
+       - 字段: id, caseId, name, type, size, url, uploadedBy, category, status, notes, createdAt, updatedAt
+     - ⬜ CaseTimeline Model
+       - 字段: id, caseId, type, description, userId, metadata, timestamp
    - ⬜ Controllers
      - ⬜ adminSettingsController
        - getSystemSettings: 获取系统设置
