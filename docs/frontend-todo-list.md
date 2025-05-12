@@ -16,7 +16,7 @@
 - [x] 完善色彩系统（定义主色、辅助色、中性色变量）
 - [x] 完善排版系统（设置字体、标题、正文样式）
 - [x] 完善现有UI组件（Button, Card, Dropdown）
-- [ ] 添加缺失的原子组件：
+- [x] 添加缺失的原子组件：
   - [x] Alert（已完成实现）
   - [x] Input
   - [x] Checkbox
@@ -31,7 +31,7 @@
   - [x] Progress
   - [x] Tabs
   - [x] Accordion
-- [ ] 创建分子组件：
+- [x] 创建分子组件：
   - [x] FormField（带标签和错误提示的表单字段）
   - [x] SearchInput（搜索输入框）
   - [x] FileUpload（文件上传）
@@ -40,7 +40,7 @@
   - [x] EmptyState（空状态）
   - [x] LoadingState（加载状态）
   - [x] ErrorState（错误状态）
-- [ ] 创建模板组件：
+- [x] 创建模板组件：
   - [x] AuthLayout（认证页面布局）
   - [x] DashboardLayout（仪表盘布局）
   - [x] PageHeader（页面标题和描述）
