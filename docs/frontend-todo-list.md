@@ -93,7 +93,7 @@
 
 ## 7. 管理员页面实现
 
-- [ ] 管理员仪表盘 (`/admin/dashboard`)
+- [x] 管理员仪表盘 (`/admin/dashboard`)
 - [ ] 用户管理页 (`/admin/users`)
 - [ ] 系统设置页 (`/admin/settings`)
 
