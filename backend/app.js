@@ -23,6 +23,7 @@ const pathwayRoutes = require('./routes/pathway/pathwayRoutes');
 const formRoutes = require('./routes/forms/formRoutes');
 const consultantRoutes = require('./routes/consultant/consultantRoutes');
 const bookingRoutes = require('./routes/consultant/bookingRoutes');
+const adminSettingsRoutes = require('./routes/admin/adminSettingsRoutes');
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use('/api/pathway', pathwayRoutes);
 app.use('/api/forms', formRoutes);
 app.use('/api/consultants', consultantRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/admin', adminSettingsRoutes);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ 
