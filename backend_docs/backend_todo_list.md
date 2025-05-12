@@ -642,64 +642,100 @@ Based on analysis of the frontend code and structure, this document outlines the
      - GET /api/consultant/:consultantId/clients/by-tag - 根据标签查找客户
 
 ## 13. 顾问案例管理模块 (新增)
-   - ⬜ Models
-     - ⬜ Case Model
+   - ✅ Models
+     - ✅ Case Model
        - 字段: id, title, clientId, consultantId, type, description, status, priority, progress, dueDate, createdAt, updatedAt
-     - ⬜ CaseTask Model
+     - ✅ CaseTask Model
        - 字段: id, caseId, title, description, assigneeId, status, priority, dueDate, completedAt, createdAt, updatedAt
-     - ⬜ CaseNote Model
+     - ✅ CaseNote Model
        - 字段: id, caseId, authorId, content, isPrivate, createdAt, updatedAt
-     - ⬜ CaseDocument Model
+     - ✅ CaseDocument Model
        - 字段: id, caseId, name, type, size, url, uploadedBy, category, status, notes, createdAt, updatedAt
-     - ⬜ CaseTimeline Model
+     - ✅ CaseTimeline Model
        - 字段: id, caseId, type, description, userId, metadata, timestamp
-   - ⬜ Controllers
-     - ⬜ consultantCaseController
-       - getCases: 获取案例列表
-       - getCaseStats: 获取案例统计数据
-       - getCaseTypes: 获取案例类型
-       - createCase: 创建新案例
+   - ✅ Controllers
+     - ✅ consultantCaseController
+       - getConsultantCases: 获取顾问的案例列表
+       - getClientCases: 获取客户的案例列表
        - getCaseById: 获取案例详情
-       - updateCase: 更新案例
+       - createCase: 创建新案例
+       - updateCase: 更新案例信息
+       - deleteCase: 删除案例
+       - getCaseStats: 获取案例统计数据
+       - getUpcomingDeadlines: 获取即将到期的案例
+       - updateCaseProgress: 更新案例进度
        - getCaseTasks: 获取案例任务
        - createCaseTask: 创建案例任务
        - updateCaseTask: 更新案例任务
+       - deleteCaseTask: 删除案例任务
        - getCaseNotes: 获取案例笔记
-       - createCaseNote: 添加案例笔记
+       - createCaseNote: 创建案例笔记
+       - updateCaseNote: 更新案例笔记
+       - deleteCaseNote: 删除案例笔记
        - getCaseDocuments: 获取案例文档
        - uploadCaseDocument: 上传案例文档
+       - updateCaseDocument: 更新案例文档
+       - deleteCaseDocument: 删除案例文档
        - getCaseTimeline: 获取案例时间线
-   - ⬜ Services
-     - ⬜ consultantCaseService
-       - getCases: 获取案例列表
-       - getCaseStats: 获取案例统计数据
-       - getCaseTypes: 获取案例类型
-       - createCase: 创建新案例
+       - addMilestoneEvent: 添加里程碑事件
+       - addApplicationEvent: 添加申请提交事件
+       - addDecisionEvent: 添加决定接收事件
+       - searchCases: 搜索案例
+   - ✅ Services
+     - ✅ consultantCaseService
+       - getConsultantCases: 获取顾问的案例列表
+       - getClientCases: 获取客户的案例列表
        - getCaseById: 获取案例详情
-       - updateCase: 更新案例
+       - createCase: 创建新案例
+       - updateCase: 更新案例信息
+       - deleteCase: 删除案例
+       - getCaseStats: 获取案例统计数据
+       - getUpcomingDeadlines: 获取即将到期的案例
+       - updateCaseProgress: 更新案例进度
        - getCaseTasks: 获取案例任务
        - createCaseTask: 创建案例任务
        - updateCaseTask: 更新案例任务
+       - deleteCaseTask: 删除案例任务
        - getCaseNotes: 获取案例笔记
-       - createCaseNote: 添加案例笔记
+       - createCaseNote: 创建案例笔记
+       - updateCaseNote: 更新案例笔记
+       - deleteCaseNote: 删除案例笔记
        - getCaseDocuments: 获取案例文档
        - uploadCaseDocument: 上传案例文档
+       - updateCaseDocument: 更新案例文档
+       - deleteCaseDocument: 删除案例文档
        - getCaseTimeline: 获取案例时间线
-   - ⬜ Routes
-     - GET /api/consultant/:consultantId/cases - 获取案例列表
+       - addMilestoneEvent: 添加里程碑事件
+       - addApplicationEvent: 添加申请提交事件
+       - addDecisionEvent: 添加决定接收事件
+       - searchCases: 搜索案例
+   - ✅ Routes
+     - GET /api/consultant/:consultantId/cases - 获取顾问的案例列表
      - GET /api/consultant/:consultantId/cases/stats - 获取案例统计数据
-     - GET /api/consultant/:consultantId/cases/types - 获取案例类型
+     - GET /api/consultant/:consultantId/cases/deadlines - 获取即将到期的案例
+     - GET /api/consultant/:consultantId/cases/search - 搜索案例
      - POST /api/consultant/:consultantId/cases - 创建新案例
-     - GET /api/consultant/:consultantId/cases/:caseId - 获取案例详情
-     - PATCH /api/consultant/:consultantId/cases/:caseId - 更新案例
-     - GET /api/consultant/:consultantId/cases/:caseId/tasks - 获取案例任务
-     - POST /api/consultant/:consultantId/cases/:caseId/tasks - 创建案例任务
-     - PATCH /api/consultant/:consultantId/cases/:caseId/tasks/:taskId - 更新案例任务
-     - GET /api/consultant/:consultantId/cases/:caseId/notes - 获取案例笔记
-     - POST /api/consultant/:consultantId/cases/:caseId/notes - 添加案例笔记
-     - GET /api/consultant/:consultantId/cases/:caseId/documents - 获取案例文档
-     - POST /api/consultant/:consultantId/cases/:caseId/documents - 上传案例文档
-     - GET /api/consultant/:consultantId/cases/:caseId/timeline - 获取案例时间线
+     - GET /api/consultant/cases/:caseId - 获取案例详情
+     - PATCH /api/consultant/cases/:caseId - 更新案例信息
+     - DELETE /api/consultant/cases/:caseId - 删除案例
+     - PATCH /api/consultant/cases/:caseId/progress - 更新案例进度
+     - GET /api/consultant/cases/:caseId/tasks - 获取案例任务
+     - POST /api/consultant/cases/:caseId/tasks - 创建案例任务
+     - PATCH /api/consultant/tasks/:taskId - 更新案例任务
+     - DELETE /api/consultant/tasks/:taskId - 删除案例任务
+     - GET /api/consultant/cases/:caseId/notes - 获取案例笔记
+     - POST /api/consultant/cases/:caseId/notes - 创建案例笔记
+     - PATCH /api/consultant/notes/:noteId - 更新案例笔记
+     - DELETE /api/consultant/notes/:noteId - 删除案例笔记
+     - GET /api/consultant/cases/:caseId/documents - 获取案例文档
+     - POST /api/consultant/cases/:caseId/documents - 上传案例文档
+     - PATCH /api/consultant/documents/:documentId - 更新案例文档
+     - DELETE /api/consultant/documents/:documentId - 删除案例文档
+     - GET /api/consultant/cases/:caseId/timeline - 获取案例时间线
+     - POST /api/consultant/cases/:caseId/milestones - 添加里程碑事件
+     - POST /api/consultant/cases/:caseId/applications - 添加申请提交事件
+     - POST /api/consultant/cases/:caseId/decisions - 添加决定接收事件
+     - GET /api/consultant/clients/:clientId/cases - 获取客户的案例列表
 
 ## 14. 顾问日程管理模块 (新增)
    - ⬜ Models
