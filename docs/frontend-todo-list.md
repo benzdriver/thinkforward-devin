@@ -149,6 +149,8 @@
     - [x] Input组件测试
     - [x] Checkbox组件测试
     - [x] Badge组件测试
+    - [x] Radio组件测试
+    - [x] Toggle组件测试
     - [ ] 其他UI组件测试
   - [x] 创建API钩子测试
   - [x] 创建工具函数测试
