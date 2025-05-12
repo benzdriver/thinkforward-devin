@@ -26,10 +26,6 @@ const profileSchema = new mongoose.Schema({
       type: String,
       trim: true
     },
-    countryOfResidence: {
-      type: String,
-      trim: true
-    },
     passportNumber: {
       type: String,
       trim: true
@@ -38,17 +34,17 @@ const profileSchema = new mongoose.Schema({
       type: String,
       trim: true
     },
-    address: {
-      street: String,
-      city: String,
-      province: String,
-      postalCode: String,
-      country: String
-    },
     phone: {
       type: String,
       trim: true
     }
+  },
+  address: {
+    street: String,
+    city: String,
+    province: String,
+    postalCode: String,
+    country: String
   },
   educationInfo: {
     highestDegree: {
@@ -154,6 +150,10 @@ const profileSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now
+  },
+  lastUpdated: {
+    type: String,
+    default: () => new Date().toISOString()
   }
 }, {
   timestamps: true
@@ -176,7 +176,10 @@ profileSchema.methods.updateCompletionStatus = function() {
     this.personalInfo.firstName &&
     this.personalInfo.lastName &&
     this.personalInfo.dateOfBirth &&
-    this.personalInfo.nationality
+    this.personalInfo.nationality &&
+    this.personalInfo.passportNumber &&
+    this.personalInfo.email &&
+    this.personalInfo.phone
   );
   
   this.completionStatus.educationInfo = !!(

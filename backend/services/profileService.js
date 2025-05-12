@@ -114,7 +114,19 @@ exports.updateProfileSection = async (userId, section, sectionData, locale = 'en
  * @returns {Promise<Object>} - Updated profile
  */
 exports.updatePersonalInfo = async (userId, personalInfo, locale = 'en') => {
-  return await exports.updateProfileSection(userId, 'personalInfo', personalInfo, locale);
+  let addressData = null;
+  if (personalInfo.address) {
+    addressData = personalInfo.address;
+    delete personalInfo.address;
+  }
+  
+  const profile = await exports.updateProfileSection(userId, 'personalInfo', personalInfo, locale);
+  
+  if (addressData) {
+    await exports.updateProfileSection(userId, 'address', addressData, locale);
+  }
+  
+  return profile;
 };
 
 /**
