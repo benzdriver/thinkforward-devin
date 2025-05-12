@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 15, 23, 42;
+  --background-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 241, 245, 249;
+    --background-rgb: 15, 23, 42;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-rgb));
+}
+
+@layer base {
+  /* Headings */
+  h1 {
+    @apply text-4xl font-bold tracking-tight text-neutral-900 mb-6;
+  }
+  h2 {
+    @apply text-3xl font-semibold tracking-tight text-neutral-900 mb-5;
+  }
+  h3 {
+    @apply text-2xl font-semibold tracking-tight text-neutral-800 mb-4;
+  }
+  h4 {
+    @apply text-xl font-semibold tracking-tight text-neutral-800 mb-3;
+  }
+  h5 {
+    @apply text-lg font-medium text-neutral-800 mb-2;
+  }
+  h6 {
+    @apply text-base font-medium text-neutral-800 mb-2;
+  }
+  
+  /* Body text */
+  p {
+    @apply text-base text-neutral-700 leading-7 mb-4;
+  }
+  
+  /* Inline text */
+  a {
+    @apply text-primary hover:text-primary-700 transition-colors duration-200;
+  }
+  strong, b {
+    @apply font-semibold text-neutral-900;
+  }
+  em, i {
+    @apply italic;
+  }
+  small {
+    @apply text-sm font-medium text-neutral-600 leading-tight;
+  }
+  
+  /* Lists */
+  ul, ol {
+    @apply pl-6 mb-4 text-neutral-700;
+  }
+  ul {
+    @apply list-disc;
+  }
+  ol {
+    @apply list-decimal;
+  }
+  li {
+    @apply mb-1;
+  }
+  
+  /* Block elements */
+  blockquote {
+    @apply pl-4 border-l-4 border-neutral-300 text-neutral-600 italic my-4;
+  }
+  pre {
+    @apply p-4 bg-neutral-100 rounded-md text-sm font-mono overflow-x-auto my-4;
+  }
+  code {
+    @apply font-mono text-sm bg-neutral-100 px-1 py-0.5 rounded;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl sm:px-6 lg:px-8;
+  }
+}
