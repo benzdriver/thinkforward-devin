@@ -433,93 +433,76 @@ Based on analysis of the frontend code and structure, this document outlines the
    - ✅ Booking Controller
    - ✅ Consultant Routes
    - ✅ Booking Routes
-
-### 待实现模块
-
-9. ⬜ Profile Data Structure Alignment (新增)
-   - ⬜ 更新 Profile Model 以匹配前端数据结构
-     - ⬜ 添加 passportNumber 字段到 personalInfo
-     - ⬜ 添加 email 字段到 personalInfo
-     - ⬜ 修改 educationInfo 从数组改为对象结构
-     - ⬜ 修改 workExperience 从数组改为对象结构
-     - ⬜ 修改 languageSkills 从数组改为对象结构
-     - ⬜ 更新 immigrationInfo 字段以匹配前端结构
-   - ⬜ 更新 profileController 以处理新的数据结构
-   - ⬜ 更新 profileService 以支持新的数据结构
-   - ⬜ 更新 profileRoutes 中的验证规则
-
-10. ⬜ Profile Settings Module (新增)
-    - ⬜ Models
-      - ⬜ AccountSettings Model
+9. ✅ Profile Data Structure Alignment (新增)
+   - ✅ 更新 Profile Model 以匹配前端数据结构
+     - ✅ 添加 passportNumber 字段到 personalInfo
+     - ✅ 添加 email 字段到 personalInfo
+     - ✅ 修改 educationInfo 从数组改为对象结构
+     - ✅ 修改 workExperience 从数组改为对象结构
+     - ✅ 修改 languageSkills 从数组改为对象结构
+     - ✅ 更新 immigrationInfo 字段以匹配前端结构
+   - ✅ 更新 profileController 以处理新的数据结构
+   - ✅ 更新 profileService 以支持新的数据结构
+   - ✅ 更新 profileRoutes 中的验证规则
+10. ✅ Profile Settings Module (新增)
+    - ✅ Models
+      - ✅ AccountSettings Model
         - 字段: userId, email, emailVerified, phone, phoneVerified, language, timezone, dateFormat, timeFormat, currency, twoFactorEnabled, twoFactorMethod, updatedAt
-      - ⬜ NotificationSettings Model
+      - ✅ NotificationSettings Model
         - 字段: userId, email (marketing, updates, security, reminders), push (messages, taskUpdates, appointments, documentUpdates), sms (security, appointments, importantUpdates), updatedAt
-      - ⬜ PrivacySettings Model
+      - ✅ PrivacySettings Model
         - 字段: userId, profileVisibility, activityVisibility, documentVisibility, shareDataWithPartners, allowPersonalizedRecommendations, allowAnonymousDataCollection, allowSearchEngineIndexing, cookies, dataSharing, updatedAt
-      - ⬜ SecuritySettings Model
+      - ✅ SecuritySettings Model
         - 字段: userId, twoFactorEnabled, twoFactorMethod, loginAlertsEnabled, activeSessions, lastPasswordChange, updatedAt
-    - ⬜ Controllers
-      - ⬜ profileSettingsController
-        - getUserProfile: 获取用户个人资料
-        - updateUserProfile: 更新用户个人资料
-        - uploadAvatar: 上传头像
-        - deleteAvatar: 删除头像
+    - ✅ Controllers
+      - ✅ profileSettingsController
+        - getAllSettings: 获取所有设置
+        - initializeSettings: 初始化用户设置
         - getAccountSettings: 获取账户设置
         - updateAccountSettings: 更新账户设置
-        - sendEmailVerification: 发送邮箱验证
-        - sendPhoneVerification: 发送手机验证
         - getNotificationSettings: 获取通知设置
         - updateNotificationSettings: 更新通知设置
         - getPrivacySettings: 获取隐私设置
         - updatePrivacySettings: 更新隐私设置
         - getSecuritySettings: 获取安全设置
         - updateSecuritySettings: 更新安全设置
-        - revokeSession: 撤销会话
-        - revokeAllSessions: 撤销所有会话
-        - changePassword: 修改密码
-        - deactivateAccount: 停用账户
-        - deleteAccount: 删除账户
-    - ⬜ Services
-      - ⬜ profileSettingsService
-        - getUserProfile: 获取用户个人资料
-        - updateUserProfile: 更新用户个人资料
-        - uploadAvatar: 上传头像
-        - deleteAvatar: 删除头像
+        - addSession: 添加会话
+        - removeSession: 移除会话
+        - removeAllOtherSessions: 移除所有其他会话
+        - updatePasswordChangeTime: 更新密码更改时间
+    - ✅ Services
+      - ✅ profileSettingsService
+        - getAllSettings: 获取所有设置
+        - initializeSettings: 初始化用户设置
         - getAccountSettings: 获取账户设置
         - updateAccountSettings: 更新账户设置
-        - sendEmailVerification: 发送邮箱验证
-        - sendPhoneVerification: 发送手机验证
         - getNotificationSettings: 获取通知设置
         - updateNotificationSettings: 更新通知设置
         - getPrivacySettings: 获取隐私设置
         - updatePrivacySettings: 更新隐私设置
         - getSecuritySettings: 获取安全设置
         - updateSecuritySettings: 更新安全设置
-        - revokeSession: 撤销会话
-        - revokeAllSessions: 撤销所有会话
-        - changePassword: 修改密码
-        - deactivateAccount: 停用账户
-        - deleteAccount: 删除账户
-    - ⬜ Routes
-      - GET /api/profile-settings/:userId/profile - 获取用户个人资料
-      - PUT /api/profile-settings/:userId/profile - 更新用户个人资料
-      - POST /api/profile-settings/:userId/avatar - 上传头像
-      - DELETE /api/profile-settings/:userId/avatar - 删除头像
+        - addSession: 添加会话
+        - removeSession: 移除会话
+        - removeAllOtherSessions: 移除所有其他会话
+        - updatePasswordChangeTime: 更新密码更改时间
+    - ✅ Routes
+      - GET /api/profile-settings/:userId - 获取用户的所有设置
+      - POST /api/profile-settings/:userId/initialize - 初始化用户设置
       - GET /api/profile-settings/:userId/account - 获取账户设置
       - PUT /api/profile-settings/:userId/account - 更新账户设置
-      - POST /api/profile-settings/:userId/verify-email - 发送邮箱验证
-      - POST /api/profile-settings/:userId/verify-phone - 发送手机验证
       - GET /api/profile-settings/:userId/notifications - 获取通知设置
       - PUT /api/profile-settings/:userId/notifications - 更新通知设置
       - GET /api/profile-settings/:userId/privacy - 获取隐私设置
       - PUT /api/profile-settings/:userId/privacy - 更新隐私设置
       - GET /api/profile-settings/:userId/security - 获取安全设置
       - PUT /api/profile-settings/:userId/security - 更新安全设置
-      - POST /api/profile-settings/:userId/sessions/:sessionId/revoke - 撤销会话
-      - POST /api/profile-settings/:userId/sessions/revoke-all - 撤销所有会话
-      - POST /api/profile-settings/:userId/change-password - 修改密码
-      - POST /api/profile-settings/:userId/deactivate - 停用账户
-      - POST /api/profile-settings/:userId/delete - 删除账户
+      - POST /api/profile-settings/:userId/sessions - 添加会话
+      - DELETE /api/profile-settings/:userId/sessions/:sessionId - 移除会话
+      - DELETE /api/profile-settings/:userId/sessions - 移除所有其他会话
+      - POST /api/profile-settings/:userId/password-change - 更新密码更改时间
+
+### 待实现模块
 
 ## 11. Consultant Dashboard Module (新增)
    - ⬜ Models

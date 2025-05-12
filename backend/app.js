@@ -16,6 +16,7 @@ dotenv.config();
 
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const profileSettingsRoutes = require('./routes/settings/profileSettingsRoutes');
 const expressEntryRoutes = require('./routes/canada/expressEntryRoutes');
 const assessmentRoutes = require('./routes/assessment/assessmentRoutes');
 const pathwayRoutes = require('./routes/pathway/pathwayRoutes');
@@ -47,6 +48,7 @@ app.use('/locales', express.static(path.join(__dirname, 'locales')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/profile-settings', profileSettingsRoutes);
 app.use('/api/canada/express-entry', expressEntryRoutes);
 app.use('/api/assessment', assessmentRoutes);
 app.use('/api/pathway', pathwayRoutes);
