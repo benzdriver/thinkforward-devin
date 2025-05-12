@@ -762,3 +762,62 @@ Based on analysis of the frontend code and structure, this document outlines the
 - Error handling and validation
 - API documentation
 - Axios for external API requests
+
+## 16. API Standards
+
+根据前端API集成需求，所有后端API端点应遵循以下标准：
+
+### RESTful API设计
+- 使用适当的HTTP方法（GET, POST, PUT, PATCH, DELETE）
+- 使用资源导向的URL路径
+- 使用嵌套资源表示关系
+- 支持过滤、排序和分页
+
+### 请求和响应格式
+- 使用JSON格式进行数据交换
+- 请求体使用camelCase命名约定
+- 响应体使用一致的结构
+
+### HTTP状态码
+- 200: 成功的GET, PUT, PATCH请求
+- 201: 成功的POST请求（创建资源）
+- 204: 成功的DELETE请求
+- 400: 错误的请求（客户端错误）
+- 401: 未授权（缺少或无效的认证）
+- 403: 禁止访问（权限不足）
+- 404: 资源未找到
+- 422: 验证错误
+- 500: 服务器内部错误
+
+### 标准错误响应格式
+```json
+{
+  "message": "操作失败的描述信息",
+  "code": "ERROR_CODE",
+  "details": {
+    "field1": "字段1的错误信息",
+    "field2": "字段2的错误信息"
+  }
+}
+```
+
+### 分页响应格式
+```json
+{
+  "items": [...],
+  "total": 100,
+  "page": 1,
+  "limit": 10,
+  "totalPages": 10
+}
+```
+
+### 缓存控制
+- 使用适当的缓存控制头（Cache-Control, ETag）
+- 支持条件请求（If-Modified-Since, If-None-Match）
+- 实现缓存策略以提高性能
+
+### 请求重试和错误处理
+- 对特定错误（503, 504）支持自动重试
+- 提供详细的错误信息以便前端显示
+- 实现幂等性以支持安全重试
