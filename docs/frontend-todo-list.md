@@ -95,7 +95,7 @@
 
 - [x] 管理员仪表盘 (`/admin/dashboard`)
 - [x] 用户管理页 (`/admin/users`)
-- [ ] 系统设置页 (`/admin/settings`)
+- [x] 系统设置页 (`/admin/settings`)
 
 ## 8. 功能模块实现
 
