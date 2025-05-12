@@ -89,7 +89,7 @@
 - [x] 客户详情页 (`/consultant/clients/[id]`)
 - [x] 案例管理页 (`/consultant/cases`)
 - [x] 日程管理页 (`/consultant/schedule`)
-- [ ] 顾问资料页 (`/consultant/profile`)
+- [x] 顾问资料页 (`/consultant/profile`)
 
 ## 7. 管理员页面实现
 
