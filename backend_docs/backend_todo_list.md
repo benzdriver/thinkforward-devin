@@ -577,17 +577,33 @@ Based on analysis of the frontend code and structure, this document outlines the
      - PATCH /api/consultant-dashboard/appointments/:appointmentId/cancel - 取消预约
 
 ## 12. 顾问客户管理模块 (新增)
-   - ⬜ Models
-     - ⬜ Client Model
-       - 字段: id, userId, firstName, lastName, displayName, email, phone, avatar, status, assignedConsultantId, lastContactDate, source, createdAt, updatedAt
-     - ⬜ ClientTag Model
-       - 字段: id, clientId, tag
-     - ⬜ ClientNote Model
-       - 字段: id, clientId, consultantId, content, createdAt, updatedAt
-     - ⬜ ClientActivity Model
-       - 字段: id, clientId, consultantId, type, description, timestamp, relatedId, relatedType, createdAt
-   - ⬜ Controllers
-     - ⬜ consultantClientController
+   - ✅ Models
+     - ✅ Client Model
+       - 字段: id, userId, firstName, lastName, displayName, email, phone, avatar, status, assignedConsultantId, lastContactDate, source, address, notes, metadata, createdAt, updatedAt
+     - ✅ ClientTag Model
+       - 字段: id, clientId, tag, color, createdBy, createdAt, updatedAt
+     - ✅ ClientNote Model
+       - 字段: id, clientId, consultantId, content, isPrivate, category, pinned, createdAt, updatedAt
+     - ✅ ClientActivity Model
+       - 字段: id, clientId, consultantId, type, description, metadata, relatedId, relatedType, isRead, createdAt
+   - ✅ Controllers
+     - ✅ consultantClientController
+       - getClients: 获取客户列表
+       - getClientStats: 获取客户统计数据
+       - getClientById: 获取单个客户详情
+       - createClient: 创建新客户
+       - updateClient: 更新客户信息
+       - deleteClient: 删除客户
+       - addClientTag: 添加客户标签
+       - removeClientTag: 移除客户标签
+       - addClientNote: 添加客户笔记
+       - getClientNotes: 获取客户笔记
+       - getClientActivities: 获取客户活动
+       - searchClients: 搜索客户
+       - getConsultantTags: 获取顾问的所有标签
+       - findClientsByTag: 根据标签查找客户
+   - ✅ Services
+     - ✅ consultantClientService
        - getClients: 获取客户列表
        - getClientStats: 获取客户统计数据
        - getClientById: 获取单个客户详情
@@ -600,21 +616,10 @@ Based on analysis of the frontend code and structure, this document outlines the
        - getClientNotes: 获取客户笔记
        - addClientActivity: 记录客户活动
        - getClientActivities: 获取客户活动
-   - ⬜ Services
-     - ⬜ consultantClientService
-       - getClients: 获取客户列表
-       - getClientStats: 获取客户统计数据
-       - getClientById: 获取单个客户详情
-       - createClient: 创建新客户
-       - updateClient: 更新客户信息
-       - deleteClient: 删除客户
-       - addClientTag: 添加客户标签
-       - removeClientTag: 移除客户标签
-       - addClientNote: 添加客户笔记
-       - getClientNotes: 获取客户笔记
-       - addClientActivity: 记录客户活动
-       - getClientActivities: 获取客户活动
-   - ⬜ Routes
+       - searchClients: 搜索客户
+       - getConsultantTags: 获取顾问的所有标签
+       - findClientsByTag: 根据标签查找客户
+   - ✅ Routes
      - GET /api/consultant/:consultantId/clients - 获取客户列表
      - GET /api/consultant/:consultantId/clients/stats - 获取客户统计数据
      - GET /api/consultant/:consultantId/clients/:clientId - 获取单个客户详情
@@ -626,6 +631,9 @@ Based on analysis of the frontend code and structure, this document outlines the
      - POST /api/consultant/:consultantId/clients/:clientId/notes - 添加客户笔记
      - GET /api/consultant/:consultantId/clients/:clientId/notes - 获取客户笔记
      - GET /api/consultant/:consultantId/clients/:clientId/activities - 获取客户活动
+     - GET /api/consultant/:consultantId/clients/search - 搜索客户
+     - GET /api/consultant/:consultantId/tags - 获取顾问的所有标签
+     - GET /api/consultant/:consultantId/clients/by-tag - 根据标签查找客户
 
 ## 13. 顾问案例管理模块 (新增)
    - ⬜ Models
