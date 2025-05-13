@@ -16,7 +16,7 @@ describe('Profile API', () => {
     
     user = await User.create({
       name: 'Test User',
-      email: 'test@example.com',
+      email: 'profile-test@example.com',
       password: 'password123'
     });
     

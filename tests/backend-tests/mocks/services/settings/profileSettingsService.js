@@ -52,7 +52,8 @@ exports.getAccountSettings = async (userId, locale = 'en') => {
   let settings = await AccountSettings.findByUserId(userId);
   
   if (!settings) {
-    settings = await AccountSettings.createDefault(userId, 'test@example.com');
+    const email = `user-${userId}@example.com`;
+    settings = await AccountSettings.createDefault(userId, email);
   }
   
   return settings;
@@ -65,7 +66,8 @@ exports.updateAccountSettings = async (userId, updates, locale = 'en') => {
   let settings = await AccountSettings.findByUserId(userId);
   
   if (!settings) {
-    settings = await AccountSettings.createDefault(userId, 'test@example.com');
+    const email = `user-${userId}@example.com`;
+    settings = await AccountSettings.createDefault(userId, email);
   }
   
   return await settings.updateSettings(updates);

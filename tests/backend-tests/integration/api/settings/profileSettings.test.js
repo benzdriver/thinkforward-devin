@@ -19,7 +19,7 @@ describe('Profile Settings API', () => {
     
     user = await User.create({
       name: 'Test User',
-      email: 'test@example.com',
+      email: 'settings-test@example.com',
       password: 'password123'
     });
     
