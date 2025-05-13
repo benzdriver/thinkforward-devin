@@ -59,6 +59,13 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        errors: [{ msg: 'Email and password are required' }]
+      });
+    }
+    
     const user = await User.findOne({ email });
     
     if (!user) {
@@ -160,7 +167,7 @@ exports.logout = async (req, res) => {
       });
     }
     
-    user.refreshToken = undefined;
+    user.refreshToken = null;
     await user.save();
     
     res.status(200).json({
