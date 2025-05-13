@@ -11,15 +11,30 @@ let mongoServer;
  */
 const connectDB = async () => {
   try {
+    console.log('Starting MongoDB Memory Server with version:', process.env.MONGOMS_VERSION || '7.0.0');
+    
     mongoServer = await MongoMemoryServer.create({
       instance: {
         dbName: 'thinkforward-test',
-        debug: true
-      }
+        debug: true,
+        port: 27018 // Use a different port than the default MongoDB
+      },
+      binary: {
+        version: process.env.MONGOMS_VERSION || '7.0.0',
+        systemBinary: '/usr/bin/mongod', // Use the installed MongoDB binary
+        checkMD5: false
+      },
+      autoStart: true
     });
+    
     const uri = mongoServer.getUri();
+    console.log('MongoDB Memory Server URI:', uri);
 
-    await mongoose.connect(uri);
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    
     console.log('Connected to MongoDB Memory Server');
   } catch (error) {
     console.error('Failed to connect to MongoDB Memory Server:', error);
