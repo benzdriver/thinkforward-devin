@@ -11,6 +11,22 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     
+    const errors = [];
+    if (!name) errors.push({ msg: 'Name is required' });
+    if (!email) errors.push({ msg: 'Email is required' });
+    if (!password) errors.push({ msg: 'Password is required' });
+    
+    if (email && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      errors.push({ msg: 'Please provide a valid email address' });
+    }
+    
+    if (errors.length > 0) {
+      return res.status(400).json({
+        success: false,
+        errors
+      });
+    }
+    
     const existingUser = await User.findOne({ email });
     
     if (existingUser) {
@@ -45,7 +61,10 @@ exports.register = async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({
+    console.error('Registration error:', error);
+    
+    const statusCode = error.statusCode || 500;
+    res.status(statusCode).json({
       success: false,
       message: error.message
     });
@@ -59,10 +78,14 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    if (!email || !password) {
+    const errors = [];
+    if (!email) errors.push({ msg: 'Email is required' });
+    if (!password) errors.push({ msg: 'Password is required' });
+    
+    if (errors.length > 0) {
       return res.status(400).json({
         success: false,
-        errors: [{ msg: 'Email and password are required' }]
+        errors
       });
     }
     
@@ -103,7 +126,10 @@ exports.login = async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({
+    console.error('Login error:', error);
+    
+    const statusCode = error.statusCode || 500;
+    res.status(statusCode).json({
       success: false,
       message: error.message
     });
@@ -158,12 +184,19 @@ exports.refreshToken = async (req, res) => {
  */
 exports.logout = async (req, res) => {
   try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required'
+      });
+    }
+    
     const user = await User.findById(req.user.id);
     
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'User not found'
+      return res.status(200).json({
+        success: true,
+        message: 'Logged out successfully'
       });
     }
     
@@ -175,7 +208,10 @@ exports.logout = async (req, res) => {
       message: 'Logged out successfully'
     });
   } catch (error) {
-    res.status(500).json({
+    console.error('Logout error:', error);
+    
+    const statusCode = error.statusCode || 500;
+    res.status(statusCode).json({
       success: false,
       message: error.message
     });
