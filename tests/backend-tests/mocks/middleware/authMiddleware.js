@@ -33,7 +33,8 @@ exports.verifyToken = async (req, res, next) => {
     }
     
     req.user = {
-      id: user._id.toString(),
+      id: user._id.toString(), // Controllers use req.user.id
+      userId: user._id.toString(), // Some controllers might use req.user.userId
       email: user.email,
       role: user.role,
       isAdmin: user.role === 'admin'
