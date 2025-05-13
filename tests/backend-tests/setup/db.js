@@ -13,20 +13,12 @@ const connectDB = async () => {
   try {
     console.log('Starting MongoDB Memory Server');
     
-    mongoServer = await MongoMemoryServer.create({
-      binary: {
-        version: '7.0.0',
-        checkMD5: false
-      }
-    });
+    mongoServer = await MongoMemoryServer.create();
     
     const uri = mongoServer.getUri();
     console.log('MongoDB Memory Server URI:', uri);
 
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(uri);
     
     console.log('Connected to MongoDB Memory Server');
   } catch (error) {
@@ -57,7 +49,7 @@ const closeDatabase = async () => {
  */
 const clearDatabase = async () => {
   try {
-    if (mongoServer) {
+    if (mongoose.connection.readyState !== 0) {
       const collections = mongoose.connection.collections;
       for (const key in collections) {
         const collection = collections[key];
