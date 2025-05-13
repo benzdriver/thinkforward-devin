@@ -13,14 +13,7 @@ const connectDB = async () => {
   mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri();
 
-  const mongooseOpts = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  };
-
-  await mongoose.connect(uri, mongooseOpts);
+  await mongoose.connect(uri);
 };
 
 /**
