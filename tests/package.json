@@ -1,0 +1,110 @@
+{
+  "name": "thinkforward-ai-tests",
+  "version": "1.0.0",
+  "description": "Tests for ThinkForward AI backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:api": "jest integration/api",
+    "test:frontend": "jest frontend-integration",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "setup": "npm install && npm run install-backend-deps && npm run install-frontend-deps",
+    "install-backend-deps": "npm install express mongoose jsonwebtoken bcryptjs dotenv cors helmet morgan express-validator",
+    "install-frontend-deps": "npm install @testing-library/react @testing-library/jest-dom @testing-library/user-event msw jsdom next-router-mock"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.21.2",
+    "express-validator": "^6.15.0",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.23",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
+    "@tanstack/react-query": "^5.76.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "babel-jest": "^29.7.0",
+    "faker": "^5.5.3",
+    "jest": "^27.0.6",
+    "jsdom": "^20.0.3",
+    "mongodb-memory-server": "^7.3.6",
+    "msw": "^0.49.0",
+    "next": "^15.3.2",
+    "next-i18next": "^15.4.2",
+    "next-router-mock": "^0.9.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "supertest": "^6.1.4",
+    "zustand": "^5.0.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "testTimeout": 30000,
+    "moduleDirectories": [
+      "node_modules",
+      "../node_modules"
+    ],
+    "modulePaths": [
+      "<rootDir>/node_modules",
+      "<rootDir>/../node_modules"
+    ],
+    "moduleNameMapper": {
+      "../backend/app\\.js": "<rootDir>/mocks/backend/app.js",
+      "../backend/models/User\\.js": "<rootDir>/mocks/backend/models/User.js",
+      "../backend/models/Profile\\.js": "<rootDir>/mocks/backend/models/Profile.js",
+      "../backend/models/assessment/Assessment\\.js": "<rootDir>/mocks/backend/models/assessment/Assessment.js",
+      "../backend/models/pathway/Pathway\\.js": "<rootDir>/mocks/backend/models/pathway/Pathway.js",
+      "../backend/controllers/authController\\.js": "<rootDir>/mocks/backend/controllers/authController.js",
+      "../backend/services/authService\\.js": "<rootDir>/mocks/backend/services/authService.js"
+    },
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+    },
+    "projects": [
+      {
+        "displayName": "backend",
+        "testMatch": [
+          "<rootDir>/unit/**/*.test.js",
+          "<rootDir>/integration/api/**/*.test.js"
+        ],
+        "testEnvironment": "node",
+        "setupFilesAfterEnv": [
+          "<rootDir>/jest.setup.js"
+        ]
+      },
+      {
+        "displayName": "frontend",
+        "testMatch": [
+          "<rootDir>/frontend-integration/**/*.test.js",
+          "<rootDir>/frontend-integration/**/*.test.tsx"
+        ],
+        "testEnvironment": "jsdom",
+        "setupFilesAfterEnv": [
+          "<rootDir>/frontend-integration/jest.setup.js"
+        ],
+        "moduleNameMapper": {
+          "\\.(css|less|scss|sass)$": "<rootDir>/frontend-integration/mocks/styleMock.js",
+          "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/frontend-integration/mocks/fileMock.js"
+        },
+        "transform": {
+          "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+        }
+      }
+    ]
+  }
+}
