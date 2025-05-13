@@ -2,38 +2,52 @@
  * Database setup for tests
  */
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
+
+let mongoServer;
 
 /**
- * Connect to the MongoDB database
+ * Connect to the in-memory database
  */
 const connectDB = async () => {
   try {
-    console.log('Connecting to MongoDB for testing');
+    console.log('Starting MongoDB Memory Server');
     
-    const uri = 'mongodb://localhost:27017/thinkforward-test';
-    console.log('MongoDB URI:', uri);
+    mongoServer = await MongoMemoryServer.create({
+      binary: {
+        version: '7.0.0',
+        checkMD5: false
+      }
+    });
+    
+    const uri = mongoServer.getUri();
+    console.log('MongoDB Memory Server URI:', uri);
 
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
     
-    console.log('Connected to MongoDB for testing');
+    console.log('Connected to MongoDB Memory Server');
   } catch (error) {
-    console.error('Failed to connect to MongoDB:', error);
+    console.error('Failed to connect to MongoDB Memory Server:', error);
     throw error;
   }
 };
 
 /**
- * Close the database connection
+ * Drop database, close the connection and stop mongod
  */
 const closeDatabase = async () => {
   try {
-    await mongoose.connection.close();
-    console.log('Closed MongoDB connection');
+    if (mongoServer) {
+      await mongoose.connection.dropDatabase();
+      await mongoose.connection.close();
+      await mongoServer.stop();
+      console.log('Closed MongoDB Memory Server connection');
+    }
   } catch (error) {
-    console.error('Error closing MongoDB connection:', error);
+    console.error('Error closing MongoDB Memory Server:', error);
     throw error;
   }
 };
@@ -43,14 +57,16 @@ const closeDatabase = async () => {
  */
 const clearDatabase = async () => {
   try {
-    const collections = mongoose.connection.collections;
-    for (const key in collections) {
-      const collection = collections[key];
-      await collection.deleteMany({});
+    if (mongoServer) {
+      const collections = mongoose.connection.collections;
+      for (const key in collections) {
+        const collection = collections[key];
+        await collection.deleteMany({});
+      }
+      console.log('Cleared all collections in MongoDB Memory Server');
     }
-    console.log('Cleared all collections in MongoDB');
   } catch (error) {
-    console.error('Error clearing MongoDB collections:', error);
+    console.error('Error clearing MongoDB Memory Server collections:', error);
     throw error;
   }
 };

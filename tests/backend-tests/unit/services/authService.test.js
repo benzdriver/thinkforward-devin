@@ -3,8 +3,8 @@
  */
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const User = require('../../../../backend/models/User');
-const authService = require('../../../../backend/services/authService');
+const User = require('../../../mocks/models/User');
+const authService = require('../../../mocks/services/authService');
 const { clearDatabase } = require('../../setup/db');
 
 describe('Auth Service', () => {

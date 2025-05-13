@@ -75,7 +75,7 @@ userSchema.methods.comparePassword = async function(enteredPassword) {
 userSchema.methods.generateAuthToken = function() {
   return jwt.sign(
     { userId: this._id, email: this.email, role: this.role },
-    process.env.JWT_SECRET || 'test-jwt-secret',
+    process.env.JWT_SECRET || 'thinkforward-secret-key',
     { expiresIn: '1h' }
   );
 };
@@ -86,12 +86,32 @@ userSchema.methods.generateAuthToken = function() {
 userSchema.methods.generateRefreshToken = function() {
   const refreshToken = jwt.sign(
     { userId: this._id },
-    process.env.JWT_REFRESH_SECRET || 'test-jwt-refresh-secret',
+    process.env.JWT_REFRESH_SECRET || 'thinkforward-refresh-secret-key',
     { expiresIn: '7d' }
   );
   
   this.refreshToken = refreshToken;
   return refreshToken;
+};
+
+userSchema.statics.findByUserId = async function(userId) {
+  return this.findById(userId);
+};
+
+const originalFindById = mongoose.Query.prototype.findById;
+if (originalFindById) {
+  mongoose.Query.prototype.findById = function(...args) {
+    return originalFindById.apply(this, args).catch(err => {
+      if (err.message.includes('No document found for query')) {
+        return null;
+      }
+      throw err;
+    });
+  };
+}
+
+userSchema.statics.findByEmail = async function(email) {
+  return this.findOne({ email }).select('+password');
 };
 
 const User = mongoose.model('User', userSchema);
