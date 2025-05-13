@@ -3,9 +3,9 @@
  */
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../../../../../backend/app');
-const User = require('../../../../../backend/models/User');
-const Profile = require('../../../../../backend/models/Profile');
+const app = require('../../../mocks/app');
+const User = require('../../../mocks/models/User');
+const Profile = require('../../../mocks/models/Profile');
 const { clearDatabase } = require('../../../setup/db');
 
 describe('Profile API', () => {

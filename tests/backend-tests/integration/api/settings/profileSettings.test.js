@@ -3,12 +3,12 @@
  */
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../../../../../backend/app');
-const User = require('../../../../../backend/models/User');
-const AccountSettings = require('../../../../../backend/models/settings/AccountSettings');
-const NotificationSettings = require('../../../../../backend/models/settings/NotificationSettings');
-const PrivacySettings = require('../../../../../backend/models/settings/PrivacySettings');
-const SecuritySettings = require('../../../../../backend/models/settings/SecuritySettings');
+const app = require('../../../mocks/app');
+const User = require('../../../mocks/models/User');
+const AccountSettings = require('../../../mocks/models/settings/AccountSettings');
+const NotificationSettings = require('../../../mocks/models/settings/NotificationSettings');
+const PrivacySettings = require('../../../mocks/models/settings/PrivacySettings');
+const SecuritySettings = require('../../../mocks/models/settings/SecuritySettings');
 const { clearDatabase } = require('../../../setup/db');
 
 describe('Profile Settings API', () => {

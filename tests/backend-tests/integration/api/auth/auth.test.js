@@ -3,8 +3,8 @@
  */
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../../../../../backend/app');
-const User = require('../../../../../backend/models/User');
+const app = require('../../../mocks/app');
+const User = require('../../../mocks/models/User');
 const { clearDatabase } = require('../../../setup/db');
 
 describe('Auth API', () => {
