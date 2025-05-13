@@ -136,33 +136,37 @@ if (!process.env.USE_REAL_DB) {
         })
       };
     } else if (modelName === 'Profile') {
+      const createTestProfile = (userId) => {
+        return createMockDocument({
+          userId: userId,
+          personalInfo: {
+            firstName: 'Test',
+            lastName: 'User',
+            dateOfBirth: new Date('1990-01-01'),
+            nationality: 'Test Country'
+          },
+          educationInfo: {
+            highestDegree: 'bachelor',
+            institution: 'Test University'
+          },
+          workExperience: {
+            occupation: 'Software Engineer',
+            yearsOfExperience: 5
+          },
+          languageSkills: {
+            englishProficiency: 'advanced'
+          },
+          immigrationInfo: {
+            desiredCountry: 'Canada',
+            desiredProvince: 'Ontario'
+          }
+        }, modelName);
+      };
+      
       mockImplementation = {
         findOne: jest.fn().mockImplementation((query) => {
           if (query && query.userId) {
-            return Promise.resolve(createMockDocument({
-              userId: query.userId,
-              personalInfo: {
-                firstName: 'Test',
-                lastName: 'User',
-                dateOfBirth: new Date('1990-01-01'),
-                nationality: 'Test Country'
-              },
-              educationInfo: {
-                highestDegree: 'bachelor',
-                institution: 'Test University'
-              },
-              workExperience: {
-                occupation: 'Software Engineer',
-                yearsOfExperience: 5
-              },
-              languageSkills: {
-                englishProficiency: 'advanced'
-              },
-              immigrationInfo: {
-                desiredCountry: 'Canada',
-                desiredProvince: 'Ontario'
-              }
-            }, modelName));
+            return Promise.resolve(createTestProfile(query.userId));
           }
           return Promise.resolve(null);
         }),
@@ -178,6 +182,22 @@ if (!process.env.USE_REAL_DB) {
             }, modelName));
           }
           return Promise.resolve(null);
+        }),
+        findByUserId: jest.fn().mockImplementation((userId) => {
+          if (userId) {
+            return Promise.resolve(createTestProfile(userId));
+          }
+          return Promise.resolve(null);
+        }),
+        calculateCompletionStatus: jest.fn().mockImplementation(() => {
+          return {
+            personalInfo: true,
+            educationInfo: true,
+            workExperience: true,
+            languageSkills: true,
+            immigrationInfo: true,
+            overall: 100
+          };
         })
       };
     }

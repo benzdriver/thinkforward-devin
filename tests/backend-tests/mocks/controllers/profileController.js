@@ -17,7 +17,7 @@ exports.getProfile = async (req, res) => {
       });
     }
     
-    const profile = await Profile.findByUserId(userId);
+    const profile = await Profile.findOne({ userId });
     
     if (!profile) {
       return res.status(404).json({
@@ -33,6 +33,7 @@ exports.getProfile = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Error in getProfile:', error);
     res.status(500).json({
       success: false,
       message: error.message
@@ -54,7 +55,7 @@ exports.updateProfile = async (req, res) => {
       });
     }
     
-    let profile = await Profile.findByUserId(userId);
+    let profile = await Profile.findOne({ userId });
     
     if (!profile) {
       profile = await Profile.create({
@@ -76,6 +77,7 @@ exports.updateProfile = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Error in updateProfile:', error);
     res.status(500).json({
       success: false,
       message: error.message
@@ -97,7 +99,7 @@ exports.getCompletionStatus = async (req, res) => {
       });
     }
     
-    const profile = await Profile.findByUserId(userId);
+    const profile = await Profile.findOne({ userId });
     
     if (!profile) {
       return res.status(404).json({
@@ -106,15 +108,31 @@ exports.getCompletionStatus = async (req, res) => {
       });
     }
     
-    const completionStatus = profile.calculateCompletionStatus();
+    // Use completionStatus directly instead of calling calculateCompletionStatus
+    const completionStatus = profile.completionStatus || {
+      personalInfo: false,
+      educationInfo: false,
+      workExperience: false,
+      languageSkills: false,
+      immigrationInfo: false,
+      overall: 0
+    };
+    
+    const sections = Object.keys(completionStatus).filter(key => key !== 'overall');
+    const completedSections = sections.filter(section => completionStatus[section]).length;
+    const overall = sections.length > 0 ? Math.round((completedSections / sections.length) * 100) : 0;
     
     res.status(200).json({
       success: true,
       data: {
-        completionStatus
+        completionStatus: {
+          ...completionStatus,
+          overall
+        }
       }
     });
   } catch (error) {
+    console.error('Error in getCompletionStatus:', error);
     res.status(500).json({
       success: false,
       message: error.message
@@ -136,7 +154,7 @@ exports.updatePersonalInfo = async (req, res) => {
       });
     }
     
-    let profile = await Profile.findByUserId(userId);
+    let profile = await Profile.findOne({ userId });
     
     if (!profile) {
       profile = await Profile.create({
@@ -159,6 +177,7 @@ exports.updatePersonalInfo = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Error in updatePersonalInfo:', error);
     res.status(500).json({
       success: false,
       message: error.message
@@ -180,25 +199,26 @@ exports.updateEducation = async (req, res) => {
       });
     }
     
-    let profile = await Profile.findByUserId(userId);
+    let profile = await Profile.findOne({ userId });
     
     if (!profile) {
       profile = await Profile.create({
         userId,
-        education: req.body
+        educationInfo: req.body
       });
     } else {
-      profile.education = req.body;
+      profile.educationInfo = req.body;
       await profile.save();
     }
     
     res.status(200).json({
       success: true,
       data: {
-        education: profile.education
+        educationInfo: profile.educationInfo
       }
     });
   } catch (error) {
+    console.error('Error in updateEducation:', error);
     res.status(500).json({
       success: false,
       message: error.message
@@ -220,7 +240,7 @@ exports.updateWorkExperience = async (req, res) => {
       });
     }
     
-    let profile = await Profile.findByUserId(userId);
+    let profile = await Profile.findOne({ userId });
     
     if (!profile) {
       profile = await Profile.create({
@@ -239,6 +259,7 @@ exports.updateWorkExperience = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Error in updateWorkExperience:', error);
     res.status(500).json({
       success: false,
       message: error.message
@@ -260,7 +281,7 @@ exports.updateLanguageSkills = async (req, res) => {
       });
     }
     
-    let profile = await Profile.findByUserId(userId);
+    let profile = await Profile.findOne({ userId });
     
     if (!profile) {
       profile = await Profile.create({
@@ -279,6 +300,7 @@ exports.updateLanguageSkills = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Error in updateLanguageSkills:', error);
     res.status(500).json({
       success: false,
       message: error.message
@@ -300,7 +322,7 @@ exports.updateImmigrationInfo = async (req, res) => {
       });
     }
     
-    let profile = await Profile.findByUserId(userId);
+    let profile = await Profile.findOne({ userId });
     
     if (!profile) {
       profile = await Profile.create({
@@ -323,6 +345,7 @@ exports.updateImmigrationInfo = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Error in updateImmigrationInfo:', error);
     res.status(500).json({
       success: false,
       message: error.message

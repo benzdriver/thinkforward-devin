@@ -9,14 +9,13 @@ const authMiddleware = require('../../../mocks/middleware/authMiddleware');
 
 router.use(authMiddleware.verifyToken);
 
-router.get('/', profileController.getProfile);
-router.get('/:userId', profileController.getProfile);
-
-router.patch('/', profileController.updateProfile);
-router.patch('/:userId', profileController.updateProfile);
-
 router.get('/completion', profileController.getCompletionStatus);
+router.get('/', profileController.getProfile);
+router.patch('/', profileController.updateProfile);
+
 router.get('/:userId/completion', profileController.getCompletionStatus);
+router.get('/:userId', profileController.getProfile);
+router.patch('/:userId', profileController.updateProfile);
 
 router.patch('/personal-info', profileController.updatePersonalInfo);
 router.patch('/:userId/personal-info', profileController.updatePersonalInfo);
