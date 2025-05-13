@@ -67,7 +67,7 @@ describe('Profile API', () => {
     });
   });
 
-  describe('PUT /api/profile', () => {
+  describe('PATCH /api/profile', () => {
     it('should create profile if it does not exist', async () => {
       const profileData = {
         personalInfo: {
@@ -82,7 +82,7 @@ describe('Profile API', () => {
       };
       
       const response = await request(app)
-        .put('/api/profile')
+        .patch('/api/profile')
         .set('Authorization', `Bearer ${token}`)
         .send(profileData)
         .expect(200);
@@ -117,7 +117,7 @@ describe('Profile API', () => {
       };
       
       const response = await request(app)
-        .put('/api/profile')
+        .patch('/api/profile')
         .set('Authorization', `Bearer ${token}`)
         .send(updatedData)
         .expect(200);
@@ -132,7 +132,7 @@ describe('Profile API', () => {
 
     it('should return 401 if not authenticated', async () => {
       const response = await request(app)
-        .put('/api/profile')
+        .patch('/api/profile')
         .send({})
         .expect(401);
       

@@ -1,28 +1,36 @@
 /**
  * Mock profileRoutes for testing
+ * Matches the actual backend implementation
  */
 const express = require('express');
 const router = express.Router();
 const profileController = require('../../../mocks/controllers/profileController');
-const { verifyToken } = require('../../../mocks/middleware/authMiddleware');
+const authMiddleware = require('../../../mocks/middleware/authMiddleware');
 
-router.get('/', verifyToken, profileController.getProfile);
-router.get('/:userId', verifyToken, profileController.getProfile);
-router.put('/', verifyToken, profileController.updateProfile);
-router.put('/:userId', verifyToken, profileController.updateProfile);
+router.use(authMiddleware.verifyToken);
 
-router.get('/completion', verifyToken, profileController.getCompletionStatus);
-router.get('/:userId/completion', verifyToken, profileController.getCompletionStatus);
+router.get('/', profileController.getProfile);
+router.get('/:userId', profileController.getProfile);
 
-router.put('/personal-info', verifyToken, profileController.updatePersonalInfo);
-router.put('/:userId/personal-info', verifyToken, profileController.updatePersonalInfo);
-router.put('/education', verifyToken, profileController.updateEducation);
-router.put('/:userId/education', verifyToken, profileController.updateEducation);
-router.put('/work-experience', verifyToken, profileController.updateWorkExperience);
-router.put('/:userId/work-experience', verifyToken, profileController.updateWorkExperience);
-router.put('/language-skills', verifyToken, profileController.updateLanguageSkills);
-router.put('/:userId/language-skills', verifyToken, profileController.updateLanguageSkills);
-router.put('/immigration-info', verifyToken, profileController.updateImmigrationInfo);
-router.put('/:userId/immigration-info', verifyToken, profileController.updateImmigrationInfo);
+router.patch('/', profileController.updateProfile);
+router.patch('/:userId', profileController.updateProfile);
+
+router.get('/completion', profileController.getCompletionStatus);
+router.get('/:userId/completion', profileController.getCompletionStatus);
+
+router.patch('/personal-info', profileController.updatePersonalInfo);
+router.patch('/:userId/personal-info', profileController.updatePersonalInfo);
+
+router.patch('/education-info', profileController.updateEducation);
+router.patch('/:userId/education-info', profileController.updateEducation);
+
+router.patch('/work-experience', profileController.updateWorkExperience);
+router.patch('/:userId/work-experience', profileController.updateWorkExperience);
+
+router.patch('/language-skills', profileController.updateLanguageSkills);
+router.patch('/:userId/language-skills', profileController.updateLanguageSkills);
+
+router.patch('/immigration-info', profileController.updateImmigrationInfo);
+router.patch('/:userId/immigration-info', profileController.updateImmigrationInfo);
 
 module.exports = router;

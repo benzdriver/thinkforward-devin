@@ -1,45 +1,31 @@
 /**
  * Mock profileSettingsRoutes for testing
+ * Matches the actual backend routes structure
  */
 const express = require('express');
 const router = express.Router();
 const profileSettingsController = require('../../../mocks/controllers/settings/profileSettingsController');
-const { verifyToken } = require('../../../mocks/middleware/authMiddleware');
+const authMiddleware = require('../../../mocks/middleware/authMiddleware');
 
-router.get('/', verifyToken, profileSettingsController.getAllSettings);
-router.get('/:userId', verifyToken, profileSettingsController.getAllSettings);
+router.get('/:userId', authMiddleware.verifyToken, profileSettingsController.getAllSettings);
+router.post('/:userId/initialize', authMiddleware.verifyToken, profileSettingsController.initializeSettings);
 
-router.post('/initialize', verifyToken, profileSettingsController.initializeSettings);
-router.post('/:userId/initialize', verifyToken, profileSettingsController.initializeSettings);
+router.get('/:userId/account', authMiddleware.verifyToken, profileSettingsController.getAccountSettings);
+router.put('/:userId/account', authMiddleware.verifyToken, profileSettingsController.updateAccountSettings);
 
-router.get('/account', verifyToken, profileSettingsController.getAccountSettings);
-router.get('/:userId/account', verifyToken, profileSettingsController.getAccountSettings);
-router.put('/account', verifyToken, profileSettingsController.updateAccountSettings);
-router.put('/:userId/account', verifyToken, profileSettingsController.updateAccountSettings);
+router.get('/:userId/notifications', authMiddleware.verifyToken, profileSettingsController.getNotificationSettings);
+router.put('/:userId/notifications', authMiddleware.verifyToken, profileSettingsController.updateNotificationSettings);
 
-router.get('/notifications', verifyToken, profileSettingsController.getNotificationSettings);
-router.get('/:userId/notifications', verifyToken, profileSettingsController.getNotificationSettings);
-router.put('/notifications', verifyToken, profileSettingsController.updateNotificationSettings);
-router.put('/:userId/notifications', verifyToken, profileSettingsController.updateNotificationSettings);
+router.get('/:userId/privacy', authMiddleware.verifyToken, profileSettingsController.getPrivacySettings);
+router.put('/:userId/privacy', authMiddleware.verifyToken, profileSettingsController.updatePrivacySettings);
 
-router.get('/privacy', verifyToken, profileSettingsController.getPrivacySettings);
-router.get('/:userId/privacy', verifyToken, profileSettingsController.getPrivacySettings);
-router.put('/privacy', verifyToken, profileSettingsController.updatePrivacySettings);
-router.put('/:userId/privacy', verifyToken, profileSettingsController.updatePrivacySettings);
+router.get('/:userId/security', authMiddleware.verifyToken, profileSettingsController.getSecuritySettings);
+router.put('/:userId/security', authMiddleware.verifyToken, profileSettingsController.updateSecuritySettings);
 
-router.get('/security', verifyToken, profileSettingsController.getSecuritySettings);
-router.get('/:userId/security', verifyToken, profileSettingsController.getSecuritySettings);
-router.put('/security', verifyToken, profileSettingsController.updateSecuritySettings);
-router.put('/:userId/security', verifyToken, profileSettingsController.updateSecuritySettings);
+router.post('/:userId/sessions', authMiddleware.verifyToken, profileSettingsController.addSession);
+router.delete('/:userId/sessions/:sessionId', authMiddleware.verifyToken, profileSettingsController.removeSession);
+router.delete('/:userId/sessions', authMiddleware.verifyToken, profileSettingsController.removeAllOtherSessions);
 
-router.post('/sessions', verifyToken, profileSettingsController.addSession);
-router.post('/:userId/sessions', verifyToken, profileSettingsController.addSession);
-router.delete('/sessions/:sessionId', verifyToken, profileSettingsController.removeSession);
-router.delete('/:userId/sessions/:sessionId', verifyToken, profileSettingsController.removeSession);
-router.delete('/sessions', verifyToken, profileSettingsController.removeAllOtherSessions);
-router.delete('/:userId/sessions', verifyToken, profileSettingsController.removeAllOtherSessions);
-
-router.post('/password-change', verifyToken, profileSettingsController.updatePasswordChangeTime);
-router.post('/:userId/password-change', verifyToken, profileSettingsController.updatePasswordChangeTime);
+router.post('/:userId/password-change', authMiddleware.verifyToken, profileSettingsController.updatePasswordChangeTime);
 
 module.exports = router;

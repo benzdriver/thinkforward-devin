@@ -26,7 +26,7 @@ describe('Profile Settings API', () => {
     token = user.generateAuthToken();
   });
 
-  describe('GET /api/settings', () => {
+  describe('GET /api/profile-settings/:userId', () => {
     it('should return 200 and all settings if they exist', async () => {
       await Promise.all([
         AccountSettings.createDefault(user._id, 'test@example.com'),
@@ -36,7 +36,7 @@ describe('Profile Settings API', () => {
       ]);
       
       const response = await request(app)
-        .get('/api/settings')
+        .get(`/api/profile-settings/${user._id}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(200);
       
@@ -51,7 +51,7 @@ describe('Profile Settings API', () => {
 
     it('should return 401 if not authenticated', async () => {
       const response = await request(app)
-        .get('/api/settings')
+        .get(`/api/profile-settings/${user._id}`)
         .expect(401);
       
       expect(response.body.success).toBe(false);
@@ -59,12 +59,12 @@ describe('Profile Settings API', () => {
     });
   });
 
-  describe('GET /api/settings/account', () => {
+  describe('GET /api/profile-settings/:userId/account', () => {
     it('should return 200 and account settings if they exist', async () => {
       await AccountSettings.createDefault(user._id, 'test@example.com');
       
       const response = await request(app)
-        .get('/api/settings/account')
+        .get(`/api/profile-settings/${user._id}/account`)
         .set('Authorization', `Bearer ${token}`)
         .expect(200);
       
@@ -76,7 +76,7 @@ describe('Profile Settings API', () => {
 
     it('should create and return default account settings if they do not exist', async () => {
       const response = await request(app)
-        .get('/api/settings/account')
+        .get(`/api/profile-settings/${user._id}/account`)
         .set('Authorization', `Bearer ${token}`)
         .expect(200);
       
@@ -87,7 +87,7 @@ describe('Profile Settings API', () => {
     });
   });
 
-  describe('PUT /api/settings/account', () => {
+  describe('PUT /api/profile-settings/:userId/account', () => {
     it('should update account settings and return 200', async () => {
       await AccountSettings.createDefault(user._id, 'test@example.com');
       
@@ -97,7 +97,7 @@ describe('Profile Settings API', () => {
       };
       
       const response = await request(app)
-        .put('/api/settings/account')
+        .put(`/api/profile-settings/${user._id}/account`)
         .set('Authorization', `Bearer ${token}`)
         .send(updatedData)
         .expect(200);
@@ -113,12 +113,12 @@ describe('Profile Settings API', () => {
     });
   });
 
-  describe('GET /api/settings/notifications', () => {
+  describe('GET /api/profile-settings/:userId/notifications', () => {
     it('should return 200 and notification settings if they exist', async () => {
       await NotificationSettings.createDefault(user._id);
       
       const response = await request(app)
-        .get('/api/settings/notifications')
+        .get(`/api/profile-settings/${user._id}/notifications`)
         .set('Authorization', `Bearer ${token}`)
         .expect(200);
       
@@ -131,12 +131,12 @@ describe('Profile Settings API', () => {
     });
   });
 
-  describe('GET /api/settings/privacy', () => {
+  describe('GET /api/profile-settings/:userId/privacy', () => {
     it('should return 200 and privacy settings if they exist', async () => {
       await PrivacySettings.createDefault(user._id);
       
       const response = await request(app)
-        .get('/api/settings/privacy')
+        .get(`/api/profile-settings/${user._id}/privacy`)
         .set('Authorization', `Bearer ${token}`)
         .expect(200);
       
@@ -149,12 +149,12 @@ describe('Profile Settings API', () => {
     });
   });
 
-  describe('GET /api/settings/security', () => {
+  describe('GET /api/profile-settings/:userId/security', () => {
     it('should return 200 and security settings if they exist', async () => {
       await SecuritySettings.createDefault(user._id);
       
       const response = await request(app)
-        .get('/api/settings/security')
+        .get(`/api/profile-settings/${user._id}/security`)
         .set('Authorization', `Bearer ${token}`)
         .expect(200);
       
@@ -166,7 +166,7 @@ describe('Profile Settings API', () => {
     });
   });
 
-  describe('PUT /api/settings/security', () => {
+  describe('PUT /api/profile-settings/:userId/security', () => {
     it('should update security settings and return 200', async () => {
       await SecuritySettings.createDefault(user._id);
       
@@ -175,7 +175,7 @@ describe('Profile Settings API', () => {
       };
       
       const response = await request(app)
-        .put('/api/settings/security')
+        .put(`/api/profile-settings/${user._id}/security`)
         .set('Authorization', `Bearer ${token}`)
         .send(updatedData)
         .expect(200);

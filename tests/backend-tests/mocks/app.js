@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
-app.use('/api/settings', profileSettingsRoutes);
+app.use('/api/profile-settings', profileSettingsRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
