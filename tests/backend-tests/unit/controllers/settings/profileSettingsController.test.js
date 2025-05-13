@@ -1,11 +1,11 @@
 /**
  * Profile Settings Controller tests
  */
-const profileSettingsController = require('../../../../../backend/controllers/settings/profileSettingsController');
-const profileSettingsService = require('../../../../../backend/services/settings/profileSettingsService');
+const profileSettingsController = require('../../../mocks/controllers/settings/profileSettingsController');
+const profileSettingsService = require('../../../mocks/services/settings/profileSettingsService');
 const { validationResult } = require('express-validator');
 
-jest.mock('../../../../../backend/services/settings/profileSettingsService');
+jest.mock('../../../mocks/services/settings/profileSettingsService');
 jest.mock('express-validator');
 
 describe('Profile Settings Controller', () => {
