@@ -21,9 +21,9 @@ exports.verifyToken = async (req, res, next) => {
     
     const token = authHeader.split(' ')[1];
     
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'test-secret-key');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'test-jwt-secret');
     
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(decoded.userId);
     
     if (!user) {
       return res.status(401).json({
