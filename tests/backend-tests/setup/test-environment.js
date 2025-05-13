@@ -200,6 +200,127 @@ if (!process.env.USE_REAL_DB) {
           };
         })
       };
+    } else if (modelName === 'AccountSettings') {
+      const createTestAccountSettings = (userId) => {
+        return createMockDocument({
+          userId: userId,
+          email: 'test@example.com',
+          emailVerified: true,
+          language: 'zh-CN',
+          timezone: 'Asia/Shanghai',
+          updatedAt: new Date().toISOString()
+        }, modelName);
+      };
+      
+      mockImplementation = {
+        findOne: jest.fn().mockImplementation((query) => {
+          if (query && query.userId) {
+            return Promise.resolve(createTestAccountSettings(query.userId));
+          }
+          return Promise.resolve(null);
+        }),
+        findByUserId: jest.fn().mockImplementation((userId) => {
+          if (userId) {
+            return Promise.resolve(createTestAccountSettings(userId));
+          }
+          return Promise.resolve(null);
+        }),
+        createDefault: jest.fn().mockImplementation((userId, email) => {
+          return Promise.resolve(createMockDocument({
+            userId,
+            email: email || 'test@example.com',
+            emailVerified: false,
+            language: 'zh-CN',
+            timezone: 'Asia/Shanghai',
+            updatedAt: new Date().toISOString()
+          }, modelName));
+        })
+      };
+    } else if (modelName === 'SecuritySettings') {
+      const createTestSecuritySettings = (userId) => {
+        return createMockDocument({
+          userId: userId,
+          twoFactorEnabled: false,
+          loginAlertsEnabled: true,
+          activeSessions: [],
+          lastPasswordChange: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }, modelName);
+      };
+      
+      mockImplementation = {
+        findOne: jest.fn().mockImplementation((query) => {
+          if (query && query.userId) {
+            return Promise.resolve(createTestSecuritySettings(query.userId));
+          }
+          return Promise.resolve(null);
+        }),
+        findByUserId: jest.fn().mockImplementation((userId) => {
+          if (userId) {
+            return Promise.resolve(createTestSecuritySettings(userId));
+          }
+          return Promise.resolve(null);
+        }),
+        createDefault: jest.fn().mockImplementation((userId, currentSession) => {
+          const settings = {
+            userId,
+            twoFactorEnabled: false,
+            loginAlertsEnabled: true,
+            activeSessions: [],
+            lastPasswordChange: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          };
+          
+          if (currentSession) {
+            settings.activeSessions.push({
+              id: currentSession.id || 'test-session',
+              device: currentSession.device || 'Test Device',
+              location: currentSession.location || 'Unknown',
+              lastActive: new Date().toISOString(),
+              current: true
+            });
+          }
+          
+          return Promise.resolve(createMockDocument(settings, modelName));
+        })
+      };
+    } else if (modelName === 'NotificationSettings' || modelName === 'PrivacySettings') {
+      const createTestSettings = (userId) => {
+        const baseSettings = {
+          userId: userId,
+          updatedAt: new Date().toISOString()
+        };
+        
+        if (modelName === 'NotificationSettings') {
+          baseSettings.emailNotifications = true;
+          baseSettings.pushNotifications = false;
+          baseSettings.smsNotifications = false;
+        } else if (modelName === 'PrivacySettings') {
+          baseSettings.profileVisibility = 'public';
+          baseSettings.showEmail = false;
+          baseSettings.showPhone = false;
+        }
+        
+        return createMockDocument(baseSettings, modelName);
+      };
+      
+      mockImplementation = {
+        findOne: jest.fn().mockImplementation((query) => {
+          if (query && query.userId) {
+            return Promise.resolve(createTestSettings(query.userId));
+          }
+          return Promise.resolve(null);
+        }),
+        findByUserId: jest.fn().mockImplementation((userId) => {
+          if (userId) {
+            return Promise.resolve(createTestSettings(userId));
+          }
+          return Promise.resolve(null);
+        }),
+        createDefault: jest.fn().mockImplementation((userId) => {
+          return Promise.resolve(createTestSettings(userId));
+        })
+      };
     }
     
     const ValidationError = function(errors) {
