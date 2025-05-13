@@ -1,0 +1,54 @@
+{
+  "name": "thinkforward-backend-tests",
+  "version": "1.0.0",
+  "description": "Backend tests for ThinkForward AI",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:unit": "jest unit",
+    "test:integration": "jest integration",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.21.2",
+    "express-validator": "^6.15.0",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.23",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.27.2",
+    "babel-jest": "^29.7.0",
+    "faker": "^5.5.3",
+    "jest": "^27.0.6",
+    "mongodb-memory-server": "^7.3.6",
+    "supertest": "^6.1.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "testTimeout": 30000,
+    "moduleDirectories": [
+      "node_modules",
+      "../node_modules"
+    ],
+    "modulePaths": [
+      "<rootDir>/node_modules",
+      "<rootDir>/../node_modules"
+    ],
+    "testMatch": [
+      "<rootDir>/unit/**/*.test.js",
+      "<rootDir>/integration/**/*.test.js"
+    ]
+  }
+}
