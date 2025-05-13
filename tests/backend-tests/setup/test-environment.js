@@ -4,6 +4,7 @@
 const dotenv = require('dotenv');
 const path = require('path');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 dotenv.config({
   path: path.resolve(__dirname, '../../../.env.test')
@@ -20,21 +21,72 @@ if (!process.env.USE_REAL_DB) {
     return this;
   };
   
+  const createMockDocument = (data) => {
+    const doc = {
+      _id: data._id || new mongoose.Types.ObjectId(),
+      ...data,
+      save: jest.fn().mockResolvedValue(data),
+      comparePassword: jest.fn().mockResolvedValue(true),
+      generateAuthToken: jest.fn().mockImplementation(function() {
+        return jwt.sign(
+          { userId: this._id, email: this.email, role: this.role || 'user' },
+          process.env.JWT_SECRET,
+          { expiresIn: '1h' }
+        );
+      }),
+      generateRefreshToken: jest.fn().mockImplementation(function() {
+        const refreshToken = jwt.sign(
+          { userId: this._id },
+          process.env.JWT_REFRESH_SECRET,
+          { expiresIn: '7d' }
+        );
+        this.refreshToken = refreshToken;
+        return refreshToken;
+      })
+    };
+    
+    return doc;
+  };
+  
   mongoose.model = jest.fn().mockImplementation((modelName, schema) => {
+    let mockImplementation = {};
+    
+    if (modelName === 'User') {
+      mockImplementation = {
+        findOne: jest.fn().mockImplementation((query) => {
+          if (query && query.email === 'test@example.com') {
+            return Promise.resolve(createMockDocument({
+              name: 'Test User',
+              email: 'test@example.com',
+              password: 'hashedpassword123',
+              role: 'user'
+            }));
+          }
+          return Promise.resolve(null);
+        }),
+        findById: jest.fn().mockImplementation((id) => {
+          if (id) {
+            return Promise.resolve(createMockDocument({
+              _id: id,
+              name: 'Test User',
+              email: 'test@example.com',
+              role: 'user'
+            }));
+          }
+          return Promise.resolve(null);
+        })
+      };
+    }
+    
     const mockModel = {
       find: jest.fn().mockResolvedValue([]),
       findOne: jest.fn().mockResolvedValue(null),
       findById: jest.fn().mockResolvedValue(null),
-      create: jest.fn().mockImplementation(data => {
-        return {
-          _id: new mongoose.Types.ObjectId(),
-          ...data,
-          save: jest.fn().mockResolvedValue(data)
-        };
-      }),
+      create: jest.fn().mockImplementation(data => createMockDocument(data)),
       deleteMany: jest.fn().mockResolvedValue({ deletedCount: 0 }),
       updateOne: jest.fn().mockResolvedValue({ nModified: 1 }),
-      select: jest.fn().mockReturnThis()
+      select: jest.fn().mockReturnThis(),
+      ...mockImplementation
     };
     
     if (schema && schema.methods) {
