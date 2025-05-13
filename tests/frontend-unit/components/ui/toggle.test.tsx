@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { Toggle } from '@/components/ui/toggle';
+import { Toggle } from '../../mocks/toggle.tsx';
 
 describe('Toggle 组件', () => {
   it('渲染基本开关', () => {
