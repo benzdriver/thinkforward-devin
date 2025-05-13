@@ -28,9 +28,7 @@ exports.getProfile = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      data: {
-        profile
-      }
+      data: profile
     });
   } catch (error) {
     console.error('Error in getProfile:', error);
@@ -72,9 +70,7 @@ exports.updateProfile = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      data: {
-        profile
-      }
+      data: profile
     });
   } catch (error) {
     console.error('Error in updateProfile:', error);
@@ -125,10 +121,8 @@ exports.getCompletionStatus = async (req, res) => {
     res.status(200).json({
       success: true,
       data: {
-        completionStatus: {
-          ...completionStatus,
-          overall
-        }
+        ...completionStatus,
+        overall
       }
     });
   } catch (error) {
@@ -172,9 +166,7 @@ exports.updatePersonalInfo = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      data: {
-        personalInfo: profile.personalInfo
-      }
+      data: profile.personalInfo
     });
   } catch (error) {
     console.error('Error in updatePersonalInfo:', error);
@@ -213,9 +205,7 @@ exports.updateEducation = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      data: {
-        educationInfo: profile.educationInfo
-      }
+      data: profile.educationInfo
     });
   } catch (error) {
     console.error('Error in updateEducation:', error);
@@ -254,9 +244,7 @@ exports.updateWorkExperience = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      data: {
-        workExperience: profile.workExperience
-      }
+      data: profile.workExperience
     });
   } catch (error) {
     console.error('Error in updateWorkExperience:', error);
@@ -295,9 +283,7 @@ exports.updateLanguageSkills = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      data: {
-        languageSkills: profile.languageSkills
-      }
+      data: profile.languageSkills
     });
   } catch (error) {
     console.error('Error in updateLanguageSkills:', error);
@@ -340,9 +326,7 @@ exports.updateImmigrationInfo = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      data: {
-        immigrationInfo: profile.immigrationInfo
-      }
+      data: profile.immigrationInfo
     });
   } catch (error) {
     console.error('Error in updateImmigrationInfo:', error);
