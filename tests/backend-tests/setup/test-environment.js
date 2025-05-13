@@ -102,6 +102,67 @@ if (!process.env.USE_REAL_DB) {
       };
       
       doc.updateCompletionStatus();
+    } else if (modelName === 'AccountSettings') {
+      doc.updateSettings = function(settings) {
+        const allowedFields = ['email', 'language', 'timezone'];
+        
+        allowedFields.forEach(field => {
+          if (settings[field] !== undefined) {
+            this[field] = settings[field];
+          }
+        });
+        
+        this.updatedAt = new Date().toISOString();
+        return Promise.resolve(this);
+      };
+    } else if (modelName === 'SecuritySettings') {
+      doc.enableTwoFactor = function(method) {
+        this.twoFactorEnabled = true;
+        this.twoFactorMethod = method;
+        this.updatedAt = new Date().toISOString();
+        return Promise.resolve(this);
+      };
+      
+      doc.disableTwoFactor = function() {
+        this.twoFactorEnabled = false;
+        this.twoFactorMethod = undefined;
+        this.updatedAt = new Date().toISOString();
+        return Promise.resolve(this);
+      };
+      
+      doc.toggleLoginAlerts = function(enabled) {
+        this.loginAlertsEnabled = enabled;
+        this.updatedAt = new Date().toISOString();
+        return Promise.resolve(this);
+      };
+      
+      doc.addSession = function(sessionInfo) {
+        const session = {
+          id: sessionInfo.id || 'test-session',
+          device: sessionInfo.device || 'Test Device',
+          location: sessionInfo.location || 'Unknown',
+          lastActive: new Date().toISOString(),
+          current: true
+        };
+        
+        this.activeSessions.push(session);
+        return Promise.resolve(this);
+      };
+      
+      doc.removeSession = function(sessionId) {
+        this.activeSessions = this.activeSessions.filter(session => session.id !== sessionId);
+        return Promise.resolve(this);
+      };
+      
+      doc.removeAllOtherSessions = function() {
+        this.activeSessions = this.activeSessions.filter(session => session.current);
+        return Promise.resolve(this);
+      };
+      
+      doc.updatePasswordChangeTime = function() {
+        this.lastPasswordChange = new Date().toISOString();
+        return Promise.resolve(this);
+      };
     }
     
     return doc;
@@ -140,8 +201,8 @@ if (!process.env.USE_REAL_DB) {
         return createMockDocument({
           userId: userId,
           personalInfo: {
-            firstName: 'Test',
-            lastName: 'User',
+            firstName: 'John',
+            lastName: 'Doe',
             dateOfBirth: new Date('1990-01-01'),
             nationality: 'Test Country'
           },
@@ -241,7 +302,7 @@ if (!process.env.USE_REAL_DB) {
         return createMockDocument({
           userId: userId,
           twoFactorEnabled: false,
-          loginAlertsEnabled: true,
+          loginAlertsEnabled: false,
           activeSessions: [],
           lastPasswordChange: new Date().toISOString(),
           updatedAt: new Date().toISOString()
@@ -292,11 +353,25 @@ if (!process.env.USE_REAL_DB) {
         };
         
         if (modelName === 'NotificationSettings') {
-          baseSettings.emailNotifications = true;
-          baseSettings.pushNotifications = false;
-          baseSettings.smsNotifications = false;
+          baseSettings.email = {
+            assessmentResults: true,
+            pathwayUpdates: true,
+            messages: true
+          };
+          baseSettings.push = {
+            assessmentResults: true,
+            pathwayUpdates: false,
+            messages: true
+          };
+          baseSettings.sms = {
+            assessmentResults: false,
+            pathwayUpdates: false,
+            messages: false
+          };
         } else if (modelName === 'PrivacySettings') {
           baseSettings.profileVisibility = 'public';
+          baseSettings.activityVisibility = 'connections';
+          baseSettings.documentVisibility = 'private';
           baseSettings.showEmail = false;
           baseSettings.showPhone = false;
         }
