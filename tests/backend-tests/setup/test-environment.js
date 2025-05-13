@@ -21,11 +21,16 @@ if (!process.env.USE_REAL_DB) {
     return this;
   };
   
-  const createMockDocument = (data) => {
+  const createMockDocument = (data, modelName) => {
     const doc = {
       _id: data._id || new mongoose.Types.ObjectId(),
       ...data,
-      save: jest.fn().mockResolvedValue(data),
+      save: jest.fn().mockImplementation(function() {
+        if (modelName === 'Profile' && this.lastUpdated) {
+          this.lastUpdated = new Date().toISOString();
+        }
+        return Promise.resolve(this);
+      }),
       comparePassword: jest.fn().mockResolvedValue(true),
       generateAuthToken: jest.fn().mockImplementation(function() {
         return jwt.sign(
@@ -45,6 +50,60 @@ if (!process.env.USE_REAL_DB) {
       })
     };
     
+    if (modelName === 'Profile') {
+      if (!doc.completionStatus) {
+        doc.completionStatus = {
+          personalInfo: false,
+          educationInfo: false,
+          workExperience: false,
+          languageSkills: false,
+          immigrationInfo: false
+        };
+      }
+      
+      doc.isComplete = function() {
+        const { personalInfo, educationInfo, workExperience, languageSkills, immigrationInfo } = this.completionStatus;
+        return personalInfo && educationInfo && workExperience && languageSkills && immigrationInfo;
+      };
+      
+      doc.updateCompletionStatus = function() {
+        if (!this.personalInfo) this.personalInfo = {};
+        if (!this.educationInfo) this.educationInfo = {};
+        if (!this.workExperience) this.workExperience = {};
+        if (!this.languageSkills) this.languageSkills = {};
+        if (!this.immigrationInfo) this.immigrationInfo = {};
+        
+        this.completionStatus.personalInfo = !!(
+          this.personalInfo.firstName &&
+          this.personalInfo.lastName &&
+          this.personalInfo.dateOfBirth &&
+          this.personalInfo.nationality
+        );
+        
+        this.completionStatus.educationInfo = !!(
+          this.educationInfo.highestDegree &&
+          this.educationInfo.institution
+        );
+        
+        this.completionStatus.workExperience = !!(
+          this.workExperience.occupation &&
+          this.workExperience.yearsOfExperience
+        );
+        
+        this.completionStatus.languageSkills = !!(
+          this.languageSkills.englishProficiency &&
+          this.languageSkills.englishProficiency !== 'none'
+        );
+        
+        this.completionStatus.immigrationInfo = !!(
+          this.immigrationInfo.desiredCountry &&
+          this.immigrationInfo.desiredProvince
+        );
+      };
+      
+      doc.updateCompletionStatus();
+    }
+    
     return doc;
   };
   
@@ -60,7 +119,7 @@ if (!process.env.USE_REAL_DB) {
               email: 'test@example.com',
               password: 'hashedpassword123',
               role: 'user'
-            }));
+            }, modelName));
           }
           return Promise.resolve(null);
         }),
@@ -71,18 +130,76 @@ if (!process.env.USE_REAL_DB) {
               name: 'Test User',
               email: 'test@example.com',
               role: 'user'
-            }));
+            }, modelName));
+          }
+          return Promise.resolve(null);
+        })
+      };
+    } else if (modelName === 'Profile') {
+      mockImplementation = {
+        findOne: jest.fn().mockImplementation((query) => {
+          if (query && query.userId) {
+            return Promise.resolve(createMockDocument({
+              userId: query.userId,
+              personalInfo: {
+                firstName: 'Test',
+                lastName: 'User',
+                dateOfBirth: new Date('1990-01-01'),
+                nationality: 'Test Country'
+              },
+              educationInfo: {
+                highestDegree: 'bachelor',
+                institution: 'Test University'
+              },
+              workExperience: {
+                occupation: 'Software Engineer',
+                yearsOfExperience: 5
+              },
+              languageSkills: {
+                englishProficiency: 'advanced'
+              },
+              immigrationInfo: {
+                desiredCountry: 'Canada',
+                desiredProvince: 'Ontario'
+              }
+            }, modelName));
+          }
+          return Promise.resolve(null);
+        }),
+        findById: jest.fn().mockImplementation((id) => {
+          if (id) {
+            return Promise.resolve(createMockDocument({
+              _id: id,
+              userId: new mongoose.Types.ObjectId(),
+              personalInfo: {
+                firstName: 'Test',
+                lastName: 'User'
+              }
+            }, modelName));
           }
           return Promise.resolve(null);
         })
       };
     }
     
+    const ValidationError = function(errors) {
+      this.name = 'ValidationError';
+      this.errors = errors;
+      Error.captureStackTrace(this, this.constructor);
+    };
+    ValidationError.prototype = Object.create(Error.prototype);
+    ValidationError.prototype.constructor = ValidationError;
+    
     const mockModel = {
       find: jest.fn().mockResolvedValue([]),
       findOne: jest.fn().mockResolvedValue(null),
       findById: jest.fn().mockResolvedValue(null),
-      create: jest.fn().mockImplementation(data => createMockDocument(data)),
+      create: jest.fn().mockImplementation(data => {
+        if (modelName === 'Profile' && !data.userId) {
+          throw new ValidationError({ userId: { message: 'Path `userId` is required.' } });
+        }
+        return createMockDocument(data, modelName);
+      }),
       deleteMany: jest.fn().mockResolvedValue({ deletedCount: 0 }),
       updateOne: jest.fn().mockResolvedValue({ nModified: 1 }),
       select: jest.fn().mockReturnThis(),
