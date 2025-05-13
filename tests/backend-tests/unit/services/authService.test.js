@@ -15,8 +15,8 @@ describe('Auth Service', () => {
   describe('authenticateUser', () => {
     it('should authenticate user with valid credentials', async () => {
       const userData = {
-        name: 'Test User',
-        email: 'test@example.com',
+        name: 'Test User Auth',
+        email: 'test-auth-valid@example.com',
         password: 'password123'
       };
       
@@ -44,8 +44,8 @@ describe('Auth Service', () => {
 
     it('should throw error for invalid password', async () => {
       const userData = {
-        name: 'Test User',
-        email: 'test@example.com',
+        name: 'Test User Auth Invalid',
+        email: 'test-auth-invalid@example.com',
         password: 'password123'
       };
       
@@ -64,8 +64,8 @@ describe('Auth Service', () => {
   describe('createUser', () => {
     it('should create a new user with valid data', async () => {
       const userData = {
-        name: 'Test User',
-        email: 'test@example.com',
+        name: 'Test User Create',
+        email: 'test-create-valid@example.com',
         password: 'password123'
       };
       
@@ -86,8 +86,8 @@ describe('Auth Service', () => {
 
     it('should throw error if user with email already exists', async () => {
       const userData = {
-        name: 'Test User',
-        email: 'test@example.com',
+        name: 'Test User Create Duplicate',
+        email: 'test-create-duplicate@example.com',
         password: 'password123'
       };
       
@@ -106,8 +106,8 @@ describe('Auth Service', () => {
   describe('verifyToken', () => {
     it('should verify valid token', async () => {
       const userData = {
-        name: 'Test User',
-        email: 'test@example.com',
+        name: 'Test User Verify',
+        email: 'test-verify@example.com',
         password: 'password123'
       };
       
@@ -138,8 +138,8 @@ describe('Auth Service', () => {
   describe('logoutUser', () => {
     it('should clear refresh token on logout', async () => {
       const userData = {
-        name: 'Test User',
-        email: 'test@example.com',
+        name: 'Test User Logout',
+        email: 'test-logout@example.com',
         password: 'password123'
       };
       
