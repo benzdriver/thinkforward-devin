@@ -2,7 +2,7 @@
 const { i18n } = require('./next-i18next.config');
 
 const nextConfig = {
-  output: 'export',
+  // output: 'export', // Removed to fix i18n compatibility
   distDir: 'dist',
   images: {
     unoptimized: true,

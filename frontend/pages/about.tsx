@@ -57,8 +57,8 @@ const AboutPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>{t('about.pageTitle') as string} | ThinkForward AI</title>
-        <meta name="description" content={t('about.metaDescription') as string} />
+        <title>{t('about.pageTitle', { defaultValue: '关于我们' }) as string} | ThinkForward AI</title>
+        <meta name="description" content={t('about.metaDescription', { defaultValue: 'ThinkForward AI是一家利用人工智能技术变革移民咨询服务的公司，致力于使移民流程更加便捷、高效和成功。' }) as string} />
       </Head>
       
       <main className="flex-1">
@@ -66,10 +66,10 @@ const AboutPage: React.FC = () => {
         <div className="bg-gradient-to-r from-primary-900 to-primary-800 text-white py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">{t('about.heroTitle')}</h1>
-              <p className="text-xl mb-8">{t('about.heroSubtitle')}</p>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">{t('about.heroTitle', { defaultValue: '用AI变革移民咨询' })}</h1>
+              <p className="text-xl mb-8">{t('about.heroSubtitle', { defaultValue: '我们的使命是让移民流程对每个人都更加便捷、高效和成功。' })}</p>
               <Button size="lg" variant="secondary">
-                {t('about.contactUs')}
+                {t('about.contactUs', { defaultValue: '联系我们' })}
               </Button>
             </div>
           </div>
@@ -78,25 +78,25 @@ const AboutPage: React.FC = () => {
         {/* 我们的使命 */}
         <SectionContainer>
           <PageHeader
-            title={t('about.missionTitle')}
-            description={t('about.missionSubtitle')}
+            title={t('about.missionTitle', { defaultValue: '我们的使命' })}
+            description={t('about.missionSubtitle', { defaultValue: '我们存在的原因和推动我们前进的动力' })}
           />
           
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <p className="text-lg mb-6">
-                {t('about.missionText1')}
+                {t('about.missionText1', { defaultValue: '在ThinkForward AI，我们相信每个人都应该获得清晰、个性化的移民指导。我们的使命是通过结合人类专业知识和前沿AI技术，使移民咨询服务民主化。' })}
               </p>
               <p className="text-lg mb-6">
-                {t('about.missionText2')}
+                {t('about.missionText2', { defaultValue: '我们致力于降低移民流程的复杂性、成本和不确定性，帮助个人和家庭充满信心和清晰地规划他们的移民之旅。' })}
               </p>
               <p className="text-lg">
-                {t('about.missionText3')}
+                {t('about.missionText3', { defaultValue: '我们的平台弥合了传统咨询服务和自助服务选项之间的差距，提供结合两者优势的混合方法。' })}
               </p>
             </div>
             <div className="relative h-80 rounded-lg overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-400">{t('about.imagePlaceholder')}</span>
+                <span className="text-gray-400">{t('about.imagePlaceholder', { defaultValue: '图片占位符' })}</span>
               </div>
               {/* <Image 
                 src="/images/about/mission.jpg" 
@@ -112,8 +112,8 @@ const AboutPage: React.FC = () => {
         <div className="bg-gray-50 py-16">
           <SectionContainer>
             <PageHeader
-              title={t('about.valuesTitle')}
-              description={t('about.valuesSubtitle')}
+              title={t('about.valuesTitle', { defaultValue: '我们的价值观' })}
+              description={t('about.valuesSubtitle', { defaultValue: '指导我们工作的原则' })}
             />
             
             <div className="grid md:grid-cols-3 gap-8">
@@ -123,8 +123,8 @@ const AboutPage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">{t('about.value1Title')}</h3>
-                <p className="text-gray-600">{t('about.value1Text')}</p>
+                <h3 className="text-xl font-semibold mb-4">{t('about.value1Title', { defaultValue: '信任与透明' })}</h3>
+                <p className="text-gray-600">{t('about.value1Text', { defaultValue: '我们相信通过透明的流程、清晰的沟通和诚实的指导在移民旅程的每一步建立信任。' })}</p>
               </Card>
               
               <Card className="p-8">
@@ -133,8 +133,8 @@ const AboutPage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">{t('about.value2Title')}</h3>
-                <p className="text-gray-600">{t('about.value2Text')}</p>
+                <h3 className="text-xl font-semibold mb-4">{t('about.value2Title', { defaultValue: '创新与可及性' })}</h3>
+                <p className="text-gray-600">{t('about.value2Text', { defaultValue: '我们致力于利用技术使移民服务更加便捷、经济实惠和高效，让每个人都能获得帮助。' })}</p>
               </Card>
               
               <Card className="p-8">
@@ -143,8 +143,8 @@ const AboutPage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">{t('about.value3Title')}</h3>
-                <p className="text-gray-600">{t('about.value3Text')}</p>
+                <h3 className="text-xl font-semibold mb-4">{t('about.value3Title', { defaultValue: '以人为本的方法' })}</h3>
+                <p className="text-gray-600">{t('about.value3Text', { defaultValue: '虽然我们拥抱AI，但我们从不忽视人的因素。我们的技术增强而非取代专家顾问的个人接触。' })}</p>
               </Card>
             </div>
           </SectionContainer>
@@ -153,8 +153,8 @@ const AboutPage: React.FC = () => {
         {/* 我们的团队 */}
         <SectionContainer>
           <PageHeader
-            title={t('about.teamTitle')}
-            description={t('about.teamSubtitle')}
+            title={t('about.teamTitle', { defaultValue: '我们的团队' })}
+            description={t('about.teamSubtitle', { defaultValue: '我们背后的专业人士' })}
           />
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -180,14 +180,14 @@ const AboutPage: React.FC = () => {
         <div className="bg-primary-50 py-16">
           <SectionContainer>
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-6">{t('about.contactTitle')}</h2>
-              <p className="text-lg mb-8">{t('about.contactText')}</p>
+              <h2 className="text-3xl font-bold mb-6">{t('about.contactTitle', { defaultValue: '联系我们' })}</h2>
+              <p className="text-lg mb-8">{t('about.contactText', { defaultValue: '准备好开始您的移民之旅了吗？与我们的专家顾问预约咨询，了解ThinkForward AI如何帮助您实现移民目标。' })}</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" variant="primary">
-                  {t('about.scheduleConsultation')}
+                  {t('about.scheduleConsultation', { defaultValue: '预约咨询' })}
                 </Button>
                 <Button size="lg" variant="outline">
-                  {t('about.learnMore')}
+                  {t('about.learnMore', { defaultValue: '了解更多' })}
                 </Button>
               </div>
             </div>
