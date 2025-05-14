@@ -36,55 +36,55 @@ type PricingPlan = {
 const pricingPlans: PricingPlan[] = [
   {
     id: 'basic',
-    name: 'Basic',
+    name: '基础版',
     description: 'pricing.basicDescription',
     price: {
       monthly: 99,
       yearly: 990,
     },
     features: [
-      'pricing.basicFeature1',
-      'pricing.basicFeature2',
-      'pricing.basicFeature3',
-      'pricing.basicFeature4',
+      '基本功能访问',
+      '用户管理',
+      '标准客户支持',
+      '基础数据分析',
     ],
     buttonVariant: 'outline',
   },
   {
     id: 'professional',
-    name: 'Professional',
+    name: '专业版',
     description: 'pricing.professionalDescription',
     price: {
       monthly: 199,
       yearly: 1990,
     },
     features: [
-      'pricing.professionalFeature1',
-      'pricing.professionalFeature2',
-      'pricing.professionalFeature3',
-      'pricing.professionalFeature4',
-      'pricing.professionalFeature5',
-      'pricing.professionalFeature6',
+      '所有基础版功能',
+      '高级分析功能',
+      '优先客户支持',
+      '多用户管理',
+      'API访问',
+      '高级报表功能',
     ],
     popular: true,
     buttonVariant: 'primary',
   },
   {
     id: 'enterprise',
-    name: 'Enterprise',
+    name: '企业版',
     description: 'pricing.enterpriseDescription',
     price: {
       monthly: 399,
       yearly: 3990,
     },
     features: [
-      'pricing.enterpriseFeature1',
-      'pricing.enterpriseFeature2',
-      'pricing.enterpriseFeature3',
-      'pricing.enterpriseFeature4',
-      'pricing.enterpriseFeature5',
-      'pricing.enterpriseFeature6',
-      'pricing.enterpriseFeature7',
+      '所有专业版功能',
+      '专属客户经理',
+      '自定义集成',
+      '高级安全功能',
+      '无限用户',
+      '24/7全天候支持',
+      '定制化解决方案',
     ],
     buttonVariant: 'secondary',
   },
@@ -134,8 +134,8 @@ const PricingPage: React.FC = () => {
         <div className="bg-gradient-to-r from-primary-900 to-primary-800 text-white py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">{t('pricing.heroTitle')}</h1>
-              <p className="text-xl mb-8">{t('pricing.heroSubtitle')}</p>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">{t('pricing.heroTitle', { defaultValue: '简单透明的价格方案' }) as string}</h1>
+              <p className="text-xl mb-8">{t('pricing.heroSubtitle', { defaultValue: '选择最适合您需求的方案，随时可以升级或降级。' }) as string}</p>
             </div>
           </div>
         </div>
@@ -144,8 +144,8 @@ const PricingPage: React.FC = () => {
         <SectionContainer>
           <div className="text-center mb-12">
             <PageHeader
-              title={t('pricing.plansTitle')}
-              description={t('pricing.plansSubtitle')}
+              title={t('pricing.plansTitle', { defaultValue: '选择您的方案' }) as string}
+              description={t('pricing.plansSubtitle', { defaultValue: '我们提供灵活的价格方案，满足不同规模和需求的客户' }) as string}
             />
             
             {/* 计费周期切换 */}
@@ -156,13 +156,13 @@ const PricingPage: React.FC = () => {
                 onValueChange={(value) => setBillingCycle(value as 'monthly' | 'yearly')}
               >
                 <TabsList>
-                  <TabsTrigger value="monthly">{t('pricing.monthly')}</TabsTrigger>
-                  <TabsTrigger value="yearly">{t('pricing.yearly')}</TabsTrigger>
+                  <TabsTrigger value="monthly">{t('pricing.monthly', { defaultValue: '月付' }) as string}</TabsTrigger>
+                  <TabsTrigger value="yearly">{t('pricing.yearly', { defaultValue: '年付' }) as string}</TabsTrigger>
                 </TabsList>
               </Tabs>
               {billingCycle === 'yearly' && (
                 <Badge variant="success" className="ml-2">
-                  {t('pricing.savePercent')}
+                  {t('pricing.savePercent', { defaultValue: '节省16%' }) as string}
                 </Badge>
               )}
             </div>
@@ -179,12 +179,12 @@ const PricingPage: React.FC = () => {
               >
                 {plan.popular && (
                   <Badge variant="primary" className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                    {t('pricing.mostPopular')}
+                    {t('pricing.mostPopular', { defaultValue: '最受欢迎' }) as string}
                   </Badge>
                 )}
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2">{t(`pricing.${plan.id}Title`)}</h3>
-                  <p className="text-gray-600">{t(plan.description)}</p>
+                  <h3 className="text-2xl font-bold mb-2">{t(`pricing.${plan.id}Title`, { defaultValue: plan.name }) as string}</h3>
+                  <p className="text-gray-600">{t(plan.description, { defaultValue: `${plan.name} plan description` }) as string}</p>
                 </div>
                 
                 <div className="mb-6">
@@ -193,12 +193,12 @@ const PricingPage: React.FC = () => {
                       ${billingCycle === 'monthly' ? plan.price.monthly : plan.price.yearly}
                     </span>
                     <span className="text-gray-500 ml-2">
-                      {billingCycle === 'monthly' ? t('pricing.perMonth') : t('pricing.perYear')}
+                      {billingCycle === 'monthly' ? t('pricing.perMonth', { defaultValue: '/月' }) as string : t('pricing.perYear', { defaultValue: '/年' }) as string}
                     </span>
                   </div>
                   {billingCycle === 'yearly' && (
                     <p className="text-success-600 text-sm mt-2">
-                      {t('pricing.monthlyEquivalent', { price: Math.round(plan.price.yearly / 12) })}
+                      {t('pricing.monthlyEquivalent', { price: Math.round(plan.price.yearly / 12), defaultValue: `相当于每月 $${Math.round(plan.price.yearly / 12)}` }) as string}
                     </p>
                   )}
                 </div>
@@ -209,7 +209,7 @@ const PricingPage: React.FC = () => {
                       <svg className="h-5 w-5 text-success-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>{t(feature)}</span>
+                      <span>{t(feature, { defaultValue: `Feature ${index + 1}` }) as string}</span>
                     </li>
                   ))}
                 </ul>
@@ -219,7 +219,7 @@ const PricingPage: React.FC = () => {
                   size="lg" 
                   className="w-full mt-auto"
                 >
-                  {t('pricing.selectPlan')}
+                  {t('pricing.selectPlan', { defaultValue: '选择此方案' }) as string}
                 </Button>
               </Card>
             ))}
@@ -227,10 +227,10 @@ const PricingPage: React.FC = () => {
           
           {/* 企业定制 */}
           <div className="mt-16 bg-gray-50 rounded-lg p-8 text-center">
-            <h3 className="text-2xl font-bold mb-4">{t('pricing.customTitle')}</h3>
-            <p className="text-lg mb-6 max-w-3xl mx-auto">{t('pricing.customDescription')}</p>
+            <h3 className="text-2xl font-bold mb-4">{t('pricing.customTitle', { defaultValue: '需要企业定制方案？' }) as string}</h3>
+            <p className="text-lg mb-6 max-w-3xl mx-auto">{t('pricing.customDescription', { defaultValue: '我们提供灵活的企业级定制方案，满足您的特定需求。联系我们的销售团队了解更多。' }) as string}</p>
             <Button variant="primary" size="lg">
-              {t('pricing.contactSales')}
+              {t('pricing.contactSales', { defaultValue: '联系销售团队' }) as string}
             </Button>
           </div>
         </SectionContainer>
@@ -239,53 +239,53 @@ const PricingPage: React.FC = () => {
         <div className="bg-gray-50 py-16">
           <SectionContainer>
             <PageHeader
-              title={t('pricing.comparisonTitle')}
-              description={t('pricing.comparisonSubtitle')}
+              title={t('pricing.comparisonTitle', { defaultValue: '功能比较' }) as string}
+              description={t('pricing.comparisonSubtitle', { defaultValue: '查看不同方案之间的功能差异' }) as string}
             />
             
             <div className="overflow-x-auto">
               <table className="w-full mt-8 border-collapse">
                 <thead>
                   <tr className="border-b-2 border-gray-200">
-                    <th className="py-4 px-6 text-left">{t('pricing.feature')}</th>
-                    <th className="py-4 px-6 text-center">{t('pricing.basicTitle')}</th>
-                    <th className="py-4 px-6 text-center">{t('pricing.professionalTitle')}</th>
-                    <th className="py-4 px-6 text-center">{t('pricing.enterpriseTitle')}</th>
+                    <th className="py-4 px-6 text-left">{t('pricing.feature', { defaultValue: '功能' }) as string}</th>
+                    <th className="py-4 px-6 text-center">{t('pricing.basicTitle', { defaultValue: '基础版' }) as string}</th>
+                    <th className="py-4 px-6 text-center">{t('pricing.professionalTitle', { defaultValue: '专业版' }) as string}</th>
+                    <th className="py-4 px-6 text-center">{t('pricing.enterpriseTitle', { defaultValue: '企业版' }) as string}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200">
-                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature1')}</td>
+                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature1', { defaultValue: '基本功能访问' }) as string}</td>
                     <td className="py-4 px-6 text-center">✓</td>
                     <td className="py-4 px-6 text-center">✓</td>
                     <td className="py-4 px-6 text-center">✓</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature2')}</td>
+                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature2', { defaultValue: '用户管理' }) as string}</td>
                     <td className="py-4 px-6 text-center">✓</td>
                     <td className="py-4 px-6 text-center">✓</td>
                     <td className="py-4 px-6 text-center">✓</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature3')}</td>
+                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature3', { defaultValue: '高级分析功能' }) as string}</td>
                     <td className="py-4 px-6 text-center">—</td>
                     <td className="py-4 px-6 text-center">✓</td>
                     <td className="py-4 px-6 text-center">✓</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature4')}</td>
+                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature4', { defaultValue: '优先客户支持' }) as string}</td>
                     <td className="py-4 px-6 text-center">—</td>
                     <td className="py-4 px-6 text-center">✓</td>
                     <td className="py-4 px-6 text-center">✓</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature5')}</td>
+                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature5', { defaultValue: '专属客户经理' }) as string}</td>
                     <td className="py-4 px-6 text-center">—</td>
                     <td className="py-4 px-6 text-center">—</td>
                     <td className="py-4 px-6 text-center">✓</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature6')}</td>
+                    <td className="py-4 px-6 font-medium">{t('pricing.comparisonFeature6', { defaultValue: '自定义集成' }) as string}</td>
                     <td className="py-4 px-6 text-center">—</td>
                     <td className="py-4 px-6 text-center">—</td>
                     <td className="py-4 px-6 text-center">✓</td>
@@ -299,15 +299,15 @@ const PricingPage: React.FC = () => {
         {/* 常见问题 */}
         <SectionContainer>
           <PageHeader
-            title={t('pricing.faqTitle')}
-            description={t('pricing.faqSubtitle')}
+            title={t('pricing.faqTitle', { defaultValue: '常见问题' }) as string}
+            description={t('pricing.faqSubtitle', { defaultValue: '关于我们服务的常见问题解答' }) as string}
           />
           
           <div className="max-w-3xl mx-auto">
             {faqs.map((faq, index) => (
               <div key={index} className="mb-8 border-b border-gray-200 pb-6 last:border-0">
-                <h3 className="text-xl font-semibold mb-3">{t(faq.question)}</h3>
-                <p className="text-gray-600">{t(faq.answer)}</p>
+                <h3 className="text-xl font-semibold mb-3">{t(faq.question, { defaultValue: `常见问题 ${index + 1}` }) as string}</h3>
+                <p className="text-gray-600">{t(faq.answer, { defaultValue: `这是常见问题 ${index + 1} 的回答。` }) as string}</p>
               </div>
             ))}
           </div>
@@ -317,14 +317,14 @@ const PricingPage: React.FC = () => {
         <div className="bg-primary-50 py-16">
           <SectionContainer>
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-6">{t('pricing.ctaTitle')}</h2>
-              <p className="text-lg mb-8">{t('pricing.ctaText')}</p>
+              <h2 className="text-3xl font-bold mb-6">{t('pricing.ctaTitle', { defaultValue: '准备好开始了吗？' }) as string}</h2>
+              <p className="text-lg mb-8">{t('pricing.ctaText', { defaultValue: '选择适合您的方案，立即开始使用我们的服务。' }) as string}</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" variant="primary">
-                  {t('pricing.startFreeTrial')}
+                  {t('pricing.startFreeTrial', { defaultValue: '开始免费试用' }) as string}
                 </Button>
                 <Button size="lg" variant="outline">
-                  {t('pricing.contactSales')}
+                  {t('pricing.contactSales', { defaultValue: '联系销售团队' }) as string}
                 </Button>
               </div>
             </div>
