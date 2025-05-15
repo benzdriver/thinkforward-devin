@@ -143,7 +143,7 @@ const FormPreviewPage: React.FC<FormPreviewPageProps> = ({ formId }) => {
             id={fieldPath}
             label={t(`forms.fields.${label}`)}
             message={fieldError?.message}
-            messageType={fieldError?.severity}
+            messageVariant={fieldError?.severity}
           >
             <Input
               value={value || ''}
@@ -159,7 +159,7 @@ const FormPreviewPage: React.FC<FormPreviewPageProps> = ({ formId }) => {
             id={fieldPath}
             label={t(`forms.fields.${label}`)}
             message={fieldError?.message}
-            messageType={fieldError?.severity}
+            messageVariant={fieldError?.severity}
           >
             <Textarea
               value={value || ''}
@@ -175,20 +175,20 @@ const FormPreviewPage: React.FC<FormPreviewPageProps> = ({ formId }) => {
             id={fieldPath}
             label={t(`forms.fields.${label}`)}
             message={fieldError?.message}
-            messageType={fieldError?.severity}
+            messageVariant={fieldError?.severity}
           >
             <Select
               value={value || ''}
-              onChange={(e) => handleFieldChange(fieldPath, e.target.value)}
+              onChange={(value) => handleFieldChange(fieldPath, value)}
               disabled={!editMode}
-            >
-              <option value="">{t('forms.select.placeholder')}</option>
-              {options?.map((option: string) => (
-                <option key={option} value={option}>
-                  {t(`forms.options.${option}`)}
-                </option>
-              ))}
-            </Select>
+              options={[
+                { value: '', label: t('forms.select.placeholder') as string },
+                ...(options?.map((option: string) => ({
+                  value: option,
+                  label: t(`forms.options.${option}`) as string
+                })) || [])
+              ]}
+            />
           </FormField>
         );
         
@@ -198,13 +198,13 @@ const FormPreviewPage: React.FC<FormPreviewPageProps> = ({ formId }) => {
             id={fieldPath}
             label=""
             message={fieldError?.message}
-            messageType={fieldError?.severity}
+            messageVariant={fieldError?.severity}
           >
             <div className="flex items-center">
               <Checkbox
                 id={fieldPath}
                 checked={value || false}
-                onCheckedChange={(checked) => handleFieldChange(fieldPath, checked)}
+                onChange={(e) => handleFieldChange(fieldPath, e.target.checked)}
                 disabled={!editMode}
               />
               <label htmlFor={fieldPath} className="ml-2 text-sm">

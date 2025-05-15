@@ -10,8 +10,8 @@ import { Button } from '../../../components/ui/button';
 import { Card } from '../../../components/ui/card';
 import { Progress } from '../../../components/ui/progress';
 import { Badge } from '../../../components/ui/badge';
-import { Tabs } from '../../../components/ui/tabs';
-import { Accordion } from '../../../components/ui/accordion';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../../components/ui/tabs';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '../../../components/ui/accordion';
 
 const mockAssessmentResult = {
   id: 'preview',
@@ -324,12 +324,12 @@ const AssessmentResult = () => {
         <Card className="p-6">
           <Accordion type="single" collapsible>
             {result.faqs.map((faq, index) => (
-              <Accordion.Item key={index} value={`item-${index}`}>
-                <Accordion.Trigger>{t(faq.question)}</Accordion.Trigger>
-                <Accordion.Content>
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger>{t(faq.question)}</AccordionTrigger>
+                <AccordionContent>
                   <p className="text-gray-600">{t(faq.answer)}</p>
-                </Accordion.Content>
-              </Accordion.Item>
+                </AccordionContent>
+              </AccordionItem>
             ))}
           </Accordion>
         </Card>
@@ -353,17 +353,17 @@ const AssessmentResult = () => {
             onValueChange={setActiveTab}
             className="mb-8"
           >
-            <Tabs.List>
-              <Tabs.Trigger value="pathways">
+            <TabsList>
+              <TabsTrigger value="pathways">
                 {t('assessment.results.tabs.pathways')}
-              </Tabs.Trigger>
-              <Tabs.Trigger value="breakdown">
+              </TabsTrigger>
+              <TabsTrigger value="breakdown">
                 {t('assessment.results.tabs.breakdown')}
-              </Tabs.Trigger>
-              <Tabs.Trigger value="faqs">
+              </TabsTrigger>
+              <TabsTrigger value="faqs">
                 {t('assessment.results.tabs.faqs')}
-              </Tabs.Trigger>
-            </Tabs.List>
+              </TabsTrigger>
+            </TabsList>
           </Tabs>
           
           {activeTab === 'pathways' && renderPathways()}

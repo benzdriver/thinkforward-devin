@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -30,8 +30,24 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 export default function RegisterPage() {
   const { t } = useTranslation('common');
   const router = useRouter();
-  const { register: registerUser, error, resetError } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
+  
+  const authRef = useRef<{ 
+    registerUser?: (email: string, password: string, name: string) => Promise<any> 
+  }>({});
+  
+  useEffect(() => {
+    setIsClient(true);
+    
+    try {
+      const { register: registerUser } = useAuth();
+      authRef.current.registerUser = registerUser;
+    } catch (error) {
+      console.error('Auth context not available during SSR');
+    }
+  }, []);
   
   const {
     register,
@@ -48,14 +64,17 @@ export default function RegisterPage() {
   });
   
   const onSubmit = async (data: RegisterFormData) => {
+    if (!isClient || !authRef.current.registerUser) return;
+    
     setIsSubmitting(true);
-    resetError();
+    setAuthError(null);
     
     try {
-      await registerUser(data.email, data.password, data.name);
+      await authRef.current.registerUser(data.email, data.password, data.name);
       router.push('/auth/login?registered=true');
     } catch (error) {
       console.error('Registration error:', error);
+      setAuthError(error instanceof Error ? error.message : 'Registration failed');
     } finally {
       setIsSubmitting(false);
     }
@@ -79,14 +98,14 @@ export default function RegisterPage() {
           <p className="text-neutral-600 mt-2">{t('auth.registerDescription') as string}</p>
         </div>
         
-        {error && (
+        {authError && (
           <Alert 
             variant="error" 
             className="mb-6"
             title={t('auth.registerError') as string}
-            onDismiss={resetError}
+            onDismiss={() => setAuthError(null)}
           >
-            {error}
+            {authError}
           </Alert>
         )}
         
