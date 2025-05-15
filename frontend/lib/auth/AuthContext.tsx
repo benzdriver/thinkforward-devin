@@ -11,7 +11,7 @@ interface AuthContextType {
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<boolean>;
   resetError: () => void;
   refreshToken: () => Promise<boolean>;
 }
@@ -189,9 +189,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
   }, [authState.isAuthenticated, authState.tokenExpiry]);
   
+  const logout = async (): Promise<boolean> => {
+    try {
+      authState.logout();
+      
+      if (typeof window !== 'undefined') {
+        const cookieName = process.env.NEXT_PUBLIC_AUTH_COOKIE_NAME || 'thinkforward_auth';
+        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        localStorage.removeItem(AUTH_STORAGE_KEY);
+        sessionStorage.removeItem(AUTH_STORAGE_KEY);
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Logout error:', error);
+      return false;
+    }
+  };
+
   const contextValue: AuthContextType = {
     ...authState,
     refreshToken,
+    logout,
   };
   
   return (
