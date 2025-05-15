@@ -95,7 +95,7 @@ const HomePage: React.FC = () => {
               <h3 className="service-title">{t('home.service1Title')}</h3>
               <p className="service-description">{t('home.service1Description')}</p>
               <Link href="/services/express-entry">
-                <button className="btn btn-outline">{t('common.learnMore')}</button>
+                <button className="btn btn-outline">{t('common.learnMore') || '了解更多'}</button>
               </Link>
             </div>
             
@@ -103,7 +103,7 @@ const HomePage: React.FC = () => {
               <h3 className="service-title">{t('home.service2Title')}</h3>
               <p className="service-description">{t('home.service2Description')}</p>
               <Link href="/services/pnp">
-                <button className="btn btn-outline">{t('common.learnMore')}</button>
+                <button className="btn btn-outline">{t('common.learnMore') || '了解更多'}</button>
               </Link>
             </div>
             
@@ -111,7 +111,7 @@ const HomePage: React.FC = () => {
               <h3 className="service-title">{t('home.service3Title')}</h3>
               <p className="service-description">{t('home.service3Description')}</p>
               <Link href="/services/consultation">
-                <button className="btn btn-outline">{t('common.learnMore')}</button>
+                <button className="btn btn-outline">{t('common.learnMore') || '了解更多'}</button>
               </Link>
             </div>
           </div>

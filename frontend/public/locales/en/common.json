@@ -27,7 +27,8 @@
     "previous": "Previous",
     "loading": "Loading...",
     "error": "An error occurred",
-    "success": "Success!"
+    "success": "Success!",
+    "learnMore": "Learn More"
   },
   "about": {
     "pageTitle": "About Us",
@@ -158,7 +159,7 @@
     "generateForms": "Generate Forms",
     "findConsultant": "Find Consultant"
   },
-r  "profile": {
+  "profile": {
     "modeSwitcher": {
       "title": "Profile Collection Mode",
       "conversationMode": "Conversation Mode",

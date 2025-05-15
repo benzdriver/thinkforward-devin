@@ -27,7 +27,8 @@
     "previous": "Précédent",
     "loading": "Chargement...",
     "error": "Une erreur est survenue",
-    "success": "Succès !"
+    "success": "Succès !",
+    "learnMore": "En Savoir Plus"
   },
   "about": {
     "pageTitle": "À Propos de Nous",

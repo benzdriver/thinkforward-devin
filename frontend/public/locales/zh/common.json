@@ -27,7 +27,8 @@
     "previous": "上一步",
     "loading": "加载中...",
     "error": "发生错误",
-    "success": "成功！"
+    "success": "成功！",
+    "learnMore": "了解更多"
   },
   "about": {
     "pageTitle": "关于我们",

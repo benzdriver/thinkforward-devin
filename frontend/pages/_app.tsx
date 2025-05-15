@@ -8,6 +8,7 @@ import { queryClient } from '../lib/api';
 import '../styles/globals.css';
 import '../styles/custom.css'; // Import custom CSS
 import Head from 'next/head';
+import '../i18n'; // Import i18n initialization
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
