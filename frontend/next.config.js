@@ -10,7 +10,8 @@ const nextConfig = {
   trailingSlash: true,
   basePath: '',
   assetPrefix: '/',
-  i18n
+  // Removing i18n config as it conflicts with 'output: export'
+  // i18n
 };
 
 module.exports = nextConfig;
