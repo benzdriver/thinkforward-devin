@@ -89,4 +89,33 @@ body {
   .container {
     @apply px-4 mx-auto max-w-7xl sm:px-6 lg:px-8;
   }
+  
+  /* Loom-inspired card styles */
+  .loom-card {
+    @apply bg-white rounded-xl shadow-loom border border-secondary-200 p-6;
+  }
+  
+  /* Loom-inspired button styles */
+  .loom-button {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors 
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2
+    disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .loom-button-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 px-4 py-2;
+  }
+  
+  .loom-button-secondary {
+    @apply bg-secondary-100 text-secondary-900 hover:bg-secondary-200 px-4 py-2;
+  }
+  
+  /* Loom-inspired gradient backgrounds */
+  .loom-gradient-primary {
+    @apply bg-gradient-to-r from-primary-50 to-secondary-50;
+  }
+  
+  .loom-gradient-secondary {
+    @apply bg-gradient-to-r from-secondary-50 to-primary-50;
+  }
 }

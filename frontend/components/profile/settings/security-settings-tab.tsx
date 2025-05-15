@@ -161,7 +161,7 @@ export const SecuritySettingsTab: React.FC = () => {
             
             <Button
               type="button"
-              variant={securitySettings.twoFactorEnabled ? "outline" : "default"}
+              variant={securitySettings.twoFactorEnabled ? "outline" : "primary"}
               onClick={() => {
                 if (!securitySettings.twoFactorEnabled) {
                 } else {
@@ -233,7 +233,7 @@ export const SecuritySettingsTab: React.FC = () => {
             
             <Button
               type="button"
-              variant={securitySettings.loginAlertsEnabled ? "outline" : "default"}
+              variant={securitySettings.loginAlertsEnabled ? "outline" : "primary"}
               onClick={() => {
                 updateSecuritySettingsMutation.mutate({
                   ...securitySettings,
