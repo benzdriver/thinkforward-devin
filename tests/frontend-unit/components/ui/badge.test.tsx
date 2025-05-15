@@ -80,7 +80,7 @@ describe('Badge 组件', () => {
     const handleRemove = jest.fn();
     render(<Badge onRemove={handleRemove}>可移除徽章</Badge>);
     
-    const removeButton = screen.getByRole('button', { name: '移除' });
+    const removeButton = screen.getByRole('button', { name: 'Remove' });
     expect(removeButton).toBeInTheDocument();
     
     fireEvent.click(removeButton);
@@ -97,7 +97,7 @@ describe('Badge 组件', () => {
       </Badge>
     );
     
-    const removeButton = screen.getByRole('button', { name: '移除' });
+    const removeButton = screen.getByRole('button', { name: 'Remove' });
     fireEvent.click(removeButton);
     
     expect(handleRemove).toHaveBeenCalledTimes(1);
