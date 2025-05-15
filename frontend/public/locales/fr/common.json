@@ -27,7 +27,13 @@
     "previous": "Précédent",
     "loading": "Chargement...",
     "error": "Une erreur est survenue",
-    "success": "Succès !"
+    "success": "Succès !",
+    "welcomeToThinkForward": "Bienvenue à ThinkForward",
+    "homeDescription": "Votre plateforme d'assistance à l'immigration propulsée par l'IA",
+    "welcomeMessage": "Transformez Votre Parcours d'Immigration",
+    "welcomeDescription": "Obtenez des conseils personnalisés et du soutien pour votre processus d'immigration",
+    "userProfile": "Mon Profil",
+    "allRightsReserved": "Tous Droits Réservés"
   },
   "about": {
     "pageTitle": "À Propos de Nous",

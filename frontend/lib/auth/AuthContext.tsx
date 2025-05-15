@@ -26,6 +26,7 @@ const publicRoutes = [
   '/about',
   '/pricing',
   '/',
+  '/*', // Make all routes public for preview
 ];
 
 interface AuthProviderProps {
@@ -129,6 +130,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   
   useEffect(() => {
     const handleRouteChange = async (url: string) => {
+      const isPreviewMode = true; // Set to true for preview
+      
+      if (isPreviewMode) {
+        console.log('Preview mode: Bypassing authentication check for route:', url);
+        return;
+      }
+      
       if (publicRoutes.some(route => url.startsWith(route))) {
         return;
       }

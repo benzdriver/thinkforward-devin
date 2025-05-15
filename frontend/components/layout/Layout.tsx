@@ -2,14 +2,15 @@ import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { Card } from '../ui/card';
+import { cn } from '../../lib/utils';
 
 interface LanguageSwitcherProps {
   className?: string;
 }
 
-const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = '' }) => {
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className }) => {
   const { i18n } = useTranslation();
-  const currentLanguage = i18n.language;
+  const currentLanguage = i18n.language || 'en';
   
   const toggleLanguage = () => {
     const newLanguage = currentLanguage === 'en' ? 'zh' : 'en';
@@ -19,7 +20,10 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = '' }) =
   return (
     <button 
       onClick={toggleLanguage}
-      className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors hover:bg-secondary-100 ${className}`}
+      className={cn(
+        "px-3 py-1.5 text-sm font-medium rounded-md transition-colors hover:bg-secondary-100",
+        className
+      )}
     >
       {currentLanguage === 'en' ? '中文' : 'English'}
     </button>
@@ -30,11 +34,11 @@ interface UserProfileProps {
   className?: string;
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ className = '' }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ className }) => {
   const { t } = useTranslation();
   
   return (
-    <div className={`relative group ${className}`}>
+    <div className={cn("relative group", className)}>
       <button className="flex items-center space-x-2 focus:outline-none">
         <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center border border-primary-200">
           <span className="text-primary-700 font-medium text-sm">TF</span>
@@ -68,21 +72,21 @@ export const Layout: React.FC<LayoutProps> = ({ children, showHero = false }) =>
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className={cn("min-h-screen flex flex-col", "bg-gray-50")}>
       {/* Top Navbar */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+      <header className={cn("bg-white border-b border-gray-200 sticky top-0 z-10")}>
+        <div className={cn("container mx-auto px-4 sm:px-6 lg:px-8")}>
+          <div className={cn("flex justify-between items-center h-16")}>
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center">
-                <span className="text-white font-bold">TF</span>
+            <Link href="/" className={cn("flex items-center space-x-2")}>
+              <div className={cn("w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center")}>
+                <span className={cn("text-white font-bold")}>TF</span>
               </div>
-              <span className="text-xl font-bold text-neutral-900">ThinkForward</span>
+              <span className={cn("text-xl font-bold text-neutral-900")}>ThinkForward</span>
             </Link>
             
             {/* Right side: Language + Profile */}
-            <div className="flex items-center space-x-4">
+            <div className={cn("flex items-center space-x-4")}>
               <LanguageSwitcher />
               <UserProfile />
             </div>
@@ -92,12 +96,12 @@ export const Layout: React.FC<LayoutProps> = ({ children, showHero = false }) =>
       
       {/* Hero Section (Optional) */}
       {showHero && (
-        <div className="bg-gradient-to-r from-primary-50 to-secondary-50 py-12">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
+        <div className={cn("bg-gradient-to-r from-primary-50 to-secondary-50 py-12")}>
+          <div className={cn("container mx-auto px-4 sm:px-6 lg:px-8 text-center")}>
+            <h1 className={cn("text-3xl sm:text-4xl font-bold text-neutral-900 mb-4")}>
               {t('common.welcomeMessage')}
             </h1>
-            <p className="text-lg text-neutral-700 max-w-2xl mx-auto">
+            <p className={cn("text-lg text-neutral-700 max-w-2xl mx-auto")}>
               {t('common.welcomeDescription')}
             </p>
           </div>
@@ -105,10 +109,10 @@ export const Layout: React.FC<LayoutProps> = ({ children, showHero = false }) =>
       )}
       
       {/* Main Content */}
-      <main className="flex-1 py-8">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <main className={cn("flex-1 py-8")}>
+        <div className={cn("container mx-auto px-4 sm:px-6 lg:px-8")}>
           <Card 
-            className="max-w-5xl mx-auto shadow-sm border-secondary-200 overflow-visible p-6 sm:p-8"
+            className={cn("max-w-5xl mx-auto shadow-sm border-secondary-200 overflow-visible p-6 sm:p-8")}
           >
             {children}
           </Card>
@@ -116,9 +120,9 @@ export const Layout: React.FC<LayoutProps> = ({ children, showHero = false }) =>
       </main>
       
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-6">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-sm text-neutral-500">
+      <footer className={cn("bg-white border-t border-gray-200 py-6")}>
+        <div className={cn("container mx-auto px-4 sm:px-6 lg:px-8")}>
+          <div className={cn("text-center text-sm text-neutral-500")}>
             © {new Date().getFullYear()} ThinkForward AI. {t('common.allRightsReserved')}
           </div>
         </div>

@@ -7,6 +7,7 @@ import { StoreProvider } from '../lib/store';
 import { queryClient } from '../lib/api';
 import { Layout } from '../components/layout/Layout';
 import '../styles/globals.css';
+import '../lib/i18n-init'; // Initialize i18next
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

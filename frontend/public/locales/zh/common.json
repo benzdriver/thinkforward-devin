@@ -27,7 +27,13 @@
     "previous": "上一步",
     "loading": "加载中...",
     "error": "发生错误",
-    "success": "成功！"
+    "success": "成功！",
+    "welcomeToThinkForward": "欢迎使用 ThinkForward",
+    "homeDescription": "您的AI驱动移民助手平台",
+    "welcomeMessage": "改变您的移民之旅",
+    "welcomeDescription": "获取个性化的移民流程指导和支持",
+    "userProfile": "我的个人资料",
+    "allRightsReserved": "版权所有"
   },
   "about": {
     "pageTitle": "关于我们",
