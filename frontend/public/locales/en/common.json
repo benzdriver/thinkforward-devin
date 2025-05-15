@@ -223,5 +223,36 @@ r  "profile": {
     },
     "startAssessment": "Start Assessment",
     "questions": "questions"
+  },
+  "footer": {
+    "services": "Services",
+    "expressEntry": "Express Entry",
+    "provincialPrograms": "Provincial Programs",
+    "consultation": "Consultation",
+    "resources": "Resources",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "contact": "Contact Us",
+    "connect": "Connect With Us",
+    "newsletter": "Subscribe to our newsletter",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "allRightsReserved": "All Rights Reserved"
+  },
+  "home": {
+    "feature2Title": "Personalized Guidance",
+    "feature2Description": "Get tailored immigration advice based on your unique profile and goals.",
+    "feature3Title": "Expert Support",
+    "feature3Description": "Connect with immigration consultants who can guide you through every step.",
+    "servicesTitle": "Our Services",
+    "servicesSubtitle": "Comprehensive immigration solutions to meet your needs",
+    "service1Title": "Express Entry",
+    "service1Description": "Fast-track your immigration process through Canada's Express Entry system.",
+    "service2Title": "Provincial Nominee Programs",
+    "service2Description": "Explore provincial pathways tailored to specific regional needs.",
+    "service3Title": "Immigration Consultation",
+    "service3Description": "Get personalized advice from licensed immigration consultants.",
+    "testimonialsTitle": "Success Stories",
+    "testimonialsSubtitle": "Hear from people who achieved their immigration goals with ThinkForward AI"
   }
 }

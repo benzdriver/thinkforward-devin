@@ -1,19 +1,12 @@
 import React from 'react';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Link from 'next/link';
+import { MainLayout } from '../components/layout/main-layout';
 
-import { DashboardLayout } from '../components/layout/dashboard-layout';
-import { Card } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Badge } from '../components/ui/badge';
-import { Progress } from '../components/ui/progress';
-import { SectionContainer } from '../components/layout/section-container';
-
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale || 'en', ['common'])),
@@ -59,176 +52,30 @@ const mockUserData = {
   }
 };
 
-const dashboardNavItems = [
-  {
-    title: '仪表盘',
-    href: '/dashboard',
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <rect x="3" y="3" width="7" height="7" />
-        <rect x="14" y="3" width="7" height="7" />
-        <rect x="14" y="14" width="7" height="7" />
-        <rect x="3" y="14" width="7" height="7" />
-      </svg>
-    ),
-  },
-  {
-    title: '评估',
-    href: '/assessment',
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <polyline points="14 2 14 8 20 8" />
-        <line x1="16" y1="13" x2="8" y2="13" />
-        <line x1="16" y1="17" x2="8" y2="17" />
-        <polyline points="10 9 9 9 8 9" />
-      </svg>
-    ),
-    children: [
-      {
-        title: '开始评估',
-        href: '/assessment/start',
-      },
-      {
-        title: '评估结果',
-        href: '/assessment/results',
-      },
-    ],
-  },
-  {
-    title: '文档',
-    href: '/documents',
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <polyline points="14 2 14 8 20 8" />
-        <line x1="16" y1="13" x2="8" y2="13" />
-        <line x1="16" y1="17" x2="8" y2="17" />
-        <polyline points="10 9 9 9 8 9" />
-      </svg>
-    ),
-    badge: (
-      <Badge variant="primary" size="sm">
-        3
-      </Badge>
-    ),
-  },
-  {
-    title: '表格',
-    href: '/forms',
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <polyline points="9 11 12 14 22 4" />
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-      </svg>
-    ),
-  },
-  {
-    title: '顾问',
-    href: '/consultants',
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-    ),
-  },
-  {
-    title: '设置',
-    href: '/settings',
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="12" cy="12" r="3" />
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-      </svg>
-    ),
-  },
-];
-
 const DashboardPage: React.FC = () => {
   const { t } = useTranslation('common');
   
-  const getStatusBadgeVariant = (status: string) => {
+  const getStatusBadgeClass = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'success';
+        return 'badge badge-success';
       case 'in-progress':
-        return 'primary';
+        return 'badge badge-primary';
       case 'pending':
-        return 'warning';
+        return 'badge badge-warning';
       default:
-        return 'secondary';
+        return 'badge badge-secondary';
     }
   };
   
   const getStatusText = (status: string) => {
     switch (status) {
       case 'completed':
-        return t('dashboard.statusCompleted');
+        return t('dashboard.statusCompleted') || '已完成';
       case 'in-progress':
-        return t('dashboard.statusInProgress');
+        return t('dashboard.statusInProgress') || '进行中';
       case 'pending':
-        return t('dashboard.statusPending');
+        return t('dashboard.statusPending') || '待处理';
       default:
         return status;
     }
@@ -300,70 +147,96 @@ const DashboardPage: React.FC = () => {
   };
   
   return (
-    <>
+    <MainLayout>
       <Head>
-        <title>{t('dashboard.title')} | ThinkForward AI</title>
-        <meta name="description" content={t('dashboard.description') as string} />
+        <title>{t('dashboard.title') || '仪表盘'} | ThinkForward AI</title>
+        <meta name="description" content={t('dashboard.description') || '查看您的移民申请进度和下一步操作'} />
       </Head>
       
-      <DashboardLayout
-        navigationItems={dashboardNavItems}
-        sidebarWidth="md"
-        sidebarVariant="default"
-        defaultCollapsed={false}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* 左侧栏 - 个人资料和下一步 */}
-          <div className="md:col-span-2 space-y-6">
-            {/* 欢迎卡片 */}
-            <Card className="p-6">
+      {/* Hero Section - Airportr style */}
+      <section className="bg-primary-900 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold">
+                {t('dashboard.welcome', { name: mockUserData.name }) || `欢迎回来，${mockUserData.name}`}
+              </h1>
+              <p className="mt-2 opacity-90">
+                {t('dashboard.currentPath') || '当前移民路径'}: <span className="font-medium">{mockUserData.immigrationPath}</span>
+              </p>
+            </div>
+            <div className="mt-4 md:mt-0">
+              <Link href="/assessment/start">
+                <button className="btn btn-light">
+                  {t('dashboard.startNewApplication') || '开始新申请'}
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content - Left and Center */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Profile Completion Card */}
+            <div className="card">
               <div className="flex flex-col md:flex-row md:items-center justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">
-                    {t('dashboard.welcome', { name: mockUserData.name })}
+                <div className="flex-grow">
+                  <h2 className="text-xl font-bold mb-2">
+                    {t('dashboard.profileCompletion') || '个人资料完成度'}
                   </h2>
-                  <p className="text-gray-600 mb-4">
-                    {t('dashboard.currentPath')}: <span className="font-medium">{mockUserData.immigrationPath}</span>
-                  </p>
                   <div className="mb-2">
                     <div className="flex justify-between mb-1">
                       <span className="text-sm font-medium">
-                        {t('dashboard.profileCompletion')}: {mockUserData.profileCompletion}%
+                        {mockUserData.profileCompletion}%
+                      </span>
+                      <span className="text-sm">
+                        {mockUserData.profileCompletion >= 80 
+                          ? (t('dashboard.almostThere') || '即将完成') 
+                          : (t('dashboard.keepGoing') || '继续完善')}
                       </span>
                     </div>
-                    <Progress value={mockUserData.profileCompletion} className="h-2" />
+                    <div className="progress-container">
+                      <div className="progress-bar" style={{ width: `${mockUserData.profileCompletion}%` }}></div>
+                    </div>
                   </div>
                 </div>
                 <div className="mt-4 md:mt-0">
-                  <Button variant="primary">
-                    {t('dashboard.continueProfile')}
-                  </Button>
+                  <Link href="/profile">
+                    <button className="btn btn-primary">
+                      {t('dashboard.continueProfile') || '继续完善资料'}
+                    </button>
+                  </Link>
                 </div>
               </div>
-            </Card>
+            </div>
             
-            {/* 评估结果卡片 */}
-            <Card className="p-6">
+            {/* Assessment Results Card */}
+            <div className="card">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">{t('dashboard.assessmentResults')}</h3>
-                <Link href="/assessment/results" passHref>
-                  <Button variant="link" size="sm">
-                    {t('dashboard.viewDetails')}
-                  </Button>
+                <h2 className="text-xl font-bold">
+                  {t('dashboard.assessmentResults') || '评估结果'}
+                </h2>
+                <Link href="/assessment/results">
+                  <span className="text-primary-700 hover:text-primary-800 text-sm font-medium">
+                    {t('dashboard.viewDetails') || '查看详情'}
+                  </span>
                 </Link>
               </div>
               
               <div className="flex flex-col md:flex-row md:items-center gap-6">
                 <div className="flex-shrink-0 flex flex-col items-center justify-center bg-primary-50 rounded-lg p-4 w-full md:w-auto">
                   <div className="text-3xl font-bold text-primary-700">{mockUserData.assessmentResults.score}</div>
-                  <div className="text-sm text-primary-600">{t('dashboard.points')}</div>
-                  <div className="mt-2 text-sm text-gray-600">
-                    {t('dashboard.lastUpdated')}: {mockUserData.assessmentResults.lastUpdated}
+                  <div className="text-sm text-primary-600">{t('dashboard.points') || '分数'}</div>
+                  <div className="mt-2 text-sm text-neutral-600">
+                    {t('dashboard.lastUpdated') || '最后更新'}: {mockUserData.assessmentResults.lastUpdated}
                   </div>
                 </div>
                 
                 <div className="flex-grow">
-                  <div className="text-sm font-medium mb-2">{t('dashboard.scoreBreakdown')}</div>
+                  <div className="text-sm font-medium mb-2">{t('dashboard.scoreBreakdown') || '分数明细'}</div>
                   <div className="space-y-2">
                     {mockUserData.assessmentResults.breakdown.map((item, index) => (
                       <div key={index}>
@@ -371,129 +244,198 @@ const DashboardPage: React.FC = () => {
                           <span>{item.category}</span>
                           <span>{item.score}/{item.maxScore}</span>
                         </div>
-                        <Progress 
-                          value={(item.score / item.maxScore) * 100} 
-                          className="h-1.5" 
-                        />
+                        <div className="progress-container">
+                          <div 
+                            className="progress-bar" 
+                            style={{ width: `${(item.score / item.maxScore) * 100}%` }}
+                          ></div>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-            </Card>
+            </div>
             
-            {/* 下一步卡片 */}
-            <Card className="p-6">
+            {/* Next Steps Card */}
+            <div className="card">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">{t('dashboard.nextSteps')}</h3>
-                <Link href="/tasks" passHref>
-                  <Button variant="link" size="sm">
-                    {t('dashboard.viewAll')}
-                  </Button>
+                <h2 className="text-xl font-bold">
+                  {t('dashboard.nextSteps') || '下一步'}
+                </h2>
+                <Link href="/tasks">
+                  <span className="text-primary-700 hover:text-primary-800 text-sm font-medium">
+                    {t('dashboard.viewAll') || '查看全部'}
+                  </span>
                 </Link>
               </div>
               
               <div className="space-y-4">
                 {mockUserData.nextSteps.map((step) => (
-                  <div key={step.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex-shrink-0">
+                  <div key={step.id} className="flex items-start p-3 border border-neutral-200 rounded-lg">
+                    <div className="flex-shrink-0 mr-3">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        step.status === 'completed' 
+                          ? 'bg-success-100 text-success-600' 
+                          : step.status === 'in-progress'
+                            ? 'bg-primary-100 text-primary-600'
+                            : 'bg-warning-100 text-warning-600'
+                      }`}>
                         {step.status === 'completed' ? (
-                          <div className="w-6 h-6 rounded-full bg-success-100 flex items-center justify-center">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="14"
-                              height="14"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className="text-success-600"
-                            >
-                              <polyline points="20 6 9 17 4 12" />
-                            </svg>
-                          </div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        ) : step.status === 'in-progress' ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                          </svg>
                         ) : (
-                          <div className="w-6 h-6 rounded-full border-2 border-gray-300" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                          </svg>
                         )}
                       </div>
-                      <div>
-                        <div className="font-medium">{step.title}</div>
-                        <div className="text-sm text-gray-500">
-                          {t('dashboard.dueDate')}: {step.dueDate}
-                        </div>
-                      </div>
                     </div>
-                    <Badge variant={getStatusBadgeVariant(step.status)}>
-                      {getStatusText(step.status)}
-                    </Badge>
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-start">
+                        <h4 className="text-base font-medium">{step.title}</h4>
+                        <span className={getStatusBadgeClass(step.status)}>
+                          {getStatusText(step.status)}
+                        </span>
+                      </div>
+                      <p className="text-sm text-neutral-600 mt-1">
+                        {t('dashboard.dueDate') || '截止日期'}: {step.dueDate}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
               
               <div className="mt-4">
-                <Button variant="outline" className="w-full">
-                  {t('dashboard.addTask')}
-                </Button>
+                <button className="btn btn-outline w-full">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mr-2"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                  {t('dashboard.addTask') || '添加任务'}
+                </button>
               </div>
-            </Card>
+            </div>
           </div>
           
-          {/* 右侧栏 - 最近文档和预约 */}
+          {/* Sidebar - Right Column */}
           <div className="space-y-6">
-            {/* 最近文档卡片 */}
-            <Card className="p-6">
+            {/* Recent Documents Card */}
+            <div className="card">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">{t('dashboard.recentDocuments')}</h3>
-                <Link href="/documents" passHref>
-                  <Button variant="link" size="sm">
-                    {t('dashboard.viewAll')}
-                  </Button>
+                <h2 className="text-xl font-bold">
+                  {t('dashboard.recentDocuments') || '最近文档'}
+                </h2>
+                <Link href="/documents">
+                  <span className="text-primary-700 hover:text-primary-800 text-sm font-medium">
+                    {t('dashboard.viewAll') || '查看全部'}
+                  </span>
                 </Link>
               </div>
               
               <div className="space-y-3">
                 {mockUserData.recentDocuments.map((doc) => (
-                  <div key={doc.id} className="flex items-center p-2 hover:bg-gray-50 rounded-md transition-colors">
-                    <div className="mr-3 flex-shrink-0">
+                  <div key={doc.id} className="flex items-center justify-between p-3 border border-neutral-200 rounded-lg">
+                    <div className="flex items-center space-x-3">
                       {getFileIcon(doc.type)}
+                      <span className="font-medium">{doc.name}</span>
                     </div>
-                    <div className="flex-grow min-w-0">
-                      <div className="font-medium truncate">{doc.name}</div>
-                      <div className="text-sm text-gray-500">
-                        {t('dashboard.updated')}: {doc.updatedAt}
-                      </div>
-                    </div>
+                    <span className="text-sm text-neutral-500">{t('dashboard.updatedOn') || '更新于'}: {doc.updatedAt}</span>
                   </div>
                 ))}
               </div>
               
               <div className="mt-4">
-                <Button variant="outline" className="w-full">
-                  {t('dashboard.uploadDocument')}
-                </Button>
+                <button className="btn btn-outline w-full">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mr-2"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                  {t('dashboard.uploadDocument') || '上传文档'}
+                </button>
               </div>
-            </Card>
+            </div>
             
-            {/* 即将到来的预约卡片 */}
-            <Card className="p-6">
+            {/* Upcoming Appointments Card */}
+            <div className="card">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">{t('dashboard.upcomingAppointments')}</h3>
-                <Link href="/appointments" passHref>
-                  <Button variant="link" size="sm">
-                    {t('dashboard.scheduleNew')}
-                  </Button>
+                <h2 className="text-xl font-bold">
+                  {t('dashboard.upcomingAppointments') || '即将到来的预约'}
+                </h2>
+                <Link href="/appointments">
+                  <span className="text-primary-700 hover:text-primary-800 text-sm font-medium">
+                    {t('dashboard.viewAll') || '查看全部'}
+                  </span>
                 </Link>
               </div>
               
               {mockUserData.upcomingAppointments.length > 0 ? (
                 <div className="space-y-4">
                   {mockUserData.upcomingAppointments.map((appointment) => (
-                    <div key={appointment.id} className="border rounded-lg p-4">
-                      <div className="font-medium mb-2">{appointment.title}</div>
-                      <div className="flex items-center text-sm text-gray-600 mb-1">
+                    <div key={appointment.id} className="p-4 border border-neutral-200 rounded-lg">
+                      <h4 className="font-medium mb-2">{appointment.title}</h4>
+                      <div className="flex items-center text-sm text-neutral-600 mb-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -511,27 +453,9 @@ const DashboardPage: React.FC = () => {
                           <line x1="8" y1="2" x2="8" y2="6" />
                           <line x1="3" y1="10" x2="21" y2="10" />
                         </svg>
-                        {appointment.date}
+                        {appointment.date} | {appointment.time}
                       </div>
-                      <div className="flex items-center text-sm text-gray-600 mb-1">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="mr-2"
-                        >
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                        {appointment.time}
-                      </div>
-                      <div className="flex items-center text-sm text-gray-600">
+                      <div className="flex items-center text-sm text-neutral-600">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -550,18 +474,18 @@ const DashboardPage: React.FC = () => {
                         {appointment.consultant}
                       </div>
                       <div className="mt-3 flex space-x-2">
-                        <Button variant="outline" size="sm">
-                          {t('dashboard.reschedule')}
-                        </Button>
-                        <Button variant="primary" size="sm">
-                          {t('dashboard.joinMeeting')}
-                        </Button>
+                        <button className="btn btn-outline btn-sm">
+                          {t('dashboard.reschedule') || '重新安排'}
+                        </button>
+                        <button className="btn btn-primary btn-sm">
+                          {t('dashboard.joinMeeting') || '加入会议'}
+                        </button>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-6 text-gray-500">
+                <div className="text-center py-6 text-neutral-500">
                   <div className="mb-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -573,7 +497,7 @@ const DashboardPage: React.FC = () => {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="mx-auto text-gray-400"
+                      className="mx-auto text-neutral-400"
                     >
                       <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                       <line x1="16" y1="2" x2="16" y2="6" />
@@ -581,20 +505,22 @@ const DashboardPage: React.FC = () => {
                       <line x1="3" y1="10" x2="21" y2="10" />
                     </svg>
                   </div>
-                  <p>{t('dashboard.noAppointments')}</p>
-                  <Button variant="outline" size="sm" className="mt-3">
-                    {t('dashboard.scheduleAppointment')}
-                  </Button>
+                  <p>{t('dashboard.noAppointments') || '没有预约'}</p>
+                  <button className="btn btn-outline btn-sm mt-3">
+                    {t('dashboard.scheduleAppointment') || '安排预约'}
+                  </button>
                 </div>
               )}
-            </Card>
+            </div>
             
-            {/* 快速链接卡片 */}
-            <Card className="p-6">
-              <h3 className="text-lg font-semibold mb-4">{t('dashboard.quickLinks')}</h3>
+            {/* Quick Links Card */}
+            <div className="card">
+              <h2 className="text-xl font-bold mb-4">
+                {t('dashboard.quickLinks') || '快速链接'}
+              </h2>
               <div className="space-y-2">
-                <Link href="/assessment/start" passHref>
-                  <Button variant="outline" className="w-full justify-start" size="sm">
+                <Link href="/assessment/start">
+                  <button className="btn btn-outline w-full justify-start btn-sm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -609,11 +535,11 @@ const DashboardPage: React.FC = () => {
                     >
                       <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                     </svg>
-                    {t('dashboard.startAssessment')}
-                  </Button>
+                    {t('dashboard.startAssessment') || '开始评估'}
+                  </button>
                 </Link>
-                <Link href="/documents/upload" passHref>
-                  <Button variant="outline" className="w-full justify-start" size="sm">
+                <Link href="/documents/upload">
+                  <button className="btn btn-outline w-full justify-start btn-sm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -630,11 +556,11 @@ const DashboardPage: React.FC = () => {
                       <polyline points="17 8 12 3 7 8" />
                       <line x1="12" y1="3" x2="12" y2="15" />
                     </svg>
-                    {t('dashboard.uploadDocuments')}
-                  </Button>
+                    {t('dashboard.uploadDocuments') || '上传文档'}
+                  </button>
                 </Link>
-                <Link href="/forms/generate" passHref>
-                  <Button variant="outline" className="w-full justify-start" size="sm">
+                <Link href="/appointments/schedule">
+                  <button className="btn btn-outline w-full justify-start btn-sm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -647,17 +573,16 @@ const DashboardPage: React.FC = () => {
                       strokeLinejoin="round"
                       className="mr-2"
                     >
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14 2 14 8 20 8" />
-                      <line x1="16" y1="13" x2="8" y2="13" />
-                      <line x1="16" y1="17" x2="8" y2="17" />
-                      <polyline points="10 9 9 9 8 9" />
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
                     </svg>
-                    {t('dashboard.generateForms')}
-                  </Button>
+                    {t('dashboard.scheduleConsultation') || '安排咨询'}
+                  </button>
                 </Link>
-                <Link href="/consultants/match" passHref>
-                  <Button variant="outline" className="w-full justify-start" size="sm">
+                <Link href="/profile">
+                  <button className="btn btn-outline w-full justify-start btn-sm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -670,20 +595,18 @@ const DashboardPage: React.FC = () => {
                       strokeLinejoin="round"
                       className="mr-2"
                     >
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                      <circle cx="8.5" cy="7" r="4" />
-                      <line x1="20" y1="8" x2="20" y2="14" />
-                      <line x1="23" y1="11" x2="17" y2="11" />
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
                     </svg>
-                    {t('dashboard.findConsultant')}
-                  </Button>
+                    {t('dashboard.editProfile') || '编辑个人资料'}
+                  </button>
                 </Link>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
-      </DashboardLayout>
-    </>
+      </div>
+    </MainLayout>
   );
 };
 

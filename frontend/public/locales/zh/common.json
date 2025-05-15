@@ -223,5 +223,36 @@
     },
     "startAssessment": "开始评估",
     "questions": "问题"
+  },
+  "footer": {
+    "services": "服务",
+    "expressEntry": "快速通道",
+    "provincialPrograms": "省提名计划",
+    "consultation": "咨询服务",
+    "resources": "资源",
+    "blog": "博客",
+    "faq": "常见问题",
+    "contact": "联系我们",
+    "connect": "关注我们",
+    "newsletter": "订阅我们的通讯",
+    "emailPlaceholder": "输入您的电子邮件",
+    "subscribe": "订阅",
+    "allRightsReserved": "版权所有"
+  },
+  "home": {
+    "feature2Title": "个性化指导",
+    "feature2Description": "根据您的独特背景和目标获取量身定制的移民建议。",
+    "feature3Title": "专家支持",
+    "feature3Description": "与移民顾问联系，他们可以指导您完成每一步。",
+    "servicesTitle": "我们的服务",
+    "servicesSubtitle": "全面的移民解决方案，满足您的需求",
+    "service1Title": "快速通道",
+    "service1Description": "通过加拿大快速通道系统加速您的移民过程。",
+    "service2Title": "省提名计划",
+    "service2Description": "探索针对特定地区需求的省级移民途径。",
+    "service3Title": "移民咨询",
+    "service3Description": "从持牌移民顾问获取个性化建议。",
+    "testimonialsTitle": "成功案例",
+    "testimonialsSubtitle": "听听那些在ThinkForward AI的帮助下实现移民目标的人们的故事"
   }
 }

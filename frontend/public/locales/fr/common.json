@@ -223,5 +223,36 @@
     },
     "startAssessment": "Commencer l'Évaluation",
     "questions": "questions"
+  },
+  "footer": {
+    "services": "Services",
+    "expressEntry": "Entrée Express",
+    "provincialPrograms": "Programmes Provinciaux",
+    "consultation": "Consultation",
+    "resources": "Ressources",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "contact": "Contactez-Nous",
+    "connect": "Suivez-Nous",
+    "newsletter": "Abonnez-vous à notre newsletter",
+    "emailPlaceholder": "Entrez votre email",
+    "subscribe": "S'abonner",
+    "allRightsReserved": "Tous Droits Réservés"
+  },
+  "home": {
+    "feature2Title": "Conseils Personnalisés",
+    "feature2Description": "Obtenez des conseils d'immigration adaptés à votre profil et à vos objectifs uniques.",
+    "feature3Title": "Support Expert",
+    "feature3Description": "Connectez-vous avec des consultants en immigration qui peuvent vous guider à chaque étape.",
+    "servicesTitle": "Nos Services",
+    "servicesSubtitle": "Des solutions d'immigration complètes pour répondre à vos besoins",
+    "service1Title": "Entrée Express",
+    "service1Description": "Accélérez votre processus d'immigration grâce au système Entrée Express du Canada.",
+    "service2Title": "Programmes des Candidats Provinciaux",
+    "service2Description": "Explorez les voies provinciales adaptées aux besoins régionaux spécifiques.",
+    "service3Title": "Consultation en Immigration",
+    "service3Description": "Obtenez des conseils personnalisés de consultants en immigration agréés.",
+    "testimonialsTitle": "Histoires de Réussite",
+    "testimonialsSubtitle": "Écoutez les témoignages de personnes qui ont atteint leurs objectifs d'immigration avec ThinkForward AI"
   }
 }
