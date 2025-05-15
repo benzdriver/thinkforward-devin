@@ -23,12 +23,16 @@ export default function Home() {
                 {t('common.homeDescription')}
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="bg-primary-600 hover:bg-primary-700 text-white px-8">
-                  <Link href="/login">{t('common.getStarted')}</Link>
-                </Button>
-                <Button size="lg" variant="outline" className="border-primary-600 text-primary-600 hover:bg-primary-50 px-8">
-                  <Link href="/about">{t('common.learnMore')}</Link>
-                </Button>
+                <Link href="/login" passHref>
+                  <Button size="lg" className="bg-primary-600 hover:bg-primary-700 text-white px-8">
+                    {t('common.getStarted')}
+                  </Button>
+                </Link>
+                <Link href="/about" passHref>
+                  <Button size="lg" variant="outline" className="border-primary-600 text-primary-600 hover:bg-primary-50 px-8">
+                    {t('common.learnMore')}
+                  </Button>
+                </Link>
               </div>
             </div>
             <div className="w-full md:w-1/2 flex justify-center">
@@ -36,9 +40,11 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-4">{t('common.signUp')}</h3>
                 <p className="text-neutral-600 mb-6">{t('common.signUpDescription')}</p>
                 <div className="space-y-4">
-                  <Button className="w-full bg-primary-600 hover:bg-primary-700 text-white">
-                    <Link href="/register">{t('common.createAccount')}</Link>
-                  </Button>
+                  <Link href="/register" passHref>
+                    <Button className="w-full bg-primary-600 hover:bg-primary-700 text-white">
+                      {t('common.createAccount')}
+                    </Button>
+                  </Link>
                   <div className="text-center">
                     <span className="text-neutral-500">{t('common.alreadyHaveAccount')} </span>
                     <Link href="/login" className="text-primary-600 hover:text-primary-700 font-medium">
@@ -107,9 +113,11 @@ export default function Home() {
               <p className="text-lg text-neutral-700 mb-6">
                 {t('common.aboutUsDescription')}
               </p>
-              <Button variant="outline" className="border-primary-600 text-primary-600 hover:bg-primary-50">
-                <Link href="/about">{t('common.learnMoreAboutUs')}</Link>
-              </Button>
+              <Link href="/about" passHref>
+                <Button variant="outline" className="border-primary-600 text-primary-600 hover:bg-primary-50">
+                  {t('common.learnMoreAboutUs')}
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -122,9 +130,11 @@ export default function Home() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             {t('common.ctaDescription')}
           </p>
-          <Button size="lg" className="bg-white text-primary-600 hover:bg-neutral-100 px-8">
-            <Link href="/register">{t('common.getStartedNow')}</Link>
-          </Button>
+          <Link href="/register" passHref>
+            <Button size="lg" className="bg-white text-primary-600 hover:bg-neutral-100 px-8">
+              {t('common.getStartedNow')}
+            </Button>
+          </Link>
         </div>
       </div>
     </>

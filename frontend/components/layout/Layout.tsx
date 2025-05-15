@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { Card } from '../ui/card';
 import { cn } from '../../lib/utils';
@@ -10,11 +11,14 @@ interface LanguageSwitcherProps {
 
 const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className }) => {
   const { i18n } = useTranslation();
+  const router = useRouter();
   const currentLanguage = i18n.language || 'en';
   
   const toggleLanguage = () => {
     const newLanguage = currentLanguage === 'en' ? 'zh' : 'en';
-    i18n.changeLanguage(newLanguage);
+    const { pathname, asPath, query } = router;
+    
+    router.push({ pathname, query }, asPath, { locale: newLanguage });
   };
   
   return (
