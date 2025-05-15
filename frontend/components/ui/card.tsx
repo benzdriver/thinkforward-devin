@@ -16,7 +16,7 @@ const cardVariants = cva(
         elevated: "border border-neutral-100 bg-white shadow-lg",
         flat: "border-none bg-white shadow-none",
         gradient: "bg-gradient-to-br from-primary-500 to-primary-700 text-white shadow-colored",
-        accent: "bg-gradient-to-br from-accent-500 to-accent-700 text-white shadow-accent",
+        accent: "bg-gradient-to-br from-primary-500 to-primary-700 text-white shadow-colored",
         glass: "bg-white/80 backdrop-blur-md border border-white/20 shadow-md",
       },
       hover: {

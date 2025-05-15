@@ -153,7 +153,7 @@ module.exports = {
         'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
         'colored': '0 4px 14px 0 rgba(37, 99, 235, 0.25)',
         'colored-lg': '0 10px 25px -5px rgba(37, 99, 235, 0.3)',
-        'accent': '0 4px 14px 0 rgba(139, 92, 246, 0.25)',
+        'accent': '0 4px 14px 0 rgba(37, 99, 235, 0.25)',
         'none': 'none',
       },
       borderRadius: {
@@ -170,11 +170,11 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-primary': 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)',
-        'gradient-accent': 'linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)',
         'gradient-success': 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
         'gradient-warning': 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
         'gradient-destructive': 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
-        'gradient-blue-purple': 'linear-gradient(135deg, #2563EB 0%, #8B5CF6 100%)',
+        'gradient-blue-purple': 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)',
         'gradient-dark': 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
       },
       animation: {

@@ -16,7 +16,7 @@ const buttonVariants = cva(
         success: "bg-gradient-success text-white hover:bg-success-600 active:bg-success-700 shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
         warning: "bg-gradient-warning text-white hover:bg-warning-600 active:bg-warning-700 shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
         neutral: "bg-neutral-200 text-neutral-700 hover:bg-neutral-300 active:bg-neutral-400 shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
-        accent: "bg-gradient-accent text-white hover:bg-accent-600 active:bg-accent-700 shadow-accent hover:shadow-md transform hover:-translate-y-0.5",
+        accent: "bg-gradient-primary text-white hover:bg-primary-600 active:bg-primary-700 shadow-colored hover:shadow-colored-lg transform hover:-translate-y-0.5",
         glass: "bg-white bg-opacity-80 backdrop-blur-md border border-white/20 text-neutral-800 shadow-md hover:shadow-lg transform hover:-translate-y-0.5",
       },
       size: {

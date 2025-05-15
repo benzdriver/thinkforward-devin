@@ -35,7 +35,7 @@ const sidebarVariants = cva(
         default: "bg-white text-neutral-900 border-r border-neutral-200",
         dark: "bg-neutral-900 text-white border-r border-neutral-800",
         primary: "bg-gradient-primary text-white",
-        brand: "bg-gradient-blue-purple text-white",
+        brand: "bg-gradient-primary text-white",
       },
       width: {
         sm: "w-16",
