@@ -6,7 +6,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { StoreProvider } from '../lib/store';
 import { AuthProvider } from '../lib/auth/AuthContext';
 import { queryClient } from '../lib/api';
-import '../lib/i18n-init'; // Import i18n initialization
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {

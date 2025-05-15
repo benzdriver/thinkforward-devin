@@ -67,16 +67,23 @@ export default function RegisterPage() {
       contentPosition="left"
       sidebarVariant="default"
       sidebarContent={
-        <div className="flex flex-col justify-center items-center h-full p-8 text-center">
-          <h1 className="text-3xl font-bold mb-4">{t('auth.createAccount') as string}</h1>
-          <p className="text-lg opacity-80 mb-8">{t('auth.registerMessage') as string}</p>
+        <div className="flex flex-col justify-center items-center h-full p-8 text-center"
+          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%', padding: '2rem', textAlign: 'center' }}>
+          <h1 className="text-3xl font-bold mb-4" 
+              style={{ fontSize: '1.875rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+            Create Account
+          </h1>
+          <p className="text-lg opacity-80 mb-8" 
+             style={{ fontSize: '1.125rem', opacity: 0.8, marginBottom: '2rem' }}>
+            Join ThinkForward AI to start your immigration journey
+          </p>
         </div>
       }
     >
       <div className="w-full">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold">{t('auth.register') as string}</h2>
-          <p className="text-neutral-600 mt-2">{t('auth.registerDescription') as string}</p>
+        <div className="mb-8" style={{ marginBottom: '2rem' }}>
+          <h2 className="text-2xl font-bold" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Register</h2>
+          <p className="text-neutral-600 mt-2" style={{ color: '#6B7280', marginTop: '0.5rem' }}>Create your account to get started</p>
         </div>
         
         {error && (
@@ -93,13 +100,14 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-1">
-                {t('auth.name') as string}
+              <label htmlFor="name" className="block text-sm font-medium mb-1"
+                     style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, marginBottom: '0.25rem' }}>
+                Full Name
               </label>
               <Input
                 id="name"
                 type="text"
-                placeholder={t('auth.namePlaceholder') as string}
+                placeholder="Enter your full name"
                 {...register('name')}
                 error={errors.name?.message}
               />
@@ -109,13 +117,14 @@ export default function RegisterPage() {
             </div>
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
-                {t('auth.email') as string}
+              <label htmlFor="email" className="block text-sm font-medium mb-1"
+                     style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, marginBottom: '0.25rem' }}>
+                Email Address
               </label>
               <Input
                 id="email"
                 type="email"
-                placeholder={t('auth.emailPlaceholder') as string}
+                placeholder="Enter your email address"
                 {...register('email')}
                 error={errors.email?.message}
               />
@@ -125,13 +134,14 @@ export default function RegisterPage() {
             </div>
             
             <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-1">
-                {t('auth.password') as string}
+              <label htmlFor="password" className="block text-sm font-medium mb-1"
+                     style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, marginBottom: '0.25rem' }}>
+                Password
               </label>
               <Input
                 id="password"
                 type="password"
-                placeholder={t('auth.passwordPlaceholder') as string}
+                placeholder="Enter your password"
                 {...register('password')}
                 error={errors.password?.message}
               />
@@ -141,13 +151,14 @@ export default function RegisterPage() {
             </div>
             
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">
-                {t('auth.confirmPassword') as string}
+              <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1"
+                     style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, marginBottom: '0.25rem' }}>
+                Confirm Password
               </label>
               <Input
                 id="confirmPassword"
                 type="password"
-                placeholder={t('auth.confirmPasswordPlaceholder') as string}
+                placeholder="Confirm your password"
                 {...register('confirmPassword')}
                 error={errors.confirmPassword?.message}
               />
@@ -163,14 +174,17 @@ export default function RegisterPage() {
                 className="h-4 w-4 border-secondary-300 text-primary focus:ring-primary-400"
                 {...register('agreeTerms')}
               />
-              <label htmlFor="agreeTerms" className="ml-2 block text-sm text-neutral-700">
-                {t('auth.agreeTerms') as string}{' '}
-                <Link href="/terms" className="text-primary-600 hover:text-primary-500">
-                  {t('common.terms') as string}
+              <label htmlFor="agreeTerms" className="ml-2 block text-sm text-neutral-700"
+                     style={{ marginLeft: '0.5rem', display: 'block', fontSize: '0.875rem', color: '#374151' }}>
+                I agree to the{' '}
+                <Link href="/terms" className="text-primary-600 hover:text-primary-500"
+                      style={{ color: '#4A6CF7', textDecoration: 'none' }}>
+                  Terms of Service
                 </Link>{' '}
-                {t('common.and') as string}{' '}
-                <Link href="/privacy" className="text-primary-600 hover:text-primary-500">
-                  {t('common.privacy') as string}
+                and{' '}
+                <Link href="/privacy" className="text-primary-600 hover:text-primary-500"
+                      style={{ color: '#4A6CF7', textDecoration: 'none' }}>
+                  Privacy Policy
                 </Link>
               </label>
             </div>
@@ -183,18 +197,29 @@ export default function RegisterPage() {
             type="submit"
             className="w-full"
             disabled={isSubmitting}
+            style={{ 
+              width: '100%', 
+              backgroundColor: '#4A6CF7', 
+              color: 'white', 
+              padding: '0.5rem 1rem',
+              borderRadius: '0.375rem',
+              fontWeight: 500,
+              border: 'none',
+              cursor: 'pointer'
+            }}
           >
-            {isSubmitting ? t('common.loading') as string : t('auth.register') as string}
+            {isSubmitting ? "Loading..." : "Register"}
           </Button>
           
           <div className="text-center mt-6">
-            <p className="text-sm text-neutral-600">
-              {t('auth.haveAccount') as string}{' '}
+            <p className="text-sm text-neutral-600" style={{ fontSize: '0.875rem', color: '#6B7280' }}>
+              Already have an account?{' '}
               <Link
                 href="/auth/login"
                 className="text-primary-600 hover:text-primary-500 font-medium"
+                style={{ color: '#4A6CF7', fontWeight: 500, textDecoration: 'none' }}
               >
-                {t('auth.login') as string}
+                Login
               </Link>
             </p>
           </div>
