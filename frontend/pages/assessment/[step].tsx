@@ -233,9 +233,10 @@ const AssessmentStep = () => {
       case 'text':
         return (
           <FormField
+            id={question.id}
             key={question.id}
             label={t(question.question)}
-            error={errors[question.id]}
+            message={errors[question.id]}
             required={question.required}
           >
             <Input
@@ -249,9 +250,10 @@ const AssessmentStep = () => {
       case 'number':
         return (
           <FormField
+            id={question.id}
             key={question.id}
             label={t(question.question)}
-            error={errors[question.id]}
+            message={errors[question.id]}
             required={question.required}
           >
             <Input
@@ -266,9 +268,10 @@ const AssessmentStep = () => {
       case 'select':
         return (
           <FormField
+            id={question.id}
             key={question.id}
             label={t(question.question)}
-            error={errors[question.id]}
+            message={errors[question.id]}
             required={question.required}
           >
             <Select
@@ -279,7 +282,7 @@ const AssessmentStep = () => {
                 value: option.value,
                 label: t(option.label),
               }))}
-              placeholder={t('assessment.placeholders.select')}
+              placeholder={t('assessment.placeholders.select') as string}
             />
           </FormField>
         );
@@ -287,9 +290,10 @@ const AssessmentStep = () => {
       case 'radio':
         return (
           <FormField
+            id={question.id}
             key={question.id}
             label={t(question.question)}
-            error={errors[question.id]}
+            message={errors[question.id]}
             required={question.required}
           >
             <div className="space-y-2">
@@ -314,9 +318,10 @@ const AssessmentStep = () => {
       case 'checkbox':
         return (
           <FormField
+            id={question.id}
             key={question.id}
             label={t(question.question)}
-            error={errors[question.id]}
+            message={errors[question.id]}
             required={question.required}
           >
             <div className="space-y-2">
@@ -355,9 +360,10 @@ const AssessmentStep = () => {
       case 'textarea':
         return (
           <FormField
+            id={question.id}
             key={question.id}
             label={t(question.question)}
-            error={errors[question.id]}
+            message={errors[question.id]}
             required={question.required}
           >
             <Textarea
@@ -404,7 +410,7 @@ const AssessmentStep = () => {
                 {questions.map(renderQuestion)}
                 
                 {Object.keys(errors).length > 0 && (
-                  <Alert variant="destructive" className="mt-4">
+                  <Alert variant="error" className="mt-4">
                     {t('assessment.errors.pleaseFixErrors')}
                   </Alert>
                 )}

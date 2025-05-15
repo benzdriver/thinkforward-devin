@@ -184,7 +184,7 @@ const AdminUsersPage: React.FC = () => {
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
             <div className="w-full md:w-1/3">
               <Input
-                placeholder={t('search_users')}
+                placeholder={t('search_users') as string}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full"
@@ -194,25 +194,27 @@ const AdminUsersPage: React.FC = () => {
             <div className="flex flex-wrap gap-2">
               <Select
                 value={filters.role || ''}
-                onValueChange={(value) => handleRoleFilter(value || null)}
+                onChange={(value: string) => handleRoleFilter(value || null)}
                 className="w-full sm:w-auto"
-              >
-                <option value="">{t('all_roles')}</option>
-                <option value="admin">{t('admin')}</option>
-                <option value="consultant">{t('consultant')}</option>
-                <option value="client">{t('client')}</option>
-              </Select>
+                options={[
+                  { value: '', label: t('all_roles') as string },
+                  { value: 'admin', label: t('admin') as string },
+                  { value: 'consultant', label: t('consultant') as string },
+                  { value: 'client', label: t('client') as string }
+                ]}
+              />
               
               <Select
                 value={filters.status || ''}
-                onValueChange={(value) => handleStatusFilter(value || null)}
+                onChange={(value: string) => handleStatusFilter(value || null)}
                 className="w-full sm:w-auto"
-              >
-                <option value="">{t('all_statuses')}</option>
-                <option value="active">{t('active')}</option>
-                <option value="inactive">{t('inactive')}</option>
-                <option value="pending">{t('pending')}</option>
-              </Select>
+                options={[
+                  { value: '', label: t('all_statuses') as string },
+                  { value: 'active', label: t('active') as string },
+                  { value: 'inactive', label: t('inactive') as string },
+                  { value: 'pending', label: t('pending') as string }
+                ]}
+              />
             </div>
           </div>
         </Card>
@@ -233,14 +235,15 @@ const AdminUsersPage: React.FC = () => {
               <div className="flex items-center gap-2 mb-4">
                 <Select
                   value={bulkAction}
-                  onValueChange={setBulkAction}
+                  onChange={(value: string) => setBulkAction(value)}
                   className="w-40"
-                >
-                  <option value="">{t('bulk_actions')}</option>
-                  <option value="activate">{t('activate')}</option>
-                  <option value="deactivate">{t('deactivate')}</option>
-                  <option value="delete">{t('delete')}</option>
-                </Select>
+                  options={[
+                    { value: '', label: t('bulk_actions') as string },
+                    { value: 'activate', label: t('activate') as string },
+                    { value: 'deactivate', label: t('deactivate') as string },
+                    { value: 'delete', label: t('delete') as string }
+                  ]}
+                />
                 <Button 
                   variant="secondary" 
                   onClick={handleBulkAction}
@@ -262,7 +265,6 @@ const AdminUsersPage: React.FC = () => {
                       <th className="px-4 py-3 text-left">
                         <Checkbox 
                           checked={selectedUsers.length > 0 && selectedUsers.length === filteredUsers.length}
-                          indeterminate={selectedUsers.length > 0 && selectedUsers.length < filteredUsers.length}
                           onChange={(e) => handleSelectAllChange(e.target.checked)}
                         />
                       </th>
@@ -413,7 +415,7 @@ const AdminUsersPage: React.FC = () => {
               rows={4}
               value={inviteEmails}
               onChange={(e) => setInviteEmails(e.target.value)}
-              placeholder={t('invite_emails_placeholder')}
+              placeholder={t('invite_emails_placeholder') as string}
               required
             />
             <p className="text-xs text-gray-500 mt-1">
@@ -427,13 +429,14 @@ const AdminUsersPage: React.FC = () => {
             </label>
             <Select
               value={inviteRole}
-              onValueChange={(value) => setInviteRole(value as UserRole)}
+              onChange={(value: string) => setInviteRole(value as UserRole)}
               className="w-full"
-            >
-              <option value="client">{t('client')}</option>
-              <option value="consultant">{t('consultant')}</option>
-              <option value="admin">{t('admin')}</option>
-            </Select>
+              options={[
+                { value: 'client', label: t('client') as string },
+                { value: 'consultant', label: t('consultant') as string },
+                { value: 'admin', label: t('admin') as string }
+              ]}
+            />
           </div>
           
           <div className="flex justify-end gap-2 pt-4">
@@ -490,13 +493,14 @@ const AdminUsersPage: React.FC = () => {
               </label>
               <Select
                 value={editingUser.role}
-                onValueChange={(value) => setEditingUser({ ...editingUser, role: value as UserRole })}
+                onChange={(value: string) => setEditingUser({ ...editingUser, role: value as UserRole })}
                 className="w-full"
-              >
-                <option value="client">{t('client')}</option>
-                <option value="consultant">{t('consultant')}</option>
-                <option value="admin">{t('admin')}</option>
-              </Select>
+                options={[
+                  { value: 'client', label: t('client') as string },
+                  { value: 'consultant', label: t('consultant') as string },
+                  { value: 'admin', label: t('admin') as string }
+                ]}
+              />
             </div>
             
             <div>
@@ -505,13 +509,14 @@ const AdminUsersPage: React.FC = () => {
               </label>
               <Select
                 value={editingUser.status}
-                onValueChange={(value) => setEditingUser({ ...editingUser, status: value as 'active' | 'inactive' | 'pending' })}
+                onChange={(value: string) => setEditingUser({ ...editingUser, status: value as 'active' | 'inactive' | 'pending' })}
                 className="w-full"
-              >
-                <option value="active">{t('active')}</option>
-                <option value="inactive">{t('inactive')}</option>
-                <option value="pending">{t('pending')}</option>
-              </Select>
+                options={[
+                  { value: 'active', label: t('active') as string },
+                  { value: 'inactive', label: t('inactive') as string },
+                  { value: 'pending', label: t('pending') as string }
+                ]}
+              />
             </div>
             
             <div className="flex justify-end gap-2 pt-4">

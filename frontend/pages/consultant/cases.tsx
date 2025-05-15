@@ -11,6 +11,7 @@ import { SearchInput } from '../../components/form/search-input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../components/ui/tabs';
 import { Badge } from '../../components/ui/badge';
 import { Dropdown } from '../../components/ui/dropdown';
+import { DropdownMenu } from '../../components/ui/dropdown-menu';
 import { Modal } from '../../components/ui/modal';
 import { Input } from '../../components/ui/input';
 import { Textarea } from '../../components/ui/textarea';
@@ -74,7 +75,14 @@ const CasesPage: React.FC = () => {
   } = useCasesStore();
 
   const casesQuery = useCases(consultantId, {
-    ...filters,
+    search: filters.search,
+    status: filters.status || undefined,
+    type: filters.type || undefined,
+    priority: filters.priority || undefined,
+    startDate: filters.startDate || undefined,
+    endDate: filters.endDate || undefined,
+    sortBy: filters.sortBy,
+    sortOrder: filters.sortOrder,
     page: pagination.page,
     limit: pagination.limit,
   });
@@ -125,7 +133,7 @@ const CasesPage: React.FC = () => {
   }, [router.locale]);
 
   const handleFilterChange = (key: keyof typeof filters, value: any) => {
-    setFilters({ [key]: value });
+    setFilters({ [key]: value === null ? undefined : value });
   };
 
   const handlePageChange = (page: number) => {
@@ -235,16 +243,16 @@ const CasesPage: React.FC = () => {
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="w-full md:w-1/3">
           <SearchInput
-            placeholder={t('cases.filters.search')}
+            placeholder={t('cases.filters.search') as string}
             value={filters.search}
             onChange={(value) => handleFilterChange('search', value)}
           />
         </div>
         <div className="flex flex-wrap gap-2">
           <Select
-            placeholder={t('cases.filters.status')}
+            placeholder={t('cases.filters.status') as string}
             value={filters.status || ''}
-            onChange={(value) => handleFilterChange('status', value || null)}
+            onChange={(value) => handleFilterChange('status', value || undefined)}
             options={[
               { value: 'open', label: t('cases.status.open') },
               { value: 'in-progress', label: t('cases.status.inProgress') },
@@ -255,16 +263,16 @@ const CasesPage: React.FC = () => {
             className="w-32"
           />
           <Select
-            placeholder={t('cases.filters.type')}
+            placeholder={t('cases.filters.type') as string}
             value={filters.type || ''}
-            onChange={(value) => handleFilterChange('type', value || null)}
+            onChange={(value) => handleFilterChange('type', value || undefined)}
             options={caseTypes.map((type) => ({ value: type, label: type }))}
             className="w-40"
           />
           <Select
-            placeholder={t('cases.filters.priority')}
+            placeholder={t('cases.filters.priority') as string}
             value={filters.priority || ''}
-            onChange={(value) => handleFilterChange('priority', value || null)}
+            onChange={(value) => handleFilterChange('priority', value || undefined)}
             options={[
               { value: 'low', label: t('cases.priority.low') },
               { value: 'medium', label: t('cases.priority.medium') },
@@ -273,21 +281,21 @@ const CasesPage: React.FC = () => {
             className="w-32"
           />
           <DatePicker
-            placeholder={t('cases.filters.startDate')}
+            placeholder={t('cases.filters.startDate') as string}
             value={filters.startDate ? new Date(filters.startDate) : undefined}
             onChange={(date) =>
-              handleFilterChange('startDate', date ? date.toISOString() : null)
+              handleFilterChange('startDate', date && 'toISOString' in date ? date.toISOString() : undefined)
             }
-            locale={dateLocale}
+            locale={dateLocale as unknown as string}
             className="w-40"
           />
           <DatePicker
-            placeholder={t('cases.filters.endDate')}
+            placeholder={t('cases.filters.endDate') as string}
             value={filters.endDate ? new Date(filters.endDate) : undefined}
             onChange={(date) =>
-              handleFilterChange('endDate', date ? date.toISOString() : null)
+              handleFilterChange('endDate', date && 'toISOString' in date ? date.toISOString() : undefined)
             }
-            locale={dateLocale}
+            locale={dateLocale as unknown as string}
             className="w-40"
           />
           <Button
@@ -317,7 +325,7 @@ const CasesPage: React.FC = () => {
             <span className="text-sm text-gray-500">
               {t('cases.selected', { count: selectedCaseIds.length })}
             </span>
-            <Dropdown
+            <DropdownMenu
               trigger={
                 <Button variant="outline" size="sm">
                   {t('cases.bulkActions')}
@@ -479,7 +487,7 @@ const CasesPage: React.FC = () => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium" onClick={(e) => e.stopPropagation()}>
-                  <Dropdown
+                  <DropdownMenu
                     trigger={
                       <Button variant="ghost" size="sm">
                         {t('common.actions')}
@@ -537,7 +545,7 @@ const CasesPage: React.FC = () => {
                   onChange={() => toggleCaseSelection(caseItem.id)}
                   className="h-4 w-4 text-primary border-gray-300 rounded mr-2"
                 />
-                <Dropdown
+                <DropdownMenu
                   trigger={
                     <Button variant="ghost" size="sm" className="p-1">
                       <span className="sr-only">{t('common.actions')}</span>
@@ -638,7 +646,7 @@ const CasesPage: React.FC = () => {
             return (
               <Button
                 key={pageNum}
-                variant={pageNum === pagination.page ? 'default' : 'outline'}
+                variant={pageNum === pagination.page ? 'primary' : 'outline'}
                 size="sm"
                 onClick={() => handlePageChange(pageNum)}
               >
@@ -669,23 +677,25 @@ const CasesPage: React.FC = () => {
       >
         <div className="space-y-4">
           <FormField
-            label={t('cases.create.caseTitle')}
+            id="title"
+            label={t('cases.create.caseTitle') as string}
             required
           >
             <Input
               value={newCaseData.title}
               onChange={(e) => setNewCaseData({ ...newCaseData, title: e.target.value })}
-              placeholder={t('cases.create.caseTitlePlaceholder')}
+              placeholder={t('cases.create.caseTitlePlaceholder') as string}
             />
           </FormField>
           <FormField
-            label={t('cases.create.client')}
+            id="clientId"
+            label={t('cases.create.client') as string}
             required
           >
             <Select
               value={newCaseData.clientId}
               onChange={(value) => setNewCaseData({ ...newCaseData, clientId: value || '' })}
-              placeholder={t('cases.create.selectClient')}
+              placeholder={t('cases.create.selectClient') as string}
               options={[
                 { value: 'client-1', label: '张三' },
                 { value: 'client-2', label: '李四' },
@@ -693,33 +703,36 @@ const CasesPage: React.FC = () => {
             />
           </FormField>
           <FormField
-            label={t('cases.create.type')}
+            id="type"
+            label={t('cases.create.type') as string}
             required
           >
             <Select
               value={newCaseData.type}
               onChange={(value) => setNewCaseData({ ...newCaseData, type: value || '' })}
-              placeholder={t('cases.create.selectType')}
+              placeholder={t('cases.create.selectType') as string}
               options={caseTypes.map((type) => ({ value: type, label: type }))}
             />
           </FormField>
           <FormField
-            label={t('cases.create.description')}
+            id="description"
+            label={t('cases.create.description') as string}
           >
             <Textarea
               value={newCaseData.description}
               onChange={(e) => setNewCaseData({ ...newCaseData, description: e.target.value })}
-              placeholder={t('cases.create.descriptionPlaceholder')}
+              placeholder={t('cases.create.descriptionPlaceholder') as string}
               rows={4}
             />
           </FormField>
           <FormField
-            label={t('cases.create.priority')}
+            id="priority"
+            label={t('cases.create.priority') as string}
           >
             <Select
               value={newCaseData.priority}
               onChange={(value) => setNewCaseData({ ...newCaseData, priority: (value as 'low' | 'medium' | 'high') || 'medium' })}
-              placeholder={t('cases.create.selectPriority')}
+              placeholder={t('cases.create.selectPriority') as string}
               options={[
                 { value: 'low', label: t('cases.priority.low') },
                 { value: 'medium', label: t('cases.priority.medium') },
@@ -728,13 +741,14 @@ const CasesPage: React.FC = () => {
             />
           </FormField>
           <FormField
-            label={t('cases.create.dueDate')}
+            id="dueDate"
+            label={t('cases.create.dueDate') as string}
           >
             <DatePicker
               value={newCaseData.dueDate ? new Date(newCaseData.dueDate) : undefined}
-              onChange={(date) => setNewCaseData({ ...newCaseData, dueDate: date ? date.toISOString() : '' })}
-              placeholder={t('cases.create.selectDueDate')}
-              locale={dateLocale}
+              onChange={(date) => setNewCaseData({ ...newCaseData, dueDate: date && 'toISOString' in date ? date.toISOString() : '' })}
+              placeholder={t('cases.create.selectDueDate') as string}
+              locale={dateLocale as unknown as string}
             />
           </FormField>
         </div>
@@ -791,7 +805,7 @@ const CasesPage: React.FC = () => {
           description={t('cases.description')}
         />
         <SectionContainer>
-          <LoadingState message={t('common.loading')} />
+          <LoadingState>{t('common.loading')}</LoadingState>
         </SectionContainer>
       </DashboardLayout>
     );
@@ -806,8 +820,8 @@ const CasesPage: React.FC = () => {
         />
         <SectionContainer>
           <ErrorState
-            message={t('common.error')}
-            retryAction={() => casesQuery.refetch()}
+            title={t('common.error') as string}
+            retryAction={<Button onClick={() => casesQuery.refetch()}>{t('common.retry')}</Button>}
           />
         </SectionContainer>
       </DashboardLayout>
