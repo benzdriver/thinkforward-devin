@@ -21,7 +21,7 @@ export const AccountDeletionTab: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = React.useState(false);
   const [formError, setFormError] = React.useState<string | null>(null);
   
-  const deleteAccountMutation = useDeleteAccount();
+  const deleteAccountMutation = useDeleteAccount(user?.id || '');
   
   const handleInitiateDeletion = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,8 +40,8 @@ export const AccountDeletionTab: React.FC = () => {
     
     try {
       await deleteAccountMutation.mutateAsync({
-        userId: user?.id || '',
-        password
+        password,
+        reason: 'User requested account deletion'
       });
       
       logout();

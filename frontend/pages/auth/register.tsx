@@ -164,7 +164,7 @@ export default function RegisterPage() {
                     {...register('agreeTerms')}
                   />
                   <label htmlFor="agreeTerms" className="checkbox-label">
-                    {t('auth.agreeTerms') || '我同意'}{' '}
+                    {t('auth.agreeToTerms') || '我同意'}{' '}
                     <Link href="/terms" className="form-link">
                       {t('common.terms') || '服务条款'}
                     </Link>{' '}

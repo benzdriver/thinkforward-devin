@@ -15,39 +15,39 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 };
 
 const mockUserData = {
-  name: '张明',
-  email: 'zhang.ming@example.com',
+  name: 'John Smith',
+  email: 'john.smith@example.com',
   profileCompletion: 65,
-  immigrationPath: '加拿大快速通道',
+  immigrationPath: 'Express Entry',
   nextSteps: [
-    { id: 1, title: '完成语言考试', status: 'pending', dueDate: '2023-06-30' },
-    { id: 2, title: '提交学历评估', status: 'in-progress', dueDate: '2023-07-15' },
-    { id: 3, title: '更新工作经验', status: 'completed', dueDate: '2023-05-20' },
+    { id: 1, title: 'Complete Language Test', status: 'pending', dueDate: '2023-06-30' },
+    { id: 2, title: 'Submit Education Assessment', status: 'in-progress', dueDate: '2023-07-15' },
+    { id: 3, title: 'Update Work Experience', status: 'completed', dueDate: '2023-05-20' },
   ],
   recentDocuments: [
-    { id: 1, name: '护照扫描件', type: 'pdf', updatedAt: '2023-05-18' },
-    { id: 2, name: '学位证书', type: 'pdf', updatedAt: '2023-05-15' },
-    { id: 3, name: '工作证明信', type: 'docx', updatedAt: '2023-05-10' },
+    { id: 1, name: 'Passport Scan', type: 'pdf', updatedAt: '2023-05-18' },
+    { id: 2, name: 'Degree Certificate', type: 'pdf', updatedAt: '2023-05-15' },
+    { id: 3, name: 'Employment Reference Letter', type: 'docx', updatedAt: '2023-05-10' },
   ],
   upcomingAppointments: [
     { 
       id: 1, 
-      title: '移民顾问咨询', 
+      title: 'Immigration Consultant Meeting', 
       date: '2023-06-05', 
       time: '14:00-15:00',
-      consultant: '李顾问'
+      consultant: 'Ms. Johnson'
     }
   ],
   assessmentResults: {
     score: 470,
-    category: '联邦技术移民',
+    category: 'Federal Skilled Worker',
     lastUpdated: '2023-05-01',
     breakdown: [
-      { category: '年龄', score: 110, maxScore: 110 },
-      { category: '教育', score: 120, maxScore: 150 },
-      { category: '语言能力', score: 110, maxScore: 160 },
-      { category: '工作经验', score: 70, maxScore: 80 },
-      { category: '适应性', score: 60, maxScore: 100 },
+      { category: 'Age', score: 110, maxScore: 110 },
+      { category: 'Education', score: 120, maxScore: 150 },
+      { category: 'Language Proficiency', score: 110, maxScore: 160 },
+      { category: 'Work Experience', score: 70, maxScore: 80 },
+      { category: 'Adaptability', score: 60, maxScore: 100 },
     ]
   }
 };
