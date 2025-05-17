@@ -12,7 +12,7 @@ import { Avatar } from '../../../components/ui/avatar';
 import { Badge } from '../../../components/ui/badge';
 import { Progress } from '../../../components/ui/progress';
 import { LoadingState } from '../../../components/ui/loading-state';
- 想 import { ModeSwitcher } from '../../../components/profile/mode-switcher';
+import { ModeSwitcher } from '../../../components/profile/mode-switcher';
 import { useProfileStore } from '../../../lib/store/zustand/useProfileStore';
 import { useUpdatePersonalInfo, useUpdateEducationInfo, useUpdateWorkExperience, useUpdateLanguageSkills, useUpdateImmigrationInfo } from '../../../lib/api/services/profile';
 

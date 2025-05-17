@@ -17,6 +17,7 @@ import { LoadingState } from '../../components/ui/loading-state';
 import { ErrorState } from '../../components/ui/error-state';
 import { Modal } from '../../components/ui/modal';
 import { useAdminSettingsStore } from '../../lib/store/zustand/useAdminSettingsStore';
+import { SystemSettings } from '../../lib/types/admin-settings';
 
 const AdminSettingsPage: React.FC = () => {
   const { t } = useTranslation('common');
@@ -65,7 +66,11 @@ const AdminSettingsPage: React.FC = () => {
     }
   };
 
-  const handleInputChange = (category: string, key: string, value: any) => {
+  const handleInputChange = <K extends keyof SystemSettings, SK extends keyof SystemSettings[K]>(
+    category: K,
+    key: SK,
+    value: SystemSettings[K][SK]
+  ) => {
     updateSetting(category, key, value);
     setHasUnsavedChanges(true);
   };
@@ -825,7 +830,7 @@ const AdminSettingsPage: React.FC = () => {
                         </label>
                         <Select
                           value={settings.advanced.logLevel}
-                          onChange={(value) => handleInputChange('advanced', 'logLevel', value)}
+                          onChange={(value) => handleInputChange('advanced', 'logLevel', value as 'error' | 'warn' | 'info' | 'debug')}
                           className="w-full max-w-md"
                           options={[
                             { value: 'error', label: 'Error' },

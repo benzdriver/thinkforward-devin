@@ -171,8 +171,10 @@ const WorkspacePage = ({ workspaceId }: { workspaceId: string }) => {
     }
   };
   
-  const handleFileUpload = async (file: File) => {
-    if (!user?.id) return;
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!user?.id || !event.target.files || event.target.files.length === 0) return;
+    
+    const file = event.target.files[0];
     
     try {
       const result = await uploadDocumentMutation.mutateAsync({
@@ -327,7 +329,7 @@ const WorkspacePage = ({ workspaceId }: { workspaceId: string }) => {
                 <Textarea
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder={t('workspace.messages.inputPlaceholder')}
+                  placeholder={t('workspace.messages.inputPlaceholder') as string}
                   className="flex-grow"
                   rows={3}
                 />
@@ -350,12 +352,12 @@ const WorkspacePage = ({ workspaceId }: { workspaceId: string }) => {
                   <Input
                     value={newTaskTitle}
                     onChange={(e) => setNewTaskTitle(e.target.value)}
-                    placeholder={t('workspace.tasks.titlePlaceholder')}
+                    placeholder={t('workspace.tasks.titlePlaceholder') as string}
                   />
                   <Textarea
                     value={newTaskDescription}
                     onChange={(e) => setNewTaskDescription(e.target.value)}
-                    placeholder={t('workspace.tasks.descriptionPlaceholder')}
+                    placeholder={t('workspace.tasks.descriptionPlaceholder') as string}
                     rows={3}
                   />
                   <div>
@@ -366,7 +368,7 @@ const WorkspacePage = ({ workspaceId }: { workspaceId: string }) => {
                       {(['low', 'medium', 'high', 'urgent'] as const).map((priority) => (
                         <Button
                           key={priority}
-                          variant={newTaskPriority === priority ? 'default' : 'outline'}
+                          variant={newTaskPriority === priority ? 'primary' : 'outline'}
                           onClick={() => setNewTaskPriority(priority)}
                           className="flex-1"
                         >
@@ -481,10 +483,10 @@ const WorkspacePage = ({ workspaceId }: { workspaceId: string }) => {
               <Card className="p-4">
                 <h3 className="text-lg font-medium mb-4">{t('workspace.documents.upload')}</h3>
                 <FileUpload
-                  onFileSelect={handleFileUpload}
+                  onSelect={handleFileUpload}
                   accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
                   maxSize={10 * 1024 * 1024} // 10MB
-                  label={t('workspace.documents.dropzone')}
+                  label={t('workspace.documents.dropzone') as string}
                 />
               </Card>
               
@@ -527,7 +529,7 @@ const WorkspacePage = ({ workspaceId }: { workspaceId: string }) => {
                             variant="outline"
                             size="sm"
                             onClick={() => {
-                              const link = document.createElement('a');
+                              const link = window.document.createElement('a');
                               link.href = document.url;
                               link.download = document.name;
                               link.click();

@@ -13,12 +13,18 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('auth-storage')
-        ? JSON.parse(localStorage.getItem('auth-storage') || '{}')?.state?.token
-        : null;
+      const authStorage = localStorage.getItem('thinkforward_auth');
       
-      if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
+      if (authStorage) {
+        try {
+          const { token } = JSON.parse(authStorage);
+          
+          if (token && config.headers) {
+            config.headers.Authorization = `Bearer ${token}`;
+          }
+        } catch (error) {
+          console.error('Error parsing auth token from thinkforward_auth:', error);
+        }
       }
     }
     return config;
@@ -40,12 +46,12 @@ apiClient.interceptors.response.use(
         
         
         if (typeof window !== 'undefined') {
-          localStorage.removeItem('auth-storage');
+          localStorage.removeItem('thinkforward_auth');
           window.location.href = '/auth/login';
         }
       } catch (refreshError) {
         if (typeof window !== 'undefined') {
-          localStorage.removeItem('auth-storage');
+          localStorage.removeItem('thinkforward_auth');
           window.location.href = '/auth/login';
         }
         return Promise.reject(refreshError);

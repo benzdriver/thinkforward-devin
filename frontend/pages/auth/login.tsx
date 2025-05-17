@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 // import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,8 +24,24 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const { t } = useTranslation('common');
   const router = useRouter();
-  const { login, error, resetError } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
+  
+  const authRef = React.useRef<{ 
+    login?: (email: string, password: string) => Promise<any> 
+  }>({});
+  
+  useEffect(() => {
+    setIsClient(true);
+    
+    try {
+      const { login } = useAuth();
+      authRef.current.login = login;
+    } catch (error) {
+      console.error('Auth context not available during SSR');
+    }
+  }, []);
   
   const returnUrl = router.query.returnUrl as string || '/dashboard';
   
@@ -43,14 +59,17 @@ export default function LoginPage() {
   });
   
   const onSubmit = async (data: LoginFormData) => {
+    if (!isClient || !authRef.current.login) return;
+    
     setIsSubmitting(true);
-    resetError();
+    setAuthError(null);
     
     try {
-      await login(data.email, data.password);
+      await authRef.current.login(data.email, data.password);
       router.push(returnUrl);
     } catch (error) {
       console.error('Login error:', error);
+      setAuthError(error instanceof Error ? error.message : 'Login failed');
     } finally {
       setIsSubmitting(false);
     }
@@ -74,14 +93,14 @@ export default function LoginPage() {
           <p className="text-neutral-600 mt-2">{t('auth.loginDescription') as string}</p>
         </div>
         
-        {error && (
+        {authError && (
           <Alert 
             variant="error" 
             className="mb-6"
             title={t('auth.loginError') as string}
-            onDismiss={resetError}
+            onDismiss={() => setAuthError(null)}
           >
-            {error}
+            {authError}
           </Alert>
         )}
         

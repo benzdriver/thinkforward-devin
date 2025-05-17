@@ -7,6 +7,7 @@ import { PageHeader } from '../../components/layout/page-header';
 import { SectionContainer } from '../../components/layout/section-container';
 import { Card } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
+import { ButtonLink } from '../../components/ui/button-link';
 import { Badge } from '../../components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../components/ui/tabs';
 import { LoadingState } from '../../components/ui/loading-state';
@@ -66,9 +67,9 @@ const AdminDashboardPage: React.FC = () => {
         title={t('admin_dashboard')} 
         description={t('admin_dashboard_description')}
         actions={
-          <Button variant="primary" href="/admin/settings">
+          <ButtonLink variant="primary" href="/admin/settings">
             {t('system_settings')}
-          </Button>
+          </ButtonLink>
         }
       />
 
@@ -78,7 +79,7 @@ const AdminDashboardPage: React.FC = () => {
           <h3 className="text-lg font-medium text-gray-700 mb-2">{t('total_users')}</h3>
           <p className="text-3xl font-bold">{stats?.totalUsers || 0}</p>
           <p className="text-sm text-gray-500 mt-2">
-            {stats?.userGrowth > 0 ? '+' : ''}{stats?.userGrowth || 0}% {t('from_last_month')}
+            {(stats?.userGrowth ?? 0) > 0 ? '+' : ''}{stats?.userGrowth || 0}% {t('from_last_month')}
           </p>
         </Card>
         
@@ -86,7 +87,7 @@ const AdminDashboardPage: React.FC = () => {
           <h3 className="text-lg font-medium text-gray-700 mb-2">{t('active_consultants')}</h3>
           <p className="text-3xl font-bold">{stats?.activeConsultants || 0}</p>
           <p className="text-sm text-gray-500 mt-2">
-            {stats?.consultantGrowth > 0 ? '+' : ''}{stats?.consultantGrowth || 0}% {t('from_last_month')}
+            {(stats?.consultantGrowth ?? 0) > 0 ? '+' : ''}{stats?.consultantGrowth || 0}% {t('from_last_month')}
           </p>
         </Card>
         
@@ -94,7 +95,7 @@ const AdminDashboardPage: React.FC = () => {
           <h3 className="text-lg font-medium text-gray-700 mb-2">{t('completed_assessments')}</h3>
           <p className="text-3xl font-bold">{stats?.completedAssessments || 0}</p>
           <p className="text-sm text-gray-500 mt-2">
-            {stats?.assessmentGrowth > 0 ? '+' : ''}{stats?.assessmentGrowth || 0}% {t('from_last_month')}
+            {(stats?.assessmentGrowth ?? 0) > 0 ? '+' : ''}{stats?.assessmentGrowth || 0}% {t('from_last_month')}
           </p>
         </Card>
         
@@ -153,25 +154,25 @@ const AdminDashboardPage: React.FC = () => {
                         <td className="px-4 py-4 text-sm">{user.email}</td>
                         <td className="px-4 py-4">
                           <Badge variant={
-                            user.role === 'admin' ? 'red' : 
-                            user.role === 'consultant' ? 'blue' : 'gray'
+                            user.role === 'admin' ? 'destructive' : 
+                            user.role === 'consultant' ? 'primary' : 'default'
                           }>
                             {user.role}
                           </Badge>
                         </td>
                         <td className="px-4 py-4">
                           <Badge variant={
-                            user.status === 'active' ? 'green' : 
-                            user.status === 'pending' ? 'yellow' : 'gray'
+                            user.status === 'active' ? 'success' : 
+                            user.status === 'pending' ? 'warning' : 'default'
                           }>
                             {user.status}
                           </Badge>
                         </td>
                         <td className="px-4 py-4 text-sm">{new Date(user.createdAt).toLocaleDateString()}</td>
                         <td className="px-4 py-4">
-                          <Button variant="ghost" size="sm" href={`/admin/users/${user.id}`}>
+                          <ButtonLink variant="ghost" size="sm" href={`/admin/users/${user.id}`}>
                             {t('view')}
-                          </Button>
+                          </ButtonLink>
                         </td>
                       </tr>
                     ))}
@@ -183,9 +184,9 @@ const AdminDashboardPage: React.FC = () => {
                 title={t('no_users_found')}
                 description={t('no_users_found_description')}
                 action={
-                  <Button variant="primary" href="/admin/users/invite">
+                  <ButtonLink variant="primary" href="/admin/users/invite">
                     {t('invite_users')}
-                  </Button>
+                  </ButtonLink>
                 }
               />
             )}
@@ -255,8 +256,8 @@ const AdminDashboardPage: React.FC = () => {
                         <p className="text-sm text-gray-500">{metric.description}</p>
                       </div>
                       <Badge variant={
-                        metric.status === 'healthy' ? 'green' : 
-                        metric.status === 'warning' ? 'yellow' : 'red'
+                        metric.status === 'healthy' ? 'success' : 
+                        metric.status === 'warning' ? 'warning' : 'destructive'
                       }>
                         {metric.status}
                       </Badge>

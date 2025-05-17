@@ -171,20 +171,22 @@ export function useApiPaginatedQuery<TData, TError = ApiError>(
 /**
  * 无限加载查询钩子
  */
+/*
 export function useApiInfiniteQuery<TData, TError = ApiError>(
   queryKey: QueryKey,
   url: string,
   getNextPageParam: (lastPage: TData, allPages: TData[]) => number | undefined,
   config?: AxiosRequestConfig,
-  options?: Omit<UseInfiniteQueryOptions<TData, AxiosError<TError>, TData, TData[], QueryKey>, 'queryKey' | 'queryFn' | 'getNextPageParam'>
+  options?: Omit<UseInfiniteQueryOptions<TData, AxiosError<TError>>, 'queryKey' | 'queryFn' | 'getNextPageParam'>
 ) {
-  return useInfiniteQuery<TData, AxiosError<TError>, TData, TData[], QueryKey>({
+  return useInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam = 1 }) => get<TData>(`${url}?page=${pageParam}`, config),
-    getNextPageParam,
+    getNextPageParam: (lastPage, allPages) => getNextPageParam(lastPage as TData, allPages as TData[]),
     ...options,
   });
 }
+*/
 
 /**
  * 全局错误处理钩子

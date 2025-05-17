@@ -148,7 +148,7 @@ const ClientDetailPage: React.FC = () => {
   if (isLoading.client) {
     return (
       <DashboardLayout>
-        <LoadingState message={t('loading_client_details')} />
+        <LoadingState>{t('loading_client_details')}</LoadingState>
       </DashboardLayout>
     );
   }
@@ -158,9 +158,8 @@ const ClientDetailPage: React.FC = () => {
       <DashboardLayout>
         <ErrorState
           title={t('error_loading_client')}
-          message={error.client}
-          actionText={t('try_again')}
-          onAction={() => clientDetailQuery.refetch()}
+          description={error.client}
+          retryAction={<Button onClick={() => clientDetailQuery.refetch()}>{t('try_again')}</Button>}
         />
       </DashboardLayout>
     );
@@ -171,9 +170,8 @@ const ClientDetailPage: React.FC = () => {
       <DashboardLayout>
         <EmptyState
           title={t('client_not_found')}
-          message={t('client_not_found_message')}
-          actionText={t('back_to_clients')}
-          onAction={() => router.push('/consultant/clients')}
+          description={t('client_not_found_message')}
+          action={<Button onClick={() => router.push('/consultant/clients')}>{t('back_to_clients')}</Button>}
         />
       </DashboardLayout>
     );
@@ -292,12 +290,12 @@ const ClientDetailPage: React.FC = () => {
             {/* 最近活动 */}
             <SectionContainer title={t('recent_activity')}>
               {isLoading.activities ? (
-                <LoadingState size="small" />
+                <LoadingState size="sm" />
               ) : activities.length === 0 ? (
                 <EmptyState
                   title={t('no_activities')}
-                  message={t('no_activities_message')}
-                  size="small"
+                  description={t('no_activities_message')}
+                  size="sm"
                 />
               ) : (
                 <div className="space-y-4">
@@ -318,14 +316,13 @@ const ClientDetailPage: React.FC = () => {
             {/* 即将到来的预约 */}
             <SectionContainer title={t('upcoming_appointments')}>
               {isLoading.appointments ? (
-                <LoadingState size="small" />
+                <LoadingState size="sm" />
               ) : appointments.length === 0 ? (
                 <EmptyState
                   title={t('no_appointments')}
-                  message={t('no_appointments_message')}
-                  actionText={t('schedule_appointment')}
-                  onAction={() => {}}
-                  size="small"
+                  description={t('no_appointments_message')}
+                  action={<Button onClick={() => {}}>{t('schedule_appointment')}</Button>}
+                  size="sm"
                 />
               ) : (
                 <div className="space-y-4">
@@ -358,14 +355,13 @@ const ClientDetailPage: React.FC = () => {
             {/* 活跃案例 */}
             <SectionContainer title={t('active_cases')}>
               {isLoading.cases ? (
-                <LoadingState size="small" />
+                <LoadingState size="sm" />
               ) : cases.length === 0 ? (
                 <EmptyState
                   title={t('no_cases')}
-                  message={t('no_cases_message')}
-                  actionText={t('create_case')}
-                  onAction={() => {}}
-                  size="small"
+                  description={t('no_cases_message')}
+                  action={<Button onClick={() => {}}>{t('create_case')}</Button>}
+                  size="sm"
                 />
               ) : (
                 <div className="space-y-4">
@@ -402,14 +398,13 @@ const ClientDetailPage: React.FC = () => {
             {/* 最近文档 */}
             <SectionContainer title={t('recent_documents')}>
               {isLoading.documents ? (
-                <LoadingState size="small" />
+                <LoadingState size="sm" />
               ) : documents.length === 0 ? (
                 <EmptyState
                   title={t('no_documents')}
-                  message={t('no_documents_message')}
-                  actionText={t('upload_document')}
-                  onAction={() => {}}
-                  size="small"
+                  description={t('no_documents_message')}
+                  action={<Button onClick={() => {}}>{t('upload_document')}</Button>}
+                  size="sm"
                 />
               ) : (
                 <div className="space-y-4">
@@ -436,7 +431,7 @@ const ClientDetailPage: React.FC = () => {
         <TabsContent value="notes">
           <SectionContainer
             title={t('client_notes')}
-            actions={
+            headerActions={
               <Button onClick={() => {}}>
                 {t('add_note')}
               </Button>
@@ -447,9 +442,8 @@ const ClientDetailPage: React.FC = () => {
             ) : notes.length === 0 ? (
               <EmptyState
                 title={t('no_notes')}
-                message={t('no_notes_message')}
-                actionText={t('add_first_note')}
-                onAction={() => {}}
+                description={t('no_notes_message')}
+                action={<Button onClick={() => {}}>{t('add_first_note')}</Button>}
               />
             ) : (
               <div className="space-y-6">
@@ -483,7 +477,7 @@ const ClientDetailPage: React.FC = () => {
             ) : documents.length === 0 ? (
               <EmptyState
                 title={t('no_documents')}
-                message={t('no_documents_message')}
+                description={t('no_documents_message')}
               />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -500,7 +494,7 @@ const ClientDetailPage: React.FC = () => {
             ) : appointments.length === 0 ? (
               <EmptyState
                 title={t('no_appointments')}
-                message={t('no_appointments_message')}
+                description={t('no_appointments_message')}
               />
             ) : (
               <div className="space-y-4">
@@ -517,7 +511,7 @@ const ClientDetailPage: React.FC = () => {
             ) : cases.length === 0 ? (
               <EmptyState
                 title={t('no_cases')}
-                message={t('no_cases_message')}
+                description={t('no_cases_message')}
               />
             ) : (
               <div className="space-y-6">
@@ -534,7 +528,7 @@ const ClientDetailPage: React.FC = () => {
             ) : activities.length === 0 ? (
               <EmptyState
                 title={t('no_activities')}
-                message={t('no_activities_message')}
+                description={t('no_activities_message')}
               />
             ) : (
               <div className="space-y-4">

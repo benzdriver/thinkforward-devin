@@ -835,7 +835,7 @@ const FormProfilePage = () => {
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     checked={field.value || false}
-                    onCheckedChange={(checked) => field.onChange(checked)}
+                    onChange={(e) => field.onChange(e.target.checked)}
                     id="hasJobOffer"
                   />
                   <label htmlFor="hasJobOffer" className="text-sm">
@@ -858,7 +858,7 @@ const FormProfilePage = () => {
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     checked={field.value || false}
-                    onCheckedChange={(checked) => field.onChange(checked)}
+                    onChange={(e) => field.onChange(e.target.checked)}
                     id="hasFamilyInTargetCountry"
                   />
                   <label htmlFor="hasFamilyInTargetCountry" className="text-sm">

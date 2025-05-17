@@ -17,6 +17,7 @@ import { EmptyState } from '../../components/ui/empty-state';
 import { LoadingState } from '../../components/ui/loading-state';
 import { ErrorState } from '../../components/ui/error-state';
 import { Modal } from '../../components/ui/modal';
+import { AppointmentRequest } from '../../lib/store/zustand/useScheduleStore';
 
 import { useScheduleStore } from '../../lib/store/zustand/useScheduleStore';
 import { useAuthStore } from '../../lib/store/zustand/useAuthStore';
@@ -33,13 +34,23 @@ import {
   useAvailableTimeSlots
 } from '../../lib/api/services/schedule';
 
-const Calendar = ({ events, selectedDate, viewMode, onDateSelect, onEventSelect, onViewModeChange, onNavigate }) => {
+interface CalendarProps {
+  events: Array<any>;
+  selectedDate: Date;
+  viewMode: 'month' | 'week' | 'day' | 'agenda';
+  onDateSelect: (date: Date) => void;
+  onEventSelect: (event: any) => void;
+  onViewModeChange: (mode: 'month' | 'week' | 'day' | 'agenda') => void;
+  onNavigate: (date: Date) => void;
+}
+
+const Calendar = ({ events, selectedDate, viewMode, onDateSelect, onEventSelect, onViewModeChange, onNavigate }: CalendarProps) => {
   const { t } = useTranslation('common');
   
   const getDateRange = () => {
     const locales = { zh: zhCN, en: enUS, fr };
     const { i18n } = useTranslation();
-    const locale = locales[i18n.language] || enUS;
+    const locale = locales[i18n.language as keyof typeof locales] || enUS;
     
     switch (viewMode) {
       case 'month':
@@ -183,7 +194,13 @@ const Calendar = ({ events, selectedDate, viewMode, onDateSelect, onEventSelect,
   );
 };
 
-const WorkingHoursSettings = ({ workingHours, onUpdate, isLoading }) => {
+interface WorkingHoursSettingsProps {
+  workingHours: any;
+  onUpdate: (workingHours: any) => void;
+  isLoading: boolean;
+}
+
+const WorkingHoursSettings = ({ workingHours, onUpdate, isLoading }: WorkingHoursSettingsProps) => {
   const { t } = useTranslation('common');
   
   if (isLoading) {
@@ -205,7 +222,16 @@ const WorkingHoursSettings = ({ workingHours, onUpdate, isLoading }) => {
   );
 };
 
-const AppointmentRequests = ({ requests, onAccept, onReject, onReschedule, isLoading }) => {
+
+interface AppointmentRequestsProps {
+  requests: AppointmentRequest[];
+  onAccept: (requestId: string, selectedTime: { startTime: string; endTime: string } | string) => void;
+  onReject: (requestId: string) => void;
+  onReschedule: (requestId: string) => void;
+  isLoading: boolean;
+}
+
+const AppointmentRequests = ({ requests, onAccept, onReject, onReschedule, isLoading }: AppointmentRequestsProps) => {
   const { t } = useTranslation('common');
   
   if (isLoading) {
@@ -265,7 +291,7 @@ const ConsultantSchedulePage = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { user } = useAuthStore();
-  const consultantId = user?.id;
+  const consultantId = user?.id || '';
   
   const {
     events,
@@ -355,31 +381,31 @@ const ConsultantSchedulePage = () => {
     }
   }, [statsQuery.data, setStats]);
   
-  const handleDateSelect = (date) => {
+  const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
   };
   
-  const handleEventSelect = (event) => {
+  const handleEventSelect = (event: any) => {
     setSelectedEvent(event);
     setIsViewEventModalOpen(true);
   };
   
-  const handleViewModeChange = (mode) => {
+  const handleViewModeChange = (mode: 'month' | 'week' | 'day' | 'agenda') => {
     setViewMode(mode);
   };
   
-  const handleNavigate = (date) => {
+  const handleNavigate = (date: Date) => {
     setSelectedDate(date);
   };
   
-  const handleCreateEvent = (eventData) => {
+  const handleCreateEvent = (eventData: any) => {
     createEventMutation.mutate(
       {
         consultantId,
         eventData
       },
       {
-        onSuccess: (newEvent) => {
+        onSuccess: (newEvent: any) => {
           addEvent(newEvent);
           setIsCreateEventModalOpen(false);
         }
@@ -387,7 +413,7 @@ const ConsultantSchedulePage = () => {
     );
   };
   
-  const handleUpdateEvent = (eventId, updates) => {
+  const handleUpdateEvent = (eventId: string, updates: any) => {
     updateEventMutation.mutate(
       {
         consultantId,
@@ -395,7 +421,7 @@ const ConsultantSchedulePage = () => {
         updates
       },
       {
-        onSuccess: (updatedEvent) => {
+        onSuccess: (updatedEvent: any) => {
           updateEvent(eventId, updatedEvent);
           setIsEditEventModalOpen(false);
           setIsViewEventModalOpen(false);
@@ -404,7 +430,7 @@ const ConsultantSchedulePage = () => {
     );
   };
   
-  const handleDeleteEvent = (eventId) => {
+  const handleDeleteEvent = (eventId: string) => {
     deleteEventMutation.mutate(
       {
         consultantId,
@@ -419,30 +445,37 @@ const ConsultantSchedulePage = () => {
     );
   };
   
-  const handleUpdateWorkingHours = (updates) => {
+  const handleUpdateWorkingHours = (updates: any) => {
     updateWorkingHoursMutation.mutate(
       {
         consultantId,
         workingHours: updates
       },
       {
-        onSuccess: (updatedWorkingHours) => {
+        onSuccess: (updatedWorkingHours: any) => {
           setWorkingHours(updatedWorkingHours);
         }
       }
     );
   };
   
-  const handleAcceptAppointment = (requestId, selectedTime) => {
+  const handleAcceptAppointment = (requestId: string, selectedTime: string | { startTime: string; endTime: string }) => {
+    const timeObject = typeof selectedTime === 'string' 
+      ? {
+          startTime: selectedTime,
+          endTime: new Date(new Date(selectedTime).getTime() + 60 * 60 * 1000).toISOString()
+        } 
+      : selectedTime;
+      
     handleAppointmentRequestMutation.mutate(
       {
         consultantId,
         requestId,
         action: 'accept',
-        selectedTime
+        selectedTime: timeObject
       },
       {
-        onSuccess: (updatedRequest) => {
+        onSuccess: (updatedRequest: any) => {
           updateAppointmentRequest(requestId, updatedRequest);
           eventsQuery.refetch();
         }
@@ -450,7 +483,7 @@ const ConsultantSchedulePage = () => {
     );
   };
   
-  const handleRejectAppointment = (requestId) => {
+  const handleRejectAppointment = (requestId: string) => {
     handleAppointmentRequestMutation.mutate(
       {
         consultantId,
@@ -458,14 +491,14 @@ const ConsultantSchedulePage = () => {
         action: 'reject'
       },
       {
-        onSuccess: (updatedRequest) => {
+        onSuccess: (updatedRequest: any) => {
           updateAppointmentRequest(requestId, updatedRequest);
         }
       }
     );
   };
   
-  const handleRescheduleAppointment = (requestId) => {
+  const handleRescheduleAppointment = (requestId: string) => {
     console.log('Reschedule appointment', requestId);
   };
   
@@ -505,9 +538,9 @@ const ConsultantSchedulePage = () => {
         />
         <SectionContainer>
           <ErrorState
-            title={t('error_loading_data')}
-            description={errorMessage || t('unknown_error')}
-            action={
+            title={t('error_loading_data') as string}
+            description={(errorMessage || t('unknown_error')) as string}
+            retryAction={
               <Button onClick={() => {
                 eventsQuery.refetch();
                 workingHoursQuery.refetch();

@@ -329,7 +329,7 @@ const ConsultantBookingPage: React.FC<ConsultantBookingPageProps> = ({ consultan
                   <Input
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
-                    placeholder={t('consultants.book.topicPlaceholder')}
+                    placeholder={t('consultants.book.topicPlaceholder') as string}
                   />
                 </div>
                 
@@ -340,7 +340,7 @@ const ConsultantBookingPage: React.FC<ConsultantBookingPageProps> = ({ consultan
                   <Textarea
                     value={questions}
                     onChange={(e) => setQuestions(e.target.value)}
-                    placeholder={t('consultants.book.questionsPlaceholder')}
+                    placeholder={t('consultants.book.questionsPlaceholder') as string}
                     rows={4}
                   />
                 </div>

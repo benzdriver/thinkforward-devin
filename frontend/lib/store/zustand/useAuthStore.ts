@@ -166,7 +166,7 @@ export const useAuthStore = create<AuthStore>()(
       },
     }),
     {
-      name: 'auth-storage',
+      name: 'thinkforward_auth',
       partialize: (state) => ({ 
         user: state.user,
         token: state.token,

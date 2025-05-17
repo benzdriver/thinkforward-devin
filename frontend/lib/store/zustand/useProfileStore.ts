@@ -2,43 +2,43 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type ProfileData = {
-  personalInfo: {
-    firstName: string;
-    lastName: string;
-    dateOfBirth: string;
-    nationality: string;
-    passportNumber: string;
-    email: string;
-    phone: string;
+  personalInfo?: {
+    firstName?: string;
+    lastName?: string;
+    dateOfBirth?: string;
+    nationality?: string;
+    passportNumber?: string;
+    email?: string;
+    phone?: string;
   };
-  educationInfo: {
-    highestDegree: string;
-    fieldOfStudy: string;
-    institution: string;
-    graduationYear: string;
+  educationInfo?: {
+    highestDegree?: string;
+    fieldOfStudy?: string;
+    institution?: string;
+    graduationYear?: string;
   };
-  workExperience: {
-    occupation: string;
-    yearsOfExperience: number;
-    currentEmployer: string;
-    jobTitle: string;
+  workExperience?: {
+    occupation?: string;
+    yearsOfExperience?: number;
+    currentEmployer?: string;
+    jobTitle?: string;
   };
-  languageSkills: {
-    englishProficiency: string;
-    frenchProficiency: string;
-    otherLanguages: string[];
+  languageSkills?: {
+    englishProficiency?: string;
+    frenchProficiency?: string;
+    otherLanguages?: string[];
   };
-  immigrationInfo: {
-    desiredCountry: string;
-    desiredProvince: string;
-    immigrationPath: string;
-    hasJobOffer: boolean;
-    hasFamilyInCountry: boolean;
+  immigrationInfo?: {
+    desiredCountry?: string;
+    desiredProvince?: string;
+    immigrationPath?: string;
+    hasJobOffer?: boolean;
+    hasFamilyInCountry?: boolean;
   };
 };
 
 export type ProfileState = {
-  profile: Partial<ProfileData>;
+  profile: ProfileData;
   isComplete: boolean;
   completionPercentage: number;
   lastUpdated: string | null;
@@ -87,7 +87,7 @@ const calculateCompletion = (profile: Partial<ProfileData>): number => {
 export const useProfileStore = create<ProfileStore>()(
   persist(
     (set, get) => ({
-      profile: {},
+      profile: { personalInfo: {} },
       isComplete: false,
       completionPercentage: 0,
       lastUpdated: null,
@@ -169,7 +169,7 @@ export const useProfileStore = create<ProfileStore>()(
       
       resetProfile: () => {
         set({
-          profile: {},
+          profile: { personalInfo: {} },
           isComplete: false,
           completionPercentage: 0,
           lastUpdated: new Date().toISOString(),

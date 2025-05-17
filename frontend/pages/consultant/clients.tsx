@@ -12,6 +12,7 @@ import { Select } from '../../components/ui/select';
 import { Badge } from '../../components/ui/badge';
 import { Avatar } from '../../components/ui/avatar';
 import { Dropdown } from '../../components/ui/dropdown';
+import { DropdownMenu } from '../../components/ui/dropdown-menu';
 import { EmptyState } from '../../components/ui/empty-state';
 import { LoadingState } from '../../components/ui/loading-state';
 import { ErrorState } from '../../components/ui/error-state';
@@ -49,10 +50,17 @@ const ClientsPage: React.FC = () => {
     resetFilters,
   } = useConsultantClientsStore();
   
-  const consultantId = user?.consultantId || '';
+  const consultantId = user?.id || '';
   
   const clientsQuery = useConsultantClients(consultantId, {
-    ...filters,
+    search: filters.search,
+    status: filters.status || undefined,
+    tags: filters.tags,
+    source: filters.source || undefined,
+    startDate: filters.startDate || undefined,
+    endDate: filters.endDate || undefined,
+    sortBy: filters.sortBy,
+    sortOrder: filters.sortOrder,
     page: pagination.page,
     limit: pagination.limit,
   });
@@ -175,36 +183,34 @@ const ClientsPage: React.FC = () => {
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="flex-1">
           <SearchInput
-            placeholder={t('consultant.clients.search')}
+            placeholder={t('consultant.clients.search') as string}
             value={filters.search}
-            onChange={handleSearch}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)}
           />
         </div>
         
         <div className="flex flex-wrap gap-4">
           <Select
             value={filters.status || 'all'}
-            onChange={(e) => handleStatusChange(e.target.value)}
+            onChange={(value) => handleStatusChange(value)}
             className="w-40"
-          >
-            <option value="all">{t('consultant.clients.filters.allStatuses')}</option>
-            <option value="active">{t('consultant.clients.filters.active')}</option>
-            <option value="inactive">{t('consultant.clients.filters.inactive')}</option>
-            <option value="pending">{t('consultant.clients.filters.pending')}</option>
-          </Select>
+            options={[
+              { value: 'all', label: t('consultant.clients.filters.allStatuses') },
+              { value: 'active', label: t('consultant.clients.filters.active') },
+              { value: 'inactive', label: t('consultant.clients.filters.inactive') },
+              { value: 'pending', label: t('consultant.clients.filters.pending') }
+            ]}
+          />
           
           <Select
             value={filters.source || 'all'}
-            onChange={(e) => handleSourceChange(e.target.value)}
+            onChange={(value) => handleSourceChange(value)}
             className="w-40"
-          >
-            <option value="all">{t('consultant.clients.filters.allSources')}</option>
-            {sourcesQuery.data?.map((source) => (
-              <option key={source} value={source}>
-                {source}
-              </option>
-            ))}
-          </Select>
+            options={[
+              { value: 'all', label: t('consultant.clients.filters.allSources') },
+              ...(sourcesQuery.data?.map((source) => ({ value: source, label: source })) || [])
+            ]}
+          />
           
           <Button
             variant="outline"
@@ -310,7 +316,7 @@ const ClientsPage: React.FC = () => {
                         ? 'success'
                         : client.status === 'pending'
                         ? 'warning'
-                        : 'neutral'
+                        : 'secondary'
                     }
                   >
                     {t(`consultant.clients.status.${client.status}`)}
@@ -333,7 +339,7 @@ const ClientsPage: React.FC = () => {
                   {new Date(client.lastContactDate).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-4 text-right">
-                  <Dropdown
+                  <DropdownMenu
                     trigger={
                       <Button
                         variant="ghost"
@@ -345,22 +351,20 @@ const ClientsPage: React.FC = () => {
                     }
                     items={[
                       {
-                        label: t('common.view'),
+                        label: t('common.view') as string,
                         onClick: () => handleViewClient(client.id),
                       },
                       {
-                        label: t('common.edit'),
+                        label: t('common.edit') as string,
                         onClick: () => router.push(`/consultant/clients/edit/${client.id}`),
                       },
                       {
-                        label: t('common.delete'),
-                        onClick: (e) => {
-                          e.stopPropagation();
-                          if (window.confirm(t('consultant.clients.confirmDelete'))) {
+                        label: t('common.delete') as string,
+                        onClick: () => {
+                          if (window.confirm(t('consultant.clients.confirmDelete') as string)) {
                             handleDeleteClient(client.id);
                           }
                         },
-                        className: 'text-error-600',
                       },
                     ]}
                   />
