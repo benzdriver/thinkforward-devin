@@ -82,17 +82,17 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
     const state = checked !== undefined ? checked : isChecked;
     
     return (
-      <div className={cn("space-y-2", containerClassName)}>
-        <div className="flex items-center justify-between">
+      <div className={cn("space-y-2", containerClassName)} style={{ marginBottom: '0.5rem' }}>
+        <div className="flex items-center justify-between" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           {(label || description) && (
-            <div className="flex flex-col mr-3">
+            <div className="flex flex-col mr-3" style={{ display: 'flex', flexDirection: 'column', marginRight: '0.75rem' }}>
               {label && (
-                <span className={cn("text-sm font-medium text-neutral-800", labelClassName)}>
+                <span className={cn("text-sm font-medium text-neutral-800", labelClassName)} style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1E293B' }}>
                   {label}
                 </span>
               )}
               {description && (
-                <span className={cn("text-sm text-neutral-600", descriptionClassName)}>
+                <span className={cn("text-sm text-neutral-600", descriptionClassName)} style={{ fontSize: '0.875rem', color: '#475569' }}>
                   {description}
                 </span>
               )}
@@ -106,6 +106,22 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
             className={cn(toggleVariants({ variant, size }), className)}
             onClick={handleToggle}
             ref={ref}
+            style={{
+              position: 'relative',
+              display: 'inline-flex',
+              alignItems: 'center',
+              height: size === 'sm' ? '1rem' : size === 'lg' ? '1.75rem' : '1.5rem',
+              width: size === 'sm' ? '2rem' : size === 'lg' ? '3.5rem' : '2.75rem',
+              borderRadius: '9999px',
+              backgroundColor: state ? 
+                (variant === 'success' ? '#10B981' : 
+                 variant === 'warning' ? '#F59E0B' : 
+                 variant === 'destructive' ? '#EF4444' : '#3B82F6') : 
+                '#E2E8F0',
+              transition: 'background-color 0.2s',
+              cursor: props.disabled ? 'not-allowed' : 'pointer',
+              opacity: props.disabled ? 0.5 : 1,
+            }}
             {...props}
           >
             <span 
@@ -116,10 +132,21 @@ const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
                 size === "sm" && state ? "translate-x-4" : size === "sm" ? "translate-x-0.5" : "",
                 size === "lg" && state ? "translate-x-7" : size === "lg" ? "translate-x-1" : ""
               )}
+              style={{
+                pointerEvents: 'none',
+                display: 'block',
+                borderRadius: '9999px',
+                backgroundColor: 'white',
+                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                height: size === 'sm' ? '0.75rem' : size === 'lg' ? '1.5rem' : '1.25rem',
+                width: size === 'sm' ? '0.75rem' : size === 'lg' ? '1.5rem' : '1.25rem',
+                transform: `translateX(${state ? (size === 'sm' ? '1rem' : size === 'lg' ? '1.75rem' : '1.25rem') : (size === 'sm' ? '0.125rem' : size === 'lg' ? '0.25rem' : '0.25rem')})`,
+                transition: 'transform 0.2s',
+              }}
             />
           </button>
         </div>
-        {error && <p className="text-sm text-destructive mt-1">{error}</p>}
+        {error && <p className="text-sm text-destructive mt-1" style={{ fontSize: '0.875rem', color: '#EF4444', marginTop: '0.25rem' }}>{error}</p>}
       </div>
     );
   }

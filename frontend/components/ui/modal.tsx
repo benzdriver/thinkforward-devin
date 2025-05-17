@@ -217,6 +217,17 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
           "transition-opacity duration-300 ease-in-out"
         )}
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          zIndex: 50,
+          opacity: isOpen ? 1 : 0,
+          pointerEvents: isOpen ? 'auto' : 'none',
+          transition: 'opacity 0.3s ease-in-out',
+        }}
         aria-modal="true"
         role="dialog"
         aria-labelledby={title ? "modal-title" : undefined}
@@ -226,6 +237,20 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
         <div
           className={cn(modalOverlayVariants({ position }))}
           onClick={closeOnOverlayClick ? onClose : undefined}
+          style={{
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 50,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: position === 'top' ? 'flex-start' : position === 'bottom' ? 'flex-end' : 'center',
+            justifyContent: 'center',
+            padding: '1rem',
+          }}
         >
           <div
             ref={contentRef}
@@ -235,18 +260,60 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
               "transition-transform duration-300 ease-in-out",
               className
             )}
+            style={{
+              position: 'relative',
+              backgroundColor: 'white',
+              borderRadius: size === 'full' ? '0' : '0.5rem',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+              maxHeight: size === 'full' ? '100%' : 'calc(100vh - 2rem)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              width: '100%',
+              maxWidth: size === 'sm' ? '24rem' : 
+                        size === 'md' ? '28rem' : 
+                        size === 'lg' ? '32rem' : 
+                        size === 'xl' ? '36rem' : 
+                        size === '2xl' ? '42rem' : 
+                        size === '3xl' ? '48rem' : 
+                        size === '4xl' ? '56rem' : 
+                        size === '5xl' ? '64rem' : 
+                        size === 'full' ? '100%' : '28rem',
+              height: size === 'full' ? '100%' : 'auto',
+              border: '1px solid',
+              borderColor: variant === 'destructive' ? '#FEE2E2' : 
+                           variant === 'success' ? '#D1FAE5' : 
+                           variant === 'warning' ? '#FEF3C7' : '#E2E8F0',
+              transform: isOpen ? 'scale(1)' : 'scale(0.95)',
+              transition: 'transform 0.3s ease-in-out',
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             {(title || showCloseButton) && (
-              <div className={cn(modalHeaderVariants({ variant }), headerClassName)}>
+              <div className={cn(modalHeaderVariants({ variant }), headerClassName)} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '1rem 1.5rem',
+                borderBottom: '1px solid',
+                borderColor: variant === 'destructive' ? '#FEE2E2' : 
+                             variant === 'success' ? '#D1FAE5' : 
+                             variant === 'warning' ? '#FEF3C7' : '#E2E8F0',
+                backgroundColor: variant === 'destructive' ? '#FEF2F2' : 
+                                 variant === 'success' ? '#F0FDF4' : 
+                                 variant === 'warning' ? '#FFFBEB' : 'white',
+                color: variant === 'destructive' ? '#991B1B' : 
+                       variant === 'success' ? '#166534' : 
+                       variant === 'warning' ? '#92400E' : 'inherit',
+              }}>
                 <div>
                   {title && (
-                    <h2 id="modal-title" className="text-lg font-semibold">
+                    <h2 id="modal-title" className="text-lg font-semibold" style={{ fontSize: '1.125rem', fontWeight: 600 }}>
                       {title}
                     </h2>
                   )}
                   {description && (
-                    <p id="modal-description" className="text-sm text-neutral-600 mt-1">
+                    <p id="modal-description" className="text-sm text-neutral-600 mt-1" style={{ fontSize: '0.875rem', color: '#475569', marginTop: '0.25rem' }}>
                       {description}
                     </p>
                   )}
@@ -256,13 +323,19 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
                     type="button"
                     className="text-neutral-500 hover:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-400 rounded-full p-1"
                     onClick={onClose}
-                    aria-label="关闭"
+                    aria-label="Close"
+                    style={{
+                      color: '#64748B',
+                      borderRadius: '9999px',
+                      padding: '0.25rem',
+                    }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5"
                       viewBox="0 0 20 20"
                       fill="currentColor"
+                      style={{ height: '1.25rem', width: '1.25rem' }}
                     >
                       <path
                         fillRule="evenodd"
@@ -274,11 +347,26 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
                 )}
               </div>
             )}
-            <div className={cn(modalBodyVariants({ spacing: bodySpacing }), bodyClassName)}>
+            <div className={cn(modalBodyVariants({ spacing: bodySpacing }), bodyClassName)} style={{
+              padding: bodySpacing === 'none' ? '0' : 
+                       bodySpacing === 'sm' ? '1rem' : 
+                       bodySpacing === 'lg' ? '2rem' : '1.5rem',
+              overflow: 'auto',
+            }}>
               {children}
             </div>
             {footer && (
-              <div className={cn(modalFooterVariants({ variant }), footerClassName)}>
+              <div className={cn(modalFooterVariants({ variant }), footerClassName)} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                gap: '0.75rem',
+                padding: '1rem 1.5rem',
+                borderTop: '1px solid',
+                borderColor: variant === 'destructive' ? '#FEE2E2' : 
+                             variant === 'success' ? '#D1FAE5' : 
+                             variant === 'warning' ? '#FEF3C7' : '#E2E8F0',
+              }}>
                 {footer}
               </div>
             )}
