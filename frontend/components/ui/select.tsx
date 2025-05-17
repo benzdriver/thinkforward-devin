@@ -113,7 +113,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     value,
     defaultValue,
     onChange,
-    placeholder = "选择选项",
+    placeholder = "Select an option",
     label,
     error,
     helperText,
