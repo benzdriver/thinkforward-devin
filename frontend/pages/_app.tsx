@@ -9,7 +9,7 @@ import { AuthProvider } from '../lib/auth/AuthContext';
 import '../styles/globals.css';
 import '../styles/custom.css'; // Import custom CSS
 import Head from 'next/head';
-import '../i18n'; // Import i18n initialization
+// import '../i18n';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

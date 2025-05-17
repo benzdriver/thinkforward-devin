@@ -2,7 +2,7 @@
 const { i18n } = require('./next-i18next.config');
 
 const nextConfig = {
-  output: 'export', // Re-enabled for static export
+  // output: 'export',
   distDir: 'dist',
   images: {
     unoptimized: true,
@@ -10,6 +10,7 @@ const nextConfig = {
   trailingSlash: true,
   basePath: '',
   assetPrefix: '/',
+  i18n
 };
 
 module.exports = nextConfig;
