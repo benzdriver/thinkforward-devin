@@ -137,7 +137,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     }, [value]);
     
     const selectedOption = React.useMemo(() => {
-      return options.find(option => option.value === selectedValue);
+      return options?.find(option => option.value === selectedValue);
     }, [options, selectedValue]);
     
     const handleSelect = (option: SelectOption) => {
@@ -233,8 +233,90 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
       }
     }, [isOpen, options, selectedValue]);
     
+    const containerStyle: React.CSSProperties = {
+      width: '100%',
+      marginBottom: '8px',
+    };
+    
+    const labelStyle: React.CSSProperties = {
+      display: 'block',
+      fontSize: '0.875rem',
+      fontWeight: 500,
+      marginBottom: '0.375rem',
+      color: '#1E293B',
+    };
+    
+    const selectStyle: React.CSSProperties = {
+      display: 'flex',
+      width: '100%',
+      borderRadius: '0.375rem',
+      border: '1px solid',
+      borderColor: error ? '#EF4444' : 
+                  variant === 'success' ? '#10B981' : 
+                  variant === 'warning' ? '#F59E0B' : '#E2E8F0',
+      backgroundColor: 'white',
+      padding: size === 'sm' ? '0.25rem 0.5rem' : 
+               size === 'lg' ? '0.75rem 1rem' : '0.5rem 0.75rem',
+      fontSize: size === 'sm' ? '0.75rem' : 
+                size === 'lg' ? '1rem' : '0.875rem',
+      height: size === 'sm' ? '2rem' : 
+              size === 'lg' ? '3rem' : '2.5rem',
+      cursor: disabled ? 'not-allowed' : 'pointer',
+      opacity: disabled ? 0.5 : 1,
+      outline: 'none',
+    };
+    
+    const triggerStyle: React.CSSProperties = {
+      display: 'flex',
+      height: '100%',
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      color: error ? '#EF4444' : 
+             variant === 'success' ? '#047857' : 
+             variant === 'warning' ? '#B45309' : '#0F172A',
+    };
+    
+    const placeholderStyle: React.CSSProperties = {
+      color: '#94A3B8',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      flex: 1,
+      textAlign: 'left',
+    };
+    
+    const selectedTextStyle: React.CSSProperties = {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      flex: 1,
+      textAlign: 'left',
+    };
+    
+    const iconStyle: React.CSSProperties = {
+      marginLeft: '0.5rem',
+      height: '1rem',
+      width: '1rem',
+      flexShrink: 0,
+      transition: 'transform 0.2s',
+      transform: isOpen ? 'rotate(180deg)' : 'none',
+    };
+    
+    const errorTextStyle: React.CSSProperties = {
+      marginTop: '0.375rem',
+      fontSize: '0.875rem',
+      color: '#EF4444',
+    };
+    
+    const helperTextStyle: React.CSSProperties = {
+      marginTop: '0.375rem',
+      fontSize: '0.875rem',
+      color: '#64748B',
+    };
+    
     return (
-      <div className={cn("w-full", containerClassName)}>
+      <div className={cn("w-full", containerClassName)} style={containerStyle}>
         {label && (
           <label 
             className={cn(
@@ -242,8 +324,13 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
               required && "after:content-['*'] after:ml-0.5 after:text-destructive",
               labelClassName
             )}
+            style={{
+              ...labelStyle,
+              ...(required ? { position: 'relative' } : {})
+            }}
           >
             {label}
+            {required && <span style={{ marginLeft: '0.125rem', color: '#EF4444' }}>*</span>}
           </label>
         )}
         
@@ -256,6 +343,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
             }),
             className
           )}
+          style={selectStyle}
           tabIndex={disabled ? -1 : 0}
           onKeyDown={handleKeyDown}
           onClick={() => !disabled && setIsOpen(prev => !prev)}
@@ -267,11 +355,17 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
           role="combobox"
           {...props}
         >
-          <div className={cn(selectTriggerVariants({ variant: error ? "error" : variant }))}>
-            <span className={cn(
-              "truncate flex-1 text-left",
-              !selectedOption && "text-neutral-500"
-            )}>
+          <div 
+            className={cn(selectTriggerVariants({ variant: error ? "error" : variant }))}
+            style={triggerStyle}
+          >
+            <span 
+              className={cn(
+                "truncate flex-1 text-left",
+                !selectedOption && "text-neutral-500"
+              )}
+              style={selectedOption ? selectedTextStyle : placeholderStyle}
+            >
               {selectedOption ? selectedOption.label : placeholder}
             </span>
             <svg 
@@ -288,6 +382,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                 "ml-2 h-4 w-4 shrink-0 transition-transform",
                 isOpen && "rotate-180"
               )}
+              style={iconStyle}
             >
               <path d="m6 9 6 6 6-6"/>
             </svg>
@@ -310,32 +405,71 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
               selectContentVariants({ size }),
               "mt-1 max-h-60 overflow-y-auto"
             )}
+            style={{
+              position: 'absolute',
+              zIndex: 50,
+              minWidth: '8rem',
+              overflowY: 'auto',
+              maxHeight: '15rem',
+              marginTop: '0.25rem',
+              borderRadius: '0.375rem',
+              border: '1px solid #E2E8F0',
+              backgroundColor: 'white',
+              padding: '0.25rem',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              fontSize: size === 'sm' ? '0.75rem' : 
+                       size === 'lg' ? '1rem' : '0.875rem',
+            }}
             role="listbox"
             aria-orientation="vertical"
           >
-            {options.map((option, index) => (
-              <div
-                key={option.value}
-                className={cn(
-                  selectOptionVariants({ variant: error ? "error" : variant }),
-                  option.disabled && "opacity-50 cursor-not-allowed",
-                  index === highlightedIndex && "data-[highlighted]",
-                  option.value === selectedValue && "data-[selected]"
-                )}
-                role="option"
-                aria-selected={option.value === selectedValue}
-                aria-disabled={option.disabled}
-                onClick={() => handleSelect(option)}
-                onMouseEnter={() => !option.disabled && setHighlightedIndex(index)}
-              >
-                {option.label}
-              </div>
-            ))}
+            {options?.map((option, index) => {
+              const isHighlighted = index === highlightedIndex;
+              const isSelected = option.value === selectedValue;
+              const isDisabled = option.disabled;
+              
+              const optionStyle: React.CSSProperties = {
+                position: 'relative',
+                display: 'flex',
+                width: '100%',
+                cursor: isDisabled ? 'not-allowed' : 'pointer',
+                userSelect: 'none',
+                alignItems: 'center',
+                borderRadius: '0.25rem',
+                padding: '0.375rem 0.5rem',
+                outline: 'none',
+                opacity: isDisabled ? 0.5 : 1,
+                backgroundColor: isSelected ? '#EFF6FF' : 
+                                isHighlighted ? '#F8FAFC' : 'transparent',
+                color: isSelected ? '#1E40AF' : 
+                       isHighlighted ? '#1E293B' : '#0F172A',
+              };
+              
+              return (
+                <div
+                  key={option.value}
+                  className={cn(
+                    selectOptionVariants({ variant: error ? "error" : variant }),
+                    option.disabled && "opacity-50 cursor-not-allowed",
+                    index === highlightedIndex && "data-[highlighted]",
+                    option.value === selectedValue && "data-[selected]"
+                  )}
+                  style={optionStyle}
+                  role="option"
+                  aria-selected={option.value === selectedValue}
+                  aria-disabled={option.disabled}
+                  onClick={() => handleSelect(option)}
+                  onMouseEnter={() => !option.disabled && setHighlightedIndex(index)}
+                >
+                  {option.label}
+                </div>
+              );
+            })}
           </div>
         )}
         
-        {error && <p className="mt-1.5 text-sm text-destructive">{error}</p>}
-        {helperText && !error && <p className="mt-1.5 text-sm text-neutral-500">{helperText}</p>}
+        {error && <p className="mt-1.5 text-sm text-destructive" style={errorTextStyle}>{error}</p>}
+        {helperText && !error && <p className="mt-1.5 text-sm text-neutral-500" style={helperTextStyle}>{helperText}</p>}
       </div>
     );
   }
