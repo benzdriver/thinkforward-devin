@@ -364,5 +364,81 @@
     "terms": "Conditions d'Utilisation",
     "privacy": "Politique de Confidentialité",
     "and": "et"
+  },
+  "services": {
+    "title": "Nos Services",
+    "metaDescription": "Explorez les services d'immigration complets de ThinkForward AI, y compris Entrée Express, les Programmes des Candidats Provinciaux et les consultations personnalisées.",
+    "heroTitle": "Services d'Immigration Adaptés à Vos Besoins",
+    "heroSubtitle": "Nous offrons des solutions d'immigration complètes pour vous aider à atteindre vos objectifs avec confiance et clarté.",
+    "overviewTitle": "Comment Nous Pouvons Vous Aider",
+    "overviewDescription": "Nos services sont conçus pour simplifier votre parcours d'immigration, en fournissant des conseils d'experts à chaque étape.",
+    "expressEntry": {
+      "title": "Entrée Express",
+      "description": "Accélérez votre processus d'immigration grâce au système Entrée Express du Canada.",
+      "benefit1": "Évaluation complète d'admissibilité",
+      "benefit2": "Optimisation du profil pour maximiser le score CRS",
+      "benefit3": "Orientation étape par étape tout au long du processus de demande"
+    },
+    "provincialPrograms": {
+      "title": "Programmes des Candidats Provinciaux",
+      "description": "Explorez les voies provinciales adaptées aux besoins régionaux spécifiques.",
+      "benefit1": "Identification des programmes provinciaux appropriés",
+      "benefit2": "Conseils sur les exigences des demandes provinciales",
+      "benefit3": "Soutien tout au long du processus de nomination"
+    },
+    "consultation": {
+      "title": "Consultation en Immigration",
+      "description": "Obtenez des conseils personnalisés de consultants en immigration agréés.",
+      "benefit1": "Sessions individuelles avec des experts en immigration",
+      "benefit2": "Stratégie d'immigration personnalisée",
+      "benefit3": "Soutien continu tout au long de votre parcours"
+    },
+    "howItWorks": {
+      "title": "Notre Processus",
+      "description": "Nous avons simplifié le processus d'immigration pour le rendre accessible et sans stress.",
+      "step1": {
+        "title": "Évaluation",
+        "description": "Complétez notre évaluation complète pour déterminer votre admissibilité à divers programmes d'immigration."
+      },
+      "step2": {
+        "title": "Stratégie",
+        "description": "Recevez une stratégie d'immigration personnalisée basée sur votre profil et vos objectifs."
+      },
+      "step3": {
+        "title": "Préparation",
+        "description": "Rassemblez et préparez tous les documents nécessaires avec nos conseils et notre soutien."
+      },
+      "step4": {
+        "title": "Soumission",
+        "description": "Soumettez votre demande en toute confiance, sachant qu'elle a été examinée par des experts."
+      }
+    },
+    "testimonials": {
+      "title": "Histoires de Réussite",
+      "description": "Écoutez les témoignages de personnes qui ont atteint leurs objectifs d'immigration avec ThinkForward AI.",
+      "testimonial1": {
+        "initials": "JD",
+        "name": "Jean Dupont",
+        "location": "Maintenant à Toronto, Canada",
+        "quote": "ThinkForward AI a rendu mon processus de demande Entrée Express fluide et sans stress. Leurs conseils ont été inestimables pour m'aider à réaliser mon rêve de déménager au Canada."
+      },
+      "testimonial2": {
+        "initials": "SM",
+        "name": "Sophie Martin",
+        "location": "Maintenant à Vancouver, Canada",
+        "quote": "Le programme des candidats provinciaux semblait compliqué jusqu'à ce que je trouve ThinkForward AI. Leurs conseils d'experts m'ont aidée à naviguer dans le processus en toute confiance."
+      },
+      "testimonial3": {
+        "initials": "RK",
+        "name": "Raj Kumar",
+        "location": "Maintenant à Montréal, Canada",
+        "quote": "La consultation personnalisée que j'ai reçue de ThinkForward AI était exactement ce dont j'avais besoin. Ils ont répondu à toutes mes préoccupations et m'ont guidé à chaque étape."
+      }
+    },
+    "cta": {
+      "title": "Prêt à Commencer Votre Parcours d'Immigration?",
+      "description": "Contactez-nous aujourd'hui pour discuter de vos objectifs d'immigration et comment nous pouvons vous aider à les atteindre.",
+      "buttonText": "Commencer"
+    }
   }
 }

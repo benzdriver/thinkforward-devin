@@ -364,5 +364,81 @@
     "terms": "服务条款",
     "privacy": "隐私政策",
     "and": "和"
+  },
+  "services": {
+    "title": "我们的服务",
+    "metaDescription": "探索ThinkForward AI的全面移民服务，包括快速通道、省提名计划和个性化咨询。",
+    "heroTitle": "满足您需求的移民服务",
+    "heroSubtitle": "我们提供全面的移民解决方案，帮助您充满信心和清晰地实现目标。",
+    "overviewTitle": "我们如何帮助您",
+    "overviewDescription": "我们的服务旨在简化您的移民之旅，在每一步都提供专业指导。",
+    "expressEntry": {
+      "title": "快速通道",
+      "description": "通过加拿大快速通道系统加速您的移民过程。",
+      "benefit1": "全面的资格评估",
+      "benefit2": "优化个人资料以最大化CRS分数",
+      "benefit3": "申请过程的逐步指导"
+    },
+    "provincialPrograms": {
+      "title": "省提名计划",
+      "description": "探索针对特定地区需求的省级移民途径。",
+      "benefit1": "确定适合的省级项目",
+      "benefit2": "省级申请要求指导",
+      "benefit3": "提名过程中的支持"
+    },
+    "consultation": {
+      "title": "移民咨询",
+      "description": "从持牌移民顾问获取个性化建议。",
+      "benefit1": "与移民专家一对一会话",
+      "benefit2": "定制移民策略",
+      "benefit3": "全程持续支持"
+    },
+    "howItWorks": {
+      "title": "我们的流程",
+      "description": "我们简化了移民流程，使其更加便捷和无压力。",
+      "step1": {
+        "title": "评估",
+        "description": "完成我们的全面评估，确定您在各种移民项目中的资格。"
+      },
+      "step2": {
+        "title": "策略",
+        "description": "根据您的个人资料和目标获取个性化移民策略。"
+      },
+      "step3": {
+        "title": "准备",
+        "description": "在我们的指导和支持下收集和准备所有必要文件。"
+      },
+      "step4": {
+        "title": "提交",
+        "description": "充满信心地提交您的申请，因为它已经过专家审核。"
+      }
+    },
+    "testimonials": {
+      "title": "成功案例",
+      "description": "听听那些在ThinkForward AI的帮助下实现移民目标的人们的故事。",
+      "testimonial1": {
+        "initials": "JD",
+        "name": "约翰·多伊",
+        "location": "现居加拿大多伦多",
+        "quote": "ThinkForward AI使我的快速通道申请过程顺利且无压力。他们的指导对帮助我实现移居加拿大的梦想非常宝贵。"
+      },
+      "testimonial2": {
+        "initials": "SM",
+        "name": "莎拉·米勒",
+        "location": "现居加拿大温哥华",
+        "quote": "省提名计划看起来很复杂，直到我找到了ThinkForward AI。他们的专业建议帮助我充满信心地完成了整个过程。"
+      },
+      "testimonial3": {
+        "initials": "RK",
+        "name": "拉吉·库马尔",
+        "location": "现居加拿大蒙特利尔",
+        "quote": "我从ThinkForward AI获得的个性化咨询正是我所需要的。他们解答了我所有的疑虑，并指导我完成了每一步。"
+      }
+    },
+    "cta": {
+      "title": "准备开始您的移民之旅？",
+      "description": "立即联系我们，讨论您的移民目标以及我们如何帮助您实现它们。",
+      "buttonText": "开始行动"
+    }
   }
 }

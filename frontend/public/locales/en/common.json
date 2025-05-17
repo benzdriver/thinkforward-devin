@@ -364,5 +364,81 @@
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
     "and": "and"
+  },
+  "services": {
+    "title": "Our Services",
+    "metaDescription": "Explore ThinkForward AI's comprehensive immigration services including Express Entry, Provincial Nominee Programs, and personalized consultations.",
+    "heroTitle": "Immigration Services Tailored to Your Needs",
+    "heroSubtitle": "We offer comprehensive immigration solutions to help you achieve your goals with confidence and clarity.",
+    "overviewTitle": "How We Can Help You",
+    "overviewDescription": "Our services are designed to simplify your immigration journey, providing expert guidance every step of the way.",
+    "expressEntry": {
+      "title": "Express Entry",
+      "description": "Fast-track your immigration process through Canada's Express Entry system.",
+      "benefit1": "Comprehensive eligibility assessment",
+      "benefit2": "Profile optimization to maximize CRS score",
+      "benefit3": "Step-by-step guidance through the application process"
+    },
+    "provincialPrograms": {
+      "title": "Provincial Nominee Programs",
+      "description": "Explore provincial pathways tailored to specific regional needs.",
+      "benefit1": "Identification of suitable provincial programs",
+      "benefit2": "Guidance on provincial application requirements",
+      "benefit3": "Support through the nomination process"
+    },
+    "consultation": {
+      "title": "Immigration Consultation",
+      "description": "Get personalized advice from licensed immigration consultants.",
+      "benefit1": "One-on-one sessions with immigration experts",
+      "benefit2": "Customized immigration strategy",
+      "benefit3": "Ongoing support throughout your journey"
+    },
+    "howItWorks": {
+      "title": "Our Process",
+      "description": "We've simplified the immigration process to make it accessible and stress-free.",
+      "step1": {
+        "title": "Assessment",
+        "description": "Complete our comprehensive assessment to determine your eligibility for various immigration programs."
+      },
+      "step2": {
+        "title": "Strategy",
+        "description": "Receive a personalized immigration strategy based on your profile and goals."
+      },
+      "step3": {
+        "title": "Preparation",
+        "description": "Gather and prepare all necessary documents with our guidance and support."
+      },
+      "step4": {
+        "title": "Submission",
+        "description": "Submit your application with confidence, knowing it's been reviewed by experts."
+      }
+    },
+    "testimonials": {
+      "title": "Success Stories",
+      "description": "Hear from people who achieved their immigration goals with ThinkForward AI.",
+      "testimonial1": {
+        "initials": "JD",
+        "name": "John Doe",
+        "location": "Now in Toronto, Canada",
+        "quote": "ThinkForward AI made my Express Entry application process smooth and stress-free. Their guidance was invaluable in helping me achieve my dream of moving to Canada."
+      },
+      "testimonial2": {
+        "initials": "SM",
+        "name": "Sarah Miller",
+        "location": "Now in Vancouver, Canada",
+        "quote": "The provincial nominee program seemed complicated until I found ThinkForward AI. Their expert advice helped me navigate the process with confidence."
+      },
+      "testimonial3": {
+        "initials": "RK",
+        "name": "Raj Kumar",
+        "location": "Now in Montreal, Canada",
+        "quote": "The personalized consultation I received from ThinkForward AI was exactly what I needed. They addressed all my concerns and guided me through every step."
+      }
+    },
+    "cta": {
+      "title": "Ready to Start Your Immigration Journey?",
+      "description": "Contact us today to discuss your immigration goals and how we can help you achieve them.",
+      "buttonText": "Get Started"
+    }
   }
 }
