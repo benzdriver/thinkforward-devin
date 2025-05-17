@@ -17,7 +17,21 @@
     "login": "Login",
     "register": "Register",
     "forgotPassword": "Forgot Password",
-    "resetPassword": "Reset Password"
+    "resetPassword": "Reset Password",
+    "welcomeBack": "Welcome Back",
+    "loginMessage": "Sign in to your account to continue",
+    "loginDescription": "Enter your credentials to access your account",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "rememberMe": "Remember me",
+    "loginError": "Login Error",
+    "registerError": "Registration Error",
+    "noAccount": "Don't have an account?",
+    "welcomeMessage": "Create your account",
+    "needHelp": "Need help?",
+    "contactSupport": "Contact support"
   },
   "common": {
     "save": "Save",
@@ -27,7 +41,12 @@
     "previous": "Previous",
     "loading": "Loading...",
     "error": "An error occurred",
-    "success": "Success!"
+    "success": "Success!",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "contact": "Contact",
+    "allRightsReserved": "All Rights Reserved",
+    "logout": "Logout"
   },
   "about": {
     "pageTitle": "About Us",

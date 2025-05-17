@@ -14,6 +14,22 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const settings = useSettingsStore();
   const profile = useProfileStore();
 
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && settings.language) {
+      try {
+        const i18next = require('i18next');
+        if (i18next && i18next.default) {
+          const i18n = i18next.default;
+          if (i18n && typeof i18n.language !== 'undefined' && i18n.language !== settings.language) {
+            i18n.changeLanguage(settings.language);
+          }
+        }
+      } catch (error) {
+        console.error('Error initializing i18n in StoreProvider:', error);
+      }
+    }
+  }, [settings.language]);
+
   return (
     <StoreContext.Provider value={{ auth, settings, profile }}>
       {children}

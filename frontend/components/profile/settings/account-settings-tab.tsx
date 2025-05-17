@@ -6,6 +6,7 @@ import { Input } from '../../../components/ui/input';
 import { Select } from '../../../components/ui/select';
 import { FormField } from '../../../components/form/form-field';
 import { useAuthStore } from '../../../lib/store/zustand/useAuthStore';
+import { useSettingsStore } from '../../../lib/store/zustand/useSettingsStore';
 import { useProfileSettingsStore } from '../../../lib/store/zustand/useProfileSettingsStore';
 import { 
   useGetAccountSettings, 
@@ -119,7 +120,10 @@ export const AccountSettingsTab: React.FC = () => {
           >
             <Select
               value={accountSettings.language || ''}
-              onChange={(value) => updateAccountSettings({ language: value as string })}
+              onChange={(value) => {
+                updateAccountSettings({ language: value as string });
+                useSettingsStore.getState().setLanguage(value as any);
+              }}
               placeholder={t('profile.account.languagePlaceholder') as string}
               options={[
                 { value: 'zh', label: t('profile.account.languageOptions.chinese') as string },
