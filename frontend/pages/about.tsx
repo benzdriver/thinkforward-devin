@@ -90,8 +90,16 @@ const AboutPage: React.FC = () => {
               </p>
             </div>
             <div className="story-image">
-              <div className="image-placeholder">
-                <span>{t('about.imagePlaceholder') || '图片占位符'}</span>
+              <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg">
+                <img 
+                  src="/images/about/mission.jpg" 
+                  alt={t('about.missionImageAlt') || 'Our mission at ThinkForward AI'} 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80';
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -141,24 +149,24 @@ const AboutPage: React.FC = () => {
       </section>
       
       {/* Our Team Section */}
-      <section className="section">
-        <div className="container">
-          <div className="section-header text-center">
-            <h2 className="section-title">{t('about.teamTitle')}</h2>
-            <p className="section-subtitle">{t('about.teamSubtitle')}</p>
+      <section className="section bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="section-header text-center mb-12">
+            <h2 className="section-title text-3xl font-bold text-primary-900 mb-4">{t('about.teamTitle') || 'Our Team'}</h2>
+            <p className="section-subtitle text-lg text-gray-600 max-w-3xl mx-auto">{t('about.teamSubtitle') || 'The people behind ThinkForward AI'}</p>
           </div>
           
-          <div className="grid-cols-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {teamMembers.map((member) => (
-              <div key={member.id} className="team-card">
-                <div className="team-image">
-                  <div className="image-placeholder">
-                    <span>{member.name.substring(0, 2)}</span>
+              <div key={member.id} className="team-card bg-white rounded-lg shadow-md p-6 text-center transition-transform hover:transform hover:scale-105">
+                <div className="team-image mb-4">
+                  <div className="w-24 h-24 rounded-full bg-primary-900 text-white flex items-center justify-center text-2xl font-bold mx-auto shadow-lg border-2 border-blue-100 transition-all duration-300 hover:shadow-xl hover:border-blue-200">
+                    <span>{member.name.substring(0, 2).toUpperCase()}</span>
                   </div>
                 </div>
-                <h3 className="team-name">{member.name}</h3>
-                <p className="team-role">{member.role}</p>
-                <p className="team-bio">{member.bio}</p>
+                <h3 className="team-name text-xl font-semibold text-primary-900 mb-2">{member.name}</h3>
+                <p className="team-role text-blue-600 font-medium mb-3">{member.role}</p>
+                <p className="team-bio text-gray-600 text-sm">{member.bio}</p>
               </div>
             ))}
           </div>
