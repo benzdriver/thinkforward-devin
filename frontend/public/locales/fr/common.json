@@ -27,7 +27,8 @@
     "previous": "Précédent",
     "loading": "Chargement...",
     "error": "Une erreur est survenue",
-    "success": "Succès !"
+    "success": "Succès !",
+    "learnMore": "En Savoir Plus"
   },
   "about": {
     "pageTitle": "À Propos de Nous",
@@ -223,5 +224,221 @@
     },
     "startAssessment": "Commencer l'Évaluation",
     "questions": "questions"
+  },
+  "footer": {
+    "services": "Services",
+    "expressEntry": "Entrée Express",
+    "provincialPrograms": "Programmes Provinciaux",
+    "consultation": "Consultation",
+    "resources": "Ressources",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "contact": "Contactez-Nous",
+    "connect": "Suivez-Nous",
+    "newsletter": "Abonnez-vous à notre newsletter",
+    "emailPlaceholder": "Entrez votre email",
+    "subscribe": "S'abonner",
+    "allRightsReserved": "Tous Droits Réservés"
+  },
+  "home": {
+    "feature2Title": "Conseils Personnalisés",
+    "feature2Description": "Obtenez des conseils d'immigration adaptés à votre profil et à vos objectifs uniques.",
+    "feature3Title": "Support Expert",
+    "feature3Description": "Connectez-vous avec des consultants en immigration qui peuvent vous guider à chaque étape.",
+    "servicesTitle": "Nos Services",
+    "servicesSubtitle": "Des solutions d'immigration complètes pour répondre à vos besoins",
+    "service1Title": "Entrée Express",
+    "service1Description": "Accélérez votre processus d'immigration grâce au système Entrée Express du Canada.",
+    "service2Title": "Programmes des Candidats Provinciaux",
+    "service2Description": "Explorez les voies provinciales adaptées aux besoins régionaux spécifiques.",
+    "service3Title": "Consultation en Immigration",
+    "service3Description": "Obtenez des conseils personnalisés de consultants en immigration agréés.",
+    "testimonialsTitle": "Histoires de Réussite",
+    "testimonialsSubtitle": "Écoutez les témoignages de personnes qui ont atteint leurs objectifs d'immigration avec ThinkForward AI"
+  },
+  "contact": {
+    "title": "Contactez-Nous",
+    "metaDescription": "Contactez ThinkForward AI pour une assistance et une consultation en matière d'immigration.",
+    "heroTitle": "Contactez-Nous",
+    "heroSubtitle": "Nous sommes là pour vous aider dans votre parcours d'immigration. N'hésitez pas à nous contacter pour toute question.",
+    "getInTouch": "Entrer en Contact",
+    "getInTouchDescription": "Vous avez des questions sur l'immigration? Notre équipe est prête à vous fournir des conseils personnalisés.",
+    "phoneTitle": "Téléphone",
+    "phoneNumber": "+1 (123) 456-7890",
+    "emailTitle": "Email",
+    "emailAddress": "info@thinkforward.ai",
+    "addressTitle": "Adresse",
+    "address": "123 Rue de l'Immigration, Suite 456, Toronto, ON M5V 2K7, Canada",
+    "sendMessage": "Envoyer un Message",
+    "name": "Nom",
+    "email": "Email",
+    "subject": "Sujet",
+    "selectSubject": "Sélectionnez un sujet",
+    "subjectGeneral": "Demande Générale",
+    "subjectSupport": "Support",
+    "subjectBilling": "Facturation",
+    "subjectPartnership": "Partenariat",
+    "message": "Message",
+    "send": "Envoyer le Message",
+    "sending": "Envoi en cours...",
+    "successTitle": "Message Envoyé!",
+    "successMessage": "Merci de nous avoir contactés. Nous vous répondrons dans les plus brefs délais.",
+    "errorTitle": "Erreur",
+    "errorMessage": "Une erreur s'est produite. Veuillez réessayer.",
+    "findUs": "Trouvez-Nous",
+    "mapPlaceholder": "La carte sera affichée ici"
+  },
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "description": "Consultez la progression de votre demande d'immigration et les prochaines étapes",
+    "welcome": "Bienvenue, {{name}}",
+    "currentPath": "Parcours d'Immigration Actuel",
+    "startNewApplication": "Démarrer une Nouvelle Demande",
+    "profileCompletion": "Complétion du Profil",
+    "almostThere": "Presque terminé",
+    "keepGoing": "Continuez",
+    "continueProfile": "Continuer le Profil",
+    "assessmentResults": "Résultats de l'Évaluation",
+    "viewDetails": "Voir les Détails",
+    "points": "Points",
+    "lastUpdated": "Dernière Mise à Jour",
+    "scoreBreakdown": "Répartition des Points",
+    "nextSteps": "Prochaines Étapes",
+    "viewAll": "Voir Tout",
+    "dueDate": "Date Limite",
+    "addTask": "Ajouter une Tâche",
+    "recentDocuments": "Documents Récents",
+    "updatedOn": "Mis à jour le",
+    "uploadDocument": "Télécharger un Document",
+    "upcomingAppointments": "Rendez-vous à Venir",
+    "scheduleNew": "Planifier un Nouveau",
+    "statusCompleted": "Terminé",
+    "statusInProgress": "En Cours",
+    "statusPending": "En Attente",
+    "reschedule": "Reprogrammer",
+    "joinMeeting": "Rejoindre la Réunion",
+    "quickLinks": "Liens Rapides",
+    "startAssessment": "Commencer l'Évaluation",
+    "uploadDocuments": "Télécharger des Documents",
+    "scheduleConsultation": "Planifier une Consultation",
+    "editProfile": "Modifier le Profil"
+  },
+  "auth": {
+    "login": "Connexion",
+    "loginDescription": "Entrez vos identifiants pour accéder à votre compte",
+    "welcomeBack": "Bienvenue",
+    "loginMessage": "Connectez-vous à votre compte pour continuer votre parcours d'immigration",
+    "email": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "forgotPassword": "Mot de passe oublié?",
+    "rememberMe": "Se souvenir de moi",
+    "loginError": "Erreur de connexion",
+    "noAccount": "Vous n'avez pas de compte?",
+    "register": "S'inscrire",
+    "registerDescription": "Créez un compte pour commencer votre parcours d'immigration",
+    "name": "Nom",
+    "namePlaceholder": "Entrez votre nom complet",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "agreeToTerms": "J'accepte les conditions d'utilisation et la politique de confidentialité",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
+    "registerError": "Erreur d'inscription",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "resetPasswordDescription": "Entrez votre nouveau mot de passe pour réinitialiser votre compte",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+    "resetPasswordError": "Erreur de réinitialisation du mot de passe",
+    "forgotPasswordDescription": "Entrez votre email pour recevoir un lien de réinitialisation de mot de passe",
+    "sendResetLink": "Envoyer le lien de réinitialisation",
+    "backToLogin": "Retour à la connexion",
+    "forgotPasswordError": "Erreur de mot de passe oublié",
+    "resetLinkSent": "Lien de réinitialisation envoyé",
+    "resetLinkSentMessage": "Un lien de réinitialisation de mot de passe a été envoyé à votre email",
+    "createAccount": "Créer un Compte",
+    "registerMessage": "Inscrivez-vous pour commencer votre parcours d'immigration",
+    "haveAccount": "Vous avez déjà un compte?"
+  },
+  "common": {
+    "terms": "Conditions d'Utilisation",
+    "privacy": "Politique de Confidentialité",
+    "and": "et"
+  },
+  "services": {
+    "title": "Nos Services",
+    "metaDescription": "Explorez les services d'immigration complets de ThinkForward AI, y compris Entrée Express, les Programmes des Candidats Provinciaux et les consultations personnalisées.",
+    "heroTitle": "Services d'Immigration Adaptés à Vos Besoins",
+    "heroSubtitle": "Nous offrons des solutions d'immigration complètes pour vous aider à atteindre vos objectifs avec confiance et clarté.",
+    "overviewTitle": "Comment Nous Pouvons Vous Aider",
+    "overviewDescription": "Nos services sont conçus pour simplifier votre parcours d'immigration, en fournissant des conseils d'experts à chaque étape.",
+    "expressEntry": {
+      "title": "Entrée Express",
+      "description": "Accélérez votre processus d'immigration grâce au système Entrée Express du Canada.",
+      "benefit1": "Évaluation complète d'admissibilité",
+      "benefit2": "Optimisation du profil pour maximiser le score CRS",
+      "benefit3": "Orientation étape par étape tout au long du processus de demande"
+    },
+    "provincialPrograms": {
+      "title": "Programmes des Candidats Provinciaux",
+      "description": "Explorez les voies provinciales adaptées aux besoins régionaux spécifiques.",
+      "benefit1": "Identification des programmes provinciaux appropriés",
+      "benefit2": "Conseils sur les exigences des demandes provinciales",
+      "benefit3": "Soutien tout au long du processus de nomination"
+    },
+    "consultation": {
+      "title": "Consultation en Immigration",
+      "description": "Obtenez des conseils personnalisés de consultants en immigration agréés.",
+      "benefit1": "Sessions individuelles avec des experts en immigration",
+      "benefit2": "Stratégie d'immigration personnalisée",
+      "benefit3": "Soutien continu tout au long de votre parcours"
+    },
+    "howItWorks": {
+      "title": "Notre Processus",
+      "description": "Nous avons simplifié le processus d'immigration pour le rendre accessible et sans stress.",
+      "step1": {
+        "title": "Évaluation",
+        "description": "Complétez notre évaluation complète pour déterminer votre admissibilité à divers programmes d'immigration."
+      },
+      "step2": {
+        "title": "Stratégie",
+        "description": "Recevez une stratégie d'immigration personnalisée basée sur votre profil et vos objectifs."
+      },
+      "step3": {
+        "title": "Préparation",
+        "description": "Rassemblez et préparez tous les documents nécessaires avec nos conseils et notre soutien."
+      },
+      "step4": {
+        "title": "Soumission",
+        "description": "Soumettez votre demande en toute confiance, sachant qu'elle a été examinée par des experts."
+      }
+    },
+    "testimonials": {
+      "title": "Histoires de Réussite",
+      "description": "Écoutez les témoignages de personnes qui ont atteint leurs objectifs d'immigration avec ThinkForward AI.",
+      "testimonial1": {
+        "initials": "JD",
+        "name": "Jean Dupont",
+        "location": "Maintenant à Toronto, Canada",
+        "quote": "ThinkForward AI a rendu mon processus de demande Entrée Express fluide et sans stress. Leurs conseils ont été inestimables pour m'aider à réaliser mon rêve de déménager au Canada."
+      },
+      "testimonial2": {
+        "initials": "SM",
+        "name": "Sophie Martin",
+        "location": "Maintenant à Vancouver, Canada",
+        "quote": "Le programme des candidats provinciaux semblait compliqué jusqu'à ce que je trouve ThinkForward AI. Leurs conseils d'experts m'ont aidée à naviguer dans le processus en toute confiance."
+      },
+      "testimonial3": {
+        "initials": "RK",
+        "name": "Raj Kumar",
+        "location": "Maintenant à Montréal, Canada",
+        "quote": "La consultation personnalisée que j'ai reçue de ThinkForward AI était exactement ce dont j'avais besoin. Ils ont répondu à toutes mes préoccupations et m'ont guidé à chaque étape."
+      }
+    },
+    "cta": {
+      "title": "Prêt à Commencer Votre Parcours d'Immigration?",
+      "description": "Contactez-nous aujourd'hui pour discuter de vos objectifs d'immigration et comment nous pouvons vous aider à les atteindre.",
+      "buttonText": "Commencer"
+    }
   }
 }

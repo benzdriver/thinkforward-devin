@@ -27,7 +27,8 @@
     "previous": "上一步",
     "loading": "加载中...",
     "error": "发生错误",
-    "success": "成功！"
+    "success": "成功！",
+    "learnMore": "了解更多"
   },
   "about": {
     "pageTitle": "关于我们",
@@ -223,5 +224,221 @@
     },
     "startAssessment": "开始评估",
     "questions": "问题"
+  },
+  "footer": {
+    "services": "服务",
+    "expressEntry": "快速通道",
+    "provincialPrograms": "省提名计划",
+    "consultation": "咨询服务",
+    "resources": "资源",
+    "blog": "博客",
+    "faq": "常见问题",
+    "contact": "联系我们",
+    "connect": "关注我们",
+    "newsletter": "订阅我们的通讯",
+    "emailPlaceholder": "输入您的电子邮件",
+    "subscribe": "订阅",
+    "allRightsReserved": "版权所有"
+  },
+  "home": {
+    "feature2Title": "个性化指导",
+    "feature2Description": "根据您的独特背景和目标获取量身定制的移民建议。",
+    "feature3Title": "专家支持",
+    "feature3Description": "与移民顾问联系，他们可以指导您完成每一步。",
+    "servicesTitle": "我们的服务",
+    "servicesSubtitle": "全面的移民解决方案，满足您的需求",
+    "service1Title": "快速通道",
+    "service1Description": "通过加拿大快速通道系统加速您的移民过程。",
+    "service2Title": "省提名计划",
+    "service2Description": "探索针对特定地区需求的省级移民途径。",
+    "service3Title": "移民咨询",
+    "service3Description": "从持牌移民顾问获取个性化建议。",
+    "testimonialsTitle": "成功案例",
+    "testimonialsSubtitle": "听听那些在ThinkForward AI的帮助下实现移民目标的人们的故事"
+  },
+  "contact": {
+    "title": "联系我们",
+    "metaDescription": "联系ThinkForward AI获取移民帮助和咨询。",
+    "heroTitle": "联系我们",
+    "heroSubtitle": "我们随时为您的移民之旅提供帮助。如有任何问题，请联系我们。",
+    "getInTouch": "联系方式",
+    "getInTouchDescription": "对移民有疑问？我们的团队随时准备为您提供个性化指导。",
+    "phoneTitle": "电话",
+    "phoneNumber": "+1 (123) 456-7890",
+    "emailTitle": "电子邮件",
+    "emailAddress": "info@thinkforward.ai",
+    "addressTitle": "地址",
+    "address": "加拿大安大略省多伦多市移民街123号，456室，邮编M5V 2K7",
+    "sendMessage": "发送消息",
+    "name": "姓名",
+    "email": "电子邮件",
+    "subject": "主题",
+    "selectSubject": "选择主题",
+    "subjectGeneral": "一般咨询",
+    "subjectSupport": "技术支持",
+    "subjectBilling": "账单问题",
+    "subjectPartnership": "合作机会",
+    "message": "消息",
+    "send": "发送消息",
+    "sending": "发送中...",
+    "successTitle": "消息已发送！",
+    "successMessage": "感谢您联系我们。我们将尽快回复您。",
+    "errorTitle": "错误",
+    "errorMessage": "发生错误。请重试。",
+    "findUs": "查找我们",
+    "mapPlaceholder": "地图将显示在这里"
+  },
+  "dashboard": {
+    "title": "仪表盘",
+    "description": "查看您的移民申请进度和下一步操作",
+    "welcome": "欢迎回来，{{name}}",
+    "currentPath": "当前移民路径",
+    "startNewApplication": "开始新申请",
+    "profileCompletion": "个人资料完成度",
+    "almostThere": "即将完成",
+    "keepGoing": "继续完善",
+    "continueProfile": "继续完善资料",
+    "assessmentResults": "评估结果",
+    "viewDetails": "查看详情",
+    "points": "分数",
+    "lastUpdated": "最后更新",
+    "scoreBreakdown": "分数明细",
+    "nextSteps": "下一步",
+    "viewAll": "查看全部",
+    "dueDate": "截止日期",
+    "addTask": "添加任务",
+    "recentDocuments": "最近文档",
+    "updatedOn": "更新于",
+    "uploadDocument": "上传文档",
+    "upcomingAppointments": "即将到来的预约",
+    "scheduleNew": "安排新预约",
+    "statusCompleted": "已完成",
+    "statusInProgress": "进行中",
+    "statusPending": "待处理",
+    "reschedule": "重新安排",
+    "joinMeeting": "加入会议",
+    "quickLinks": "快速链接",
+    "startAssessment": "开始评估",
+    "uploadDocuments": "上传文档",
+    "scheduleConsultation": "预约咨询",
+    "editProfile": "编辑资料"
+  },
+  "auth": {
+    "login": "登录",
+    "loginDescription": "输入您的凭据以访问您的账户",
+    "welcomeBack": "欢迎回来",
+    "loginMessage": "登录您的账户以继续您的移民之旅",
+    "email": "电子邮件",
+    "emailPlaceholder": "输入您的电子邮件",
+    "password": "密码",
+    "passwordPlaceholder": "输入您的密码",
+    "forgotPassword": "忘记密码？",
+    "rememberMe": "记住我",
+    "loginError": "登录错误",
+    "noAccount": "还没有账户？",
+    "register": "注册",
+    "registerDescription": "创建账户以开始您的移民之旅",
+    "name": "姓名",
+    "namePlaceholder": "输入您的全名",
+    "confirmPassword": "确认密码",
+    "confirmPasswordPlaceholder": "确认您的密码",
+    "agreeToTerms": "我同意服务条款和隐私政策",
+    "alreadyHaveAccount": "已有账户？",
+    "registerError": "注册错误",
+    "resetPassword": "重置密码",
+    "resetPasswordDescription": "输入您的新密码以重置您的账户",
+    "newPassword": "新密码",
+    "newPasswordPlaceholder": "输入您的新密码",
+    "resetPasswordError": "重置密码错误",
+    "forgotPasswordDescription": "输入您的电子邮件以接收密码重置链接",
+    "sendResetLink": "发送重置链接",
+    "backToLogin": "返回登录",
+    "forgotPasswordError": "忘记密码错误",
+    "resetLinkSent": "重置链接已发送",
+    "resetLinkSentMessage": "密码重置链接已发送到您的电子邮件",
+    "createAccount": "创建账户",
+    "registerMessage": "注册一个账户以开始您的移民之旅",
+    "haveAccount": "已有账户？"
+  },
+  "common": {
+    "terms": "服务条款",
+    "privacy": "隐私政策",
+    "and": "和"
+  },
+  "services": {
+    "title": "我们的服务",
+    "metaDescription": "探索ThinkForward AI的全面移民服务，包括快速通道、省提名计划和个性化咨询。",
+    "heroTitle": "满足您需求的移民服务",
+    "heroSubtitle": "我们提供全面的移民解决方案，帮助您充满信心和清晰地实现目标。",
+    "overviewTitle": "我们如何帮助您",
+    "overviewDescription": "我们的服务旨在简化您的移民之旅，在每一步都提供专业指导。",
+    "expressEntry": {
+      "title": "快速通道",
+      "description": "通过加拿大快速通道系统加速您的移民过程。",
+      "benefit1": "全面的资格评估",
+      "benefit2": "优化个人资料以最大化CRS分数",
+      "benefit3": "申请过程的逐步指导"
+    },
+    "provincialPrograms": {
+      "title": "省提名计划",
+      "description": "探索针对特定地区需求的省级移民途径。",
+      "benefit1": "确定适合的省级项目",
+      "benefit2": "省级申请要求指导",
+      "benefit3": "提名过程中的支持"
+    },
+    "consultation": {
+      "title": "移民咨询",
+      "description": "从持牌移民顾问获取个性化建议。",
+      "benefit1": "与移民专家一对一会话",
+      "benefit2": "定制移民策略",
+      "benefit3": "全程持续支持"
+    },
+    "howItWorks": {
+      "title": "我们的流程",
+      "description": "我们简化了移民流程，使其更加便捷和无压力。",
+      "step1": {
+        "title": "评估",
+        "description": "完成我们的全面评估，确定您在各种移民项目中的资格。"
+      },
+      "step2": {
+        "title": "策略",
+        "description": "根据您的个人资料和目标获取个性化移民策略。"
+      },
+      "step3": {
+        "title": "准备",
+        "description": "在我们的指导和支持下收集和准备所有必要文件。"
+      },
+      "step4": {
+        "title": "提交",
+        "description": "充满信心地提交您的申请，因为它已经过专家审核。"
+      }
+    },
+    "testimonials": {
+      "title": "成功案例",
+      "description": "听听那些在ThinkForward AI的帮助下实现移民目标的人们的故事。",
+      "testimonial1": {
+        "initials": "JD",
+        "name": "约翰·多伊",
+        "location": "现居加拿大多伦多",
+        "quote": "ThinkForward AI使我的快速通道申请过程顺利且无压力。他们的指导对帮助我实现移居加拿大的梦想非常宝贵。"
+      },
+      "testimonial2": {
+        "initials": "SM",
+        "name": "莎拉·米勒",
+        "location": "现居加拿大温哥华",
+        "quote": "省提名计划看起来很复杂，直到我找到了ThinkForward AI。他们的专业建议帮助我充满信心地完成了整个过程。"
+      },
+      "testimonial3": {
+        "initials": "RK",
+        "name": "拉吉·库马尔",
+        "location": "现居加拿大蒙特利尔",
+        "quote": "我从ThinkForward AI获得的个性化咨询正是我所需要的。他们解答了我所有的疑虑，并指导我完成了每一步。"
+      }
+    },
+    "cta": {
+      "title": "准备开始您的移民之旅？",
+      "description": "立即联系我们，讨论您的移民目标以及我们如何帮助您实现它们。",
+      "buttonText": "开始行动"
+    }
   }
 }
