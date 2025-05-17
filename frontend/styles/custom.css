@@ -1,16 +1,17 @@
 /* Custom CSS styles based on airportr.com */
 
 :root {
-  --primary-50: #e6f0ff;
-  --primary-100: #cce1ff;
-  --primary-200: #99c3ff;
-  --primary-300: #66a5ff;
-  --primary-400: #3387ff;
-  --primary-500: #0069ff;
-  --primary-600: #0054cc;
-  --primary-700: #003f99;
-  --primary-800: #002a66;
-  --primary-900: #3387ff; /* Light blue as requested */
+  --primary-50: #e6f9ff;
+  --primary-100: #ccf3ff;
+  --primary-200: #99e7ff;
+  --primary-300: #66dbff;
+  --primary-400: #33cfff;
+  --primary-500: #00c3ff;
+  --primary-600: #009cc9;
+  --primary-700: #007596;
+  --primary-800: #004e64;
+  --primary-900: #4facfe; /* Light blue gradient start */
+  --primary-gradient-end: #00f2fe; /* Deep blue gradient end */
   
   --neutral-50: #f9fafb;
   --neutral-100: #f3f4f6;
@@ -77,6 +78,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--primary-900);
   font-weight: 700;
   line-height: 1.2;
+  background: linear-gradient(to right, var(--primary-900), var(--primary-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 h1 {
@@ -144,13 +149,13 @@ a:hover {
 
 .btn-primary {
   color: #fff;
-  background-color: var(--primary-600);
-  border-color: var(--primary-600);
+  background: linear-gradient(to right, var(--primary-900), var(--primary-gradient-end));
+  border: none;
 }
 
 .btn-primary:hover, .btn-primary:focus {
-  background-color: var(--primary-700);
-  border-color: var(--primary-700);
+  background: linear-gradient(to right, var(--primary-gradient-end), var(--primary-900));
+  border: none;
   transform: translateY(-1px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -267,7 +272,7 @@ a:hover {
 
 /* Navigation */
 .bg-primary-900 {
-  background-color: var(--primary-900);
+  background: linear-gradient(to right, var(--primary-900), var(--primary-gradient-end));
 }
 
 .text-white {
@@ -302,7 +307,7 @@ a:hover {
 
 /* Hero Section - Airportr style */
 .hero-section {
-  background-color: var(--primary-900);
+  background: linear-gradient(to right, var(--primary-900), var(--primary-gradient-end));
   color: #fff;
   padding: 6rem 0;
   position: relative;
@@ -316,7 +321,7 @@ a:hover {
   left: 0;
   right: 0;
   height: 6rem;
-  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(0, 242, 254, 0));
   transform: translateY(50%);
 }
 
@@ -406,7 +411,7 @@ a:hover {
 .feature-icon {
   width: 4rem;
   height: 4rem;
-  background-color: var(--primary-50);
+  background: linear-gradient(to right, var(--primary-900), var(--primary-gradient-end));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -417,7 +422,7 @@ a:hover {
 .feature-icon .icon {
   width: 2rem;
   height: 2rem;
-  stroke: var(--primary-600);
+  stroke: white;
   stroke-width: 2;
   fill: none;
 }
@@ -595,7 +600,7 @@ a:hover {
 
 .progress-bar {
   height: 100%;
-  background-color: var(--primary-600);
+  background: linear-gradient(to right, var(--primary-900), var(--primary-gradient-end));
   border-radius: 9999px;
 }
 
@@ -647,7 +652,10 @@ a:hover {
 
 .team-title {
   font-size: 0.875rem;
-  color: var(--primary-600);
+  background: linear-gradient(to right, var(--primary-900), var(--primary-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
 }
 
@@ -667,7 +675,10 @@ a:hover {
 }
 
 .team-social a:hover {
-  color: var(--primary-600);
+  background: linear-gradient(to right, var(--primary-900), var(--primary-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Pricing page specific styles */
