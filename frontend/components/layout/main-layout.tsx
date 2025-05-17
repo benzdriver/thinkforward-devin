@@ -25,10 +25,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <div className="flex justify-between items-center">
             <Link href="/">
               <div className="flex items-center cursor-pointer">
-                <div className="w-10 h-10 mr-2 rounded-full bg-primary-700 flex items-center justify-center">
-                  <span className="font-bold">TF</span>
+                <div className="w-10 h-10 mr-4 rounded-full bg-primary-700 flex items-center justify-center">
+                  <span className="font-bold">T</span>
                 </div>
-                <span className="text-xl font-bold">{t('app.name')}</span>
+                <span className="text-xl font-bold" style={{ marginLeft: '4px' }}>ThinkForward AI</span>
               </div>
             </Link>
             
