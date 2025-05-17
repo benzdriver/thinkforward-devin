@@ -33,11 +33,41 @@ export interface CardProps
     VariantProps<typeof cardVariants> {}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, hover, ...props }, ref) => {
+  ({ className, variant = "default", hover = false, ...props }, ref) => {
+    const baseStyle: React.CSSProperties = {
+      borderRadius: '0.5rem',
+      border: '1px solid #E2E8F0',
+      boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+      overflow: 'hidden',
+      backgroundColor: 'white',
+    };
+    
+    const variantStyles: Record<string, React.CSSProperties> = {
+      default: { borderColor: '#E2E8F0' },
+      feature: { borderColor: '#E0E7FF' },
+      destructive: { borderColor: '#FEE2E2' },
+      success: { borderColor: '#D1FAE5' },
+      warning: { borderColor: '#FEF3C7' },
+      neutral: { borderColor: '#E2E8F0' },
+      elevated: { borderColor: '#F1F5F9', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' },
+      flat: { border: 'none', boxShadow: 'none' },
+    };
+    
+    const hoverStyle = hover ? {
+      transition: 'box-shadow 0.2s ease-in-out',
+    } : {};
+    
+    const inlineStyle = {
+      ...baseStyle,
+      ...(variantStyles[variant as string] || variantStyles.default),
+      ...hoverStyle,
+    };
+    
     return (
       <div
         ref={ref}
         className={cn(cardVariants({ variant, hover, className }))}
+        style={inlineStyle}
         {...props}
       />
     );
@@ -52,6 +82,7 @@ const CardHeader = React.forwardRef<
   <div
     ref={ref}
     className={cn("flex flex-col space-y-1.5 p-6", className)}
+    style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', padding: '1.5rem' }}
     {...props}
   />
 ));
@@ -64,6 +95,7 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn("font-semibold leading-none tracking-tight text-lg", className)}
+    style={{ fontWeight: 600, lineHeight: 1.2, letterSpacing: '-0.025em', fontSize: '1.125rem', color: '#0F172A' }}
     {...props}
   />
 ));
@@ -73,7 +105,12 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  <div 
+    ref={ref} 
+    className={cn("p-6 pt-0", className)} 
+    style={{ padding: '1.5rem', paddingTop: 0 }} 
+    {...props} 
+  />
 ));
 CardContent.displayName = "CardContent";
 
@@ -84,6 +121,7 @@ const CardFooter = React.forwardRef<
   <div
     ref={ref}
     className={cn("flex items-center p-6 pt-0", className)}
+    style={{ display: 'flex', alignItems: 'center', padding: '1.5rem', paddingTop: 0 }}
     {...props}
   />
 ));

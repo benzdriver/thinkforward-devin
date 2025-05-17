@@ -73,8 +73,8 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       className,
       value = 0,
       max = 100,
-      size,
-      variant,
+      size = "md",
+      variant = "default",
       showValue = false,
       valuePosition = "outside",
       valueFormat,
@@ -100,14 +100,82 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       return null;
     }, [showValue, valueFormat, value, max, percentage]);
     
+    const containerStyle: React.CSSProperties = {
+      width: '100%',
+    };
+    
+    const headerContainerStyle: React.CSSProperties = {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    };
+    
+    const labelStyle: React.CSSProperties = {
+      marginBottom: '0.25rem',
+      fontSize: '0.875rem',
+      fontWeight: 500,
+    };
+    
+    const valueOutsideStyle: React.CSSProperties = {
+      marginBottom: '0.25rem',
+      fontSize: '0.875rem',
+      color: '#64748B',
+    };
+    
+    const progressBarStyle: React.CSSProperties = {
+      position: 'relative',
+      width: '100%',
+      overflow: 'hidden',
+      borderRadius: '9999px',
+      backgroundColor: variant === 'default' ? '#E2E8F0' :
+                      variant === 'primary' ? '#BFDBFE' :
+                      variant === 'secondary' ? '#E2E8F0' :
+                      variant === 'destructive' ? '#FECACA' :
+                      variant === 'success' ? '#BBF7D0' :
+                      variant === 'warning' ? '#FDE68A' :
+                      variant === 'info' ? '#BFDBFE' : '#E2E8F0',
+      height: size === 'xs' ? '0.25rem' :
+              size === 'sm' ? '0.5rem' :
+              size === 'md' ? '0.75rem' :
+              size === 'lg' ? '1rem' : '0.75rem',
+    };
+    
+    const indicatorStyle: React.CSSProperties = {
+      height: '100%',
+      width: percentage !== undefined ? `${percentage}%` : '100%',
+      display: 'flex',
+      flex: 1,
+      transition: 'all 0.2s',
+      backgroundColor: variant === 'default' ? '#94A3B8' :
+                      variant === 'primary' ? '#3B82F6' :
+                      variant === 'secondary' ? '#64748B' :
+                      variant === 'destructive' ? '#EF4444' :
+                      variant === 'success' ? '#22C55E' :
+                      variant === 'warning' ? '#F59E0B' :
+                      variant === 'info' ? '#3B82F6' : '#94A3B8',
+      animation: animation === 'pulse' ? 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' :
+                animation === 'indeterminate' ? 'indeterminate 1.5s infinite linear' : 'none',
+    };
+    
+    const valueInsideStyle: React.CSSProperties = {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '0.75rem',
+      fontWeight: 500,
+      color: 'white',
+    };
+    
     return (
-      <div className="w-full">
-        <div className="flex items-center justify-between">
+      <div className="w-full" style={containerStyle}>
+        <div className="flex items-center justify-between" style={headerContainerStyle}>
           {props.children && (
-            <div className="mb-1 text-sm font-medium">{props.children}</div>
+            <div className="mb-1 text-sm font-medium" style={labelStyle}>{props.children}</div>
           )}
           {showValue && valuePosition === "outside" && formattedValue && (
-            <div className="mb-1 text-sm text-neutral-500">{formattedValue}</div>
+            <div className="mb-1 text-sm text-neutral-500" style={valueOutsideStyle}>{formattedValue}</div>
           )}
         </div>
         <div
@@ -118,6 +186,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           aria-valuenow={percentage !== undefined ? Math.round(percentage) : undefined}
           aria-valuetext={formattedValue || undefined}
           className={cn(progressVariants({ size, variant }), className)}
+          style={progressBarStyle}
           {...props}
         >
           <div
@@ -125,12 +194,10 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
               progressIndicatorVariants({ variant, animation }),
               indicatorClassName
             )}
-            style={{
-              width: percentage !== undefined ? `${percentage}%` : "100%",
-            }}
+            style={indicatorStyle}
           >
             {showValue && valuePosition === "inside" && formattedValue && (
-              <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+              <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white" style={valueInsideStyle}>
                 {formattedValue}
               </span>
             )}

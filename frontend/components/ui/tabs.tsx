@@ -147,6 +147,12 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
         <div
           ref={ref}
           className={cn(tabsRootVariants({ orientation }), className)}
+          style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: orientation === 'horizontal' ? 'column' : 'row',
+            gap: orientation === 'horizontal' ? '0.5rem' : '0.5rem',
+          }}
           {...props}
         >
           {children}
@@ -177,6 +183,18 @@ const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
           }),
           className
         )}
+        style={{
+          display: 'flex',
+          position: 'relative',
+          flexDirection: finalOrientation === 'horizontal' ? 'row' : 'column',
+          width: fullWidth ? '100%' : 'fit-content',
+          fontSize: size === 'sm' ? '0.875rem' : size === 'lg' ? '1.125rem' : '1rem',
+          borderBottom: variant === 'default' || variant === 'underline' ? '1px solid #E2E8F0' : 'none',
+          backgroundColor: variant === 'pills' ? '#F8FAFC' : 'transparent',
+          borderRadius: variant === 'pills' || variant === 'bordered' ? '0.5rem' : 'none',
+          border: variant === 'bordered' ? '1px solid #E2E8F0' : 'none',
+          padding: variant === 'pills' || variant === 'bordered' ? '0.25rem' : '0',
+        }}
         {...props}
       />
     );
@@ -218,11 +236,26 @@ const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(
           }),
           className
         )}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: finalOrientation === 'horizontal' ? 'center' : 'flex-start',
+          whiteSpace: 'nowrap',
+          fontWeight: 500,
+          transition: 'all 0.2s',
+          padding: finalSize === 'sm' ? '0.25rem 0.5rem' : finalSize === 'lg' ? '0.75rem 1rem' : '0.5rem 0.75rem',
+          fontSize: finalSize === 'sm' ? '0.875rem' : finalSize === 'lg' ? '1.125rem' : '1rem',
+          flex: fullWidth ? '1' : 'none',
+          color: isActive ? '#3B82F6' : '#64748B',
+          backgroundColor: (isActive && (finalVariant === 'pills' || finalVariant === 'bordered')) ? 'white' : 'transparent',
+          borderBottom: (isActive && (finalVariant === 'default' || finalVariant === 'underline')) ? '2px solid #3B82F6' : '2px solid transparent',
+          boxShadow: (isActive && (finalVariant === 'pills' || finalVariant === 'bordered')) ? '0 1px 2px rgba(0, 0, 0, 0.05)' : 'none',
+        }}
         {...props}
       >
-        {icon && <span className="mr-2">{icon}</span>}
+        {icon && <span className="mr-2" style={{ marginRight: '0.5rem' }}>{icon}</span>}
         {children}
-        {badge && <span className="ml-2">{badge}</span>}
+        {badge && <span className="ml-2" style={{ marginLeft: '0.5rem' }}>{badge}</span>}
       </button>
     );
   }
@@ -260,6 +293,18 @@ const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
           }),
           className
         )}
+        style={{
+          marginTop: '0.5rem',
+          outlineOffset: '2px',
+          outline: 'none',
+          opacity: isActive ? 1 : 0,
+          transform: animation === 'slide' ? `translateX(${isActive ? '0' : '-10px'})` : 
+                    animation === 'zoom' ? `scale(${isActive ? '1' : '0.95'})` : 'none',
+          transition: 'opacity 0.2s, transform 0.2s',
+          padding: finalVariant === 'bordered' ? '1rem' : '0',
+          border: finalVariant === 'bordered' ? '1px solid #E2E8F0' : 'none',
+          borderRadius: finalVariant === 'bordered' ? '0.5rem' : 'none',
+        }}
         {...props}
       >
         {children}

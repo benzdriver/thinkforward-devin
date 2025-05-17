@@ -141,11 +141,28 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
       [type, collapsible, value, internalValue, handleValueChange, variant]
     );
 
+    const accordionStyle: React.CSSProperties = {
+      width: '100%',
+      ...(variant === 'default' || variant === 'bordered' ? {
+        border: '1px solid #E2E8F0',
+        borderRadius: '0.5rem',
+      } : {}),
+      ...(variant === 'shadow' ? {
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        borderRadius: '0.5rem',
+      } : {}),
+      ...(variant === 'minimal' ? {
+        borderTop: '1px solid #E2E8F0',
+        borderBottom: '1px solid #E2E8F0',
+      } : {}),
+    };
+
     return (
       <AccordionContext.Provider value={contextValue}>
         <div
           ref={ref}
           className={cn(accordionVariants({ variant }), className)}
+          style={accordionStyle}
           {...props}
         />
       </AccordionContext.Provider>
@@ -166,6 +183,11 @@ const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
     const { variant: contextVariant } = React.useContext(AccordionContext);
     const finalVariant = variant || contextVariant;
 
+    const itemStyle: React.CSSProperties = {
+      borderBottom: '1px solid #E2E8F0',
+      ...(disabled ? { opacity: 0.5, cursor: 'not-allowed' } : {}),
+    };
+
     return (
       <div
         ref={ref}
@@ -176,6 +198,7 @@ const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
           disabled && "opacity-50 cursor-not-allowed",
           className
         )}
+        style={itemStyle}
         {...props}
       />
     );
@@ -195,8 +218,8 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
     {
       className,
       variant,
-      size,
-      iconPosition,
+      size = "md",
+      iconPosition = "right",
       children,
       icon,
       showIcon = true,
@@ -206,6 +229,38 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
   ) => {
     const { variant: contextVariant } = React.useContext(AccordionContext);
     const finalVariant = variant || contextVariant;
+
+    const triggerStyle: React.CSSProperties = {
+      display: 'flex',
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: iconPosition === 'left' ? 'flex-start' : 'space-between',
+      flexDirection: iconPosition === 'left' ? 'row-reverse' : 'row',
+      padding: size === 'sm' ? '0.5rem 0.75rem' : 
+               size === 'lg' ? '1.25rem 1.5rem' : '1rem 1.25rem',
+      fontSize: size === 'sm' ? '0.875rem' : 
+                size === 'lg' ? '1.125rem' : '1rem',
+      fontWeight: 500,
+      textAlign: 'left',
+      backgroundColor: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      transition: 'background-color 0.2s',
+      outline: 'none',
+      ...(props.disabled ? { opacity: 0.5, cursor: 'not-allowed', pointerEvents: 'none' } : {}),
+    };
+
+    const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!props.disabled && finalVariant !== 'ghost') {
+        e.currentTarget.style.backgroundColor = '#F8FAFC';
+      }
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!props.disabled) {
+        e.currentTarget.style.backgroundColor = 'transparent';
+      }
+    };
 
     const defaultIcon = (
       <svg
@@ -219,12 +274,25 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
         strokeLinecap="round"
         strokeLinejoin="round"
         className="h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-180"
+        style={{ 
+          height: '1rem', 
+          width: '1rem', 
+          transition: 'transform 0.2s',
+          transform: getItemState(props['aria-controls']?.toString() || '') === 'open' ? 'rotate(180deg)' : 'none'
+        }}
       >
         <polyline points="6 9 12 15 18 9" />
       </svg>
     );
 
     const iconElement = icon || defaultIcon;
+
+    const iconContainerStyle: React.CSSProperties = {
+      flexShrink: 0,
+      marginLeft: iconPosition === 'right' ? '1rem' : 0,
+      marginRight: iconPosition === 'left' ? '1rem' : 0,
+      transition: 'transform 0.2s',
+    };
 
     return (
       <button
@@ -238,6 +306,9 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
           }),
           className
         )}
+        style={triggerStyle}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         {...props}
       >
         {children}
@@ -247,6 +318,7 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
               "flex-shrink-0 transition-transform duration-200",
               iconPosition === "left" ? "mr-4" : "ml-4"
             )}
+            style={iconContainerStyle}
           >
             {iconElement}
           </span>
@@ -266,6 +338,19 @@ const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>
     const { variant: contextVariant } = React.useContext(AccordionContext);
     const finalVariant = variant || contextVariant;
 
+    const contentStyle: React.CSSProperties = {
+      overflow: 'hidden',
+      fontSize: '0.875rem',
+      backgroundColor: (finalVariant === 'default' || finalVariant === 'bordered' || finalVariant === 'shadow') ? 'white' : 'transparent',
+      padding: '0 1.25rem 1rem 1.25rem',
+      paddingTop: 0,
+    };
+
+    const innerContentStyle: React.CSSProperties = {
+      paddingBottom: '0.25rem',
+      paddingTop: 0,
+    };
+
     return (
       <div
         ref={ref}
@@ -273,9 +358,10 @@ const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>
           accordionContentVariants({ variant: finalVariant }),
           className
         )}
+        style={contentStyle}
         {...props}
       >
-        <div className="pb-1 pt-0">{children}</div>
+        <div className="pb-1 pt-0" style={innerContentStyle}>{children}</div>
       </div>
     );
   }

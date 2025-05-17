@@ -42,11 +42,54 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {}
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  ({ className, variant = "primary", size = "md", fullWidth, ...props }, ref) => {
+    const baseStyle = { 
+      display: 'inline-flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      borderRadius: '0.375rem', 
+      fontSize: '0.875rem', 
+      fontWeight: 500,
+      transition: 'all 0.2s',
+      cursor: 'pointer',
+      outline: 'none',
+    };
+    
+    const variantStyles: Record<string, React.CSSProperties> = {
+      primary: { backgroundColor: '#4A6CF7', color: 'white', border: 'none' },
+      secondary: { backgroundColor: '#F1F5F9', color: '#334155', border: 'none' },
+      outline: { backgroundColor: 'transparent', color: '#0F172A', border: '1px solid #E2E8F0' },
+      ghost: { backgroundColor: 'transparent', color: '#0F172A', border: 'none' },
+      link: { backgroundColor: 'transparent', color: '#4A6CF7', border: 'none', textDecoration: 'underline' },
+      destructive: { backgroundColor: '#EF4444', color: 'white', border: 'none' },
+      success: { backgroundColor: '#10B981', color: 'white', border: 'none' },
+      warning: { backgroundColor: '#F59E0B', color: 'white', border: 'none' },
+      neutral: { backgroundColor: '#E2E8F0', color: '#475569', border: 'none' },
+    };
+    
+    const sizeStyles: Record<string, React.CSSProperties> = {
+      xs: { height: '1.75rem', padding: '0 0.5rem', fontSize: '0.75rem' },
+      sm: { height: '2rem', padding: '0 0.75rem', fontSize: '0.75rem' },
+      md: { height: '2.5rem', padding: '0 1rem', fontSize: '0.875rem' },
+      lg: { height: '3rem', padding: '0 1.5rem', fontSize: '1rem' },
+      xl: { height: '3.5rem', padding: '0 2rem', fontSize: '1.125rem' },
+      icon: { height: '2.25rem', width: '2.25rem', padding: '0' },
+    };
+    
+    const widthStyle = fullWidth ? { width: '100%' } : {};
+    
+    const inlineStyle = {
+      ...baseStyle,
+      ...(variantStyles[variant as string] || variantStyles.primary),
+      ...(sizeStyles[size as string] || sizeStyles.md),
+      ...widthStyle,
+    };
+    
     return (
       <button
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, fullWidth, className }))}
         ref={ref}
+        style={inlineStyle}
         {...props}
       />
     );

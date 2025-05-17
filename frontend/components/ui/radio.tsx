@@ -50,9 +50,9 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
     ...props 
   }, ref) => {
     return (
-      <div className={cn("space-y-2", containerClassName)}>
-        <div className="flex items-start">
-          <div className="flex items-center h-5">
+      <div className={cn("space-y-2", containerClassName)} style={{ marginBottom: '0.5rem' }}>
+        <div className="flex items-start" style={{ display: 'flex', alignItems: 'flex-start' }}>
+          <div className="flex items-center h-5" style={{ display: 'flex', alignItems: 'center', height: '1.25rem' }}>
             <input
               type="radio"
               className={cn(
@@ -62,26 +62,43 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
                 }),
                 className
               )}
+              style={{
+                borderRadius: '50%',
+                outlineOffset: '0',
+                outline: 'none',
+                height: size === 'sm' ? '0.75rem' : size === 'lg' ? '1.25rem' : '1rem',
+                width: size === 'sm' ? '0.75rem' : size === 'lg' ? '1.25rem' : '1rem',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderColor: error ? '#EF4444' : 
+                              variant === 'success' ? '#10B981' : 
+                              variant === 'warning' ? '#F59E0B' : '#CBD5E1',
+                color: error ? '#EF4444' : 
+                       variant === 'success' ? '#10B981' : 
+                       variant === 'warning' ? '#F59E0B' : '#3B82F6',
+                appearance: 'none',
+                position: 'relative',
+              }}
               ref={ref}
               {...props}
             />
           </div>
           {(label || description) && (
-            <div className="ml-3 text-sm">
+            <div className="ml-3 text-sm" style={{ marginLeft: '0.75rem', fontSize: '0.875rem' }}>
               {label && (
-                <label className={cn("font-medium text-neutral-800", labelClassName)}>
+                <label className={cn("font-medium text-neutral-800", labelClassName)} style={{ fontWeight: 500, color: '#1E293B' }}>
                   {label}
                 </label>
               )}
               {description && (
-                <p className={cn("text-neutral-600", descriptionClassName)}>
+                <p className={cn("text-neutral-600", descriptionClassName)} style={{ color: '#475569' }}>
                   {description}
                 </p>
               )}
             </div>
           )}
         </div>
-        {error && <p className="text-sm text-destructive mt-1">{error}</p>}
+        {error && <p className="text-sm text-destructive mt-1" style={{ fontSize: '0.875rem', color: '#EF4444', marginTop: '0.25rem' }}>{error}</p>}
       </div>
     );
   }

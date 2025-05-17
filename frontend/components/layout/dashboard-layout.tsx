@@ -419,6 +419,13 @@ export function DashboardLayout({
         }),
         className
       )}
+      style={{
+        display: 'flex',
+        minHeight: '100vh',
+        backgroundColor: variant === 'default' ? '#F8FAFC' : 
+                        variant === 'white' ? 'white' : 
+                        variant === 'gradient' ? '#F8FAFC' : '#F8FAFC',
+      }}
       {...props}
     >
       <aside
@@ -429,14 +436,29 @@ export function DashboardLayout({
             collapsed,
           })
         )}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          borderRight: '1px solid #E2E8F0',
+          backgroundColor: sidebarVariant === 'default' ? 'white' : 
+                          sidebarVariant === 'dark' ? '#0F172A' : 
+                          sidebarVariant === 'primary' ? '#1E40AF' : 
+                          sidebarVariant === 'brand' ? '#1E40AF' : 'white',
+          color: sidebarVariant === 'default' ? '#0F172A' : 'white',
+          width: collapsed ? '4rem' : 
+                 sidebarWidth === 'sm' ? '4rem' : 
+                 sidebarWidth === 'md' ? '16rem' : 
+                 sidebarWidth === 'lg' ? '20rem' : '16rem',
+          transition: 'all 0.3s ease-in-out',
+        }}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           {sidebarContent || defaultSidebarContent}
           {sidebarFooter || defaultSidebarFooter}
         </div>
       </aside>
       
-      <main className="flex-1 flex flex-col min-h-screen">
+      <main className="flex-1 flex flex-col min-h-screen" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         {header || defaultHeader}
         
         <div
@@ -446,6 +468,15 @@ export function DashboardLayout({
             }),
             "flex-1"
           )}
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            padding: mainPadding === 'none' ? '0' :
+                    mainPadding === 'sm' ? '1rem' :
+                    mainPadding === 'md' ? '1.5rem' :
+                    mainPadding === 'lg' ? '2rem' : '1.5rem',
+          }}
         >
           {children}
         </div>

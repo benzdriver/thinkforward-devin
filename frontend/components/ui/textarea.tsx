@@ -56,9 +56,9 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     ...props 
   }, ref) => {
     return (
-      <div className={cn("w-full", containerClassName)}>
+      <div className={cn("w-full", containerClassName)} style={{ width: '100%' }}>
         {label && (
-          <label className={cn("block text-sm font-medium text-neutral-800 mb-1.5", labelClassName)}>
+          <label className={cn("block text-sm font-medium text-neutral-800 mb-1.5", labelClassName)} style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#1E293B', marginBottom: '0.375rem' }}>
             {label}
           </label>
         )}
@@ -71,11 +71,23 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             }),
             className
           )}
+          style={{
+            display: 'flex',
+            width: '100%',
+            minHeight: '80px',
+            borderRadius: '0.375rem',
+            border: '1px solid',
+            borderColor: error ? '#EF4444' : variant === 'success' ? '#10B981' : variant === 'warning' ? '#F59E0B' : '#E2E8F0',
+            backgroundColor: 'white',
+            padding: size === 'sm' ? '0.25rem 0.5rem' : size === 'lg' ? '0.75rem 1rem' : '0.5rem 0.75rem',
+            fontSize: size === 'sm' ? '0.75rem' : size === 'lg' ? '1rem' : '0.875rem',
+            resize: resize === 'none' ? 'none' : resize === 'horizontal' ? 'horizontal' : resize === 'both' ? 'both' : 'vertical',
+          }}
           ref={ref}
           {...props}
         />
-        {error && <p className="mt-1.5 text-sm text-destructive">{error}</p>}
-        {helperText && !error && <p className="mt-1.5 text-sm text-neutral-500">{helperText}</p>}
+        {error && <p className="mt-1.5 text-sm text-destructive" style={{ marginTop: '0.375rem', fontSize: '0.875rem', color: '#EF4444' }}>{error}</p>}
+        {helperText && !error && <p className="mt-1.5 text-sm text-neutral-500" style={{ marginTop: '0.375rem', fontSize: '0.875rem', color: '#64748B' }}>{helperText}</p>}
       </div>
     );
   }

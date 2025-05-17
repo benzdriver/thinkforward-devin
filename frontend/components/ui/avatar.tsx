@@ -96,10 +96,10 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
       alt = "",
       fallback,
       fallbackVariant = "default",
-      size,
-      shape,
-      border,
-      status,
+      size = "md",
+      shape = "circle",
+      border = "none",
+      status = "none",
       delayMs = 600,
       onLoadingStatusChange,
       ...props
@@ -167,10 +167,92 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
       onLoadingStatusChange?.("error");
     };
     
+    const avatarStyle: React.CSSProperties = {
+      position: 'relative',
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'hidden',
+      height: size === 'xs' ? '1.5rem' : 
+              size === 'sm' ? '2rem' : 
+              size === 'md' ? '2.5rem' : 
+              size === 'lg' ? '3rem' : 
+              size === 'xl' ? '4rem' : 
+              size === '2xl' ? '5rem' : '2.5rem',
+      width: size === 'xs' ? '1.5rem' : 
+             size === 'sm' ? '2rem' : 
+             size === 'md' ? '2.5rem' : 
+             size === 'lg' ? '3rem' : 
+             size === 'xl' ? '4rem' : 
+             size === '2xl' ? '5rem' : '2.5rem',
+      fontSize: size === 'xs' ? '0.75rem' : 
+                size === 'sm' ? '0.875rem' : 
+                size === 'md' ? '1rem' : 
+                size === 'lg' ? '1.125rem' : 
+                size === 'xl' ? '1.25rem' : 
+                size === '2xl' ? '1.5rem' : '1rem',
+      borderRadius: shape === 'circle' ? '9999px' : '0.375rem',
+      ...(border === 'thin' ? { boxShadow: '0 0 0 1px #E2E8F0' } : {}),
+      ...(border === 'thick' ? { boxShadow: '0 0 0 2px #E2E8F0' } : {}),
+      ...(status !== 'none' ? {
+        '::after': {
+          content: '""',
+          position: 'absolute',
+          bottom: '0',
+          right: '0',
+          height: '0.625rem',
+          width: '0.625rem',
+          borderRadius: '9999px',
+          backgroundColor: status === 'online' ? '#10B981' : 
+                           status === 'offline' ? '#CBD5E1' : 
+                           status === 'busy' ? '#EF4444' : 
+                           status === 'away' ? '#F59E0B' : 'transparent',
+          boxShadow: '0 0 0 2px white',
+        }
+      } : {})
+    };
+    
+    const imageStyle: React.CSSProperties = {
+      height: '100%',
+      width: '100%',
+      objectFit: 'cover',
+      borderRadius: shape === 'circle' ? '9999px' : '0.375rem',
+    };
+    
+    const fallbackStyle: React.CSSProperties = {
+      display: 'flex',
+      height: '100%',
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontWeight: 500,
+      textTransform: 'uppercase',
+      borderRadius: shape === 'circle' ? '9999px' : '0.375rem',
+      backgroundColor: fallbackVariant === 'primary' ? '#DBEAFE' : 
+                       fallbackVariant === 'secondary' ? '#F1F5F9' : 
+                       fallbackVariant === 'destructive' ? '#FEE2E2' : 
+                       fallbackVariant === 'success' ? '#D1FAE5' : 
+                       fallbackVariant === 'warning' ? '#FEF3C7' : 
+                       fallbackVariant === 'info' ? '#E0F2FE' : '#F1F5F9',
+      color: fallbackVariant === 'primary' ? '#1E40AF' : 
+             fallbackVariant === 'secondary' ? '#1E293B' : 
+             fallbackVariant === 'destructive' ? '#991B1B' : 
+             fallbackVariant === 'success' ? '#166534' : 
+             fallbackVariant === 'warning' ? '#92400E' : 
+             fallbackVariant === 'info' ? '#0C4A6E' : '#1E293B',
+    };
+    
+    const svgStyle: React.CSSProperties = {
+      height: '50%',
+      width: '50%',
+      color: 'currentColor',
+    };
+    
     return (
       <div
         ref={ref}
         className={cn(avatarVariants({ size, shape, border, status }), className)}
+        style={avatarStyle}
         {...props}
       >
         {src && !showFallback && (
@@ -179,6 +261,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
             src={src}
             alt={alt}
             className={cn(avatarImageVariants({ shape }))}
+            style={imageStyle}
             onLoad={handleImageLoad}
             onError={handleImageError}
           />
@@ -192,6 +275,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
                 shape,
               })
             )}
+            style={fallbackStyle}
             aria-hidden="true"
           >
             {fallback || initials || (
@@ -200,6 +284,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
                 viewBox="0 0 24 24"
                 fill="currentColor"
                 className="h-1/2 w-1/2"
+                style={svgStyle}
               >
                 <path
                   fillRule="evenodd"
@@ -250,10 +335,34 @@ const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
       loose: "-mr-1",
     };
     
+    const groupStyle: React.CSSProperties = {
+      display: 'flex',
+    };
+    
+    const getAvatarItemStyle = (index: number): React.CSSProperties => ({
+      position: 'relative',
+      marginRight: spacing === 'tight' ? '-0.75rem' : 
+                   spacing === 'normal' ? '-0.5rem' : 
+                   spacing === 'loose' ? '-0.25rem' : '-0.5rem',
+      zIndex: visibleAvatars.length - index,
+    });
+    
+    const remainingStyle: React.CSSProperties = {
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: spacing === 'tight' ? '-0.75rem' : 
+                   spacing === 'normal' ? '-0.5rem' : 
+                   spacing === 'loose' ? '-0.25rem' : '-0.5rem',
+      zIndex: 0,
+    };
+    
     return (
       <div
         ref={ref}
         className={cn("flex", className)}
+        style={groupStyle}
         {...props}
       >
         {visibleAvatars.map((child, index) => {
@@ -263,7 +372,7 @@ const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
             <div
               key={index}
               className={cn(spacingClasses[spacing], "relative")}
-              style={{ zIndex: visibleAvatars.length - index }}
+              style={getAvatarItemStyle(index)}
             >
               {React.cloneElement(child as React.ReactElement<AvatarProps>, {
                 size: size || (child as React.ReactElement<AvatarProps>).props.size,
@@ -280,7 +389,7 @@ const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
               "relative flex items-center justify-center",
               spacingClasses[spacing]
             )}
-            style={{ zIndex: 0 }}
+            style={remainingStyle}
           >
             <Avatar
               size={size}

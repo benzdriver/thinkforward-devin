@@ -46,9 +46,9 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
   (
     {
       className,
-      variant,
-      size,
-      fullHeight,
+      variant = "default",
+      size = "md",
+      fullHeight = false,
       icon,
       title,
       description,
@@ -60,6 +60,61 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
     },
     ref
   ) => {
+    const containerStyle: React.CSSProperties = {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      borderRadius: '0.5rem',
+      ...(fullHeight ? { height: '100%', minHeight: '300px' } : {}),
+    };
+    
+    const variantStyles: Record<string, React.CSSProperties> = {
+      default: { backgroundColor: 'white', border: '1px solid #E2E8F0' },
+      subtle: { backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' },
+      ghost: { backgroundColor: 'transparent' },
+      card: { backgroundColor: 'white', border: '1px solid #E2E8F0', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' },
+    };
+    
+    const sizeStyles: Record<string, React.CSSProperties> = {
+      sm: { padding: '1rem', gap: '0.5rem' },
+      md: { padding: '1.5rem', gap: '0.75rem' },
+      lg: { padding: '2rem', gap: '1rem' },
+    };
+    
+    const combinedContainerStyle = {
+      ...containerStyle,
+      ...(variantStyles[variant as string] || variantStyles.default),
+      ...(sizeStyles[size as string] || sizeStyles.md),
+    };
+    
+    const titleStyle: React.CSSProperties = {
+      fontWeight: 500,
+      fontSize: size === 'sm' ? '0.875rem' : 
+               size === 'md' ? '1rem' : 
+               size === 'lg' ? '1.125rem' : '1rem',
+    };
+    
+    const descriptionStyle: React.CSSProperties = {
+      color: '#64748B',
+      fontSize: size === 'sm' ? '0.75rem' : 
+               size === 'md' ? '0.875rem' : 
+               size === 'lg' ? '1rem' : '0.875rem',
+    };
+    
+    const actionContainerStyle: React.CSSProperties = {
+      marginTop: '0.5rem',
+    };
+    
+    const footerStyle: React.CSSProperties = {
+      marginTop: size === 'sm' ? '0.5rem' : 
+                size === 'md' ? '1rem' : 
+                size === 'lg' ? '1.5rem' : '1rem',
+      fontSize: size === 'lg' ? '0.875rem' : '0.75rem',
+      color: '#94A3B8',
+    };
+    
     const defaultIcon = (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -72,6 +127,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
         strokeLinecap="round"
         strokeLinejoin="round"
         className="text-secondary-400"
+        style={{ color: '#94A3B8' }}
       >
         <rect width="18" height="18" x="3" y="3" rx="2" />
         <path d="M9.5 15v-6h1.5L9.5 15" />
@@ -92,6 +148,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
         strokeLinecap="round"
         strokeLinejoin="round"
         className="animate-spin text-primary"
+        style={{ color: '#3B82F6', animation: 'spin 1s linear infinite' }}
       >
         <path d="M21 12a9 9 0 1 1-6.219-8.56" />
       </svg>
@@ -108,6 +165,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
           }),
           className
         )}
+        style={combinedContainerStyle}
         {...props}
       >
         {isLoading ? loadingIcon : icon || defaultIcon}
@@ -117,8 +175,9 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
             "text-sm": size === "sm",
             "text-base": size === "md",
             "text-lg": size === "lg",
-          })}>
-            {isLoading ? "加载中..." : title}
+          })}
+          style={titleStyle}>
+            {isLoading ? "Loading..." : title}
           </h3>
         )}
         
@@ -127,19 +186,20 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
             "text-xs": size === "sm",
             "text-sm": size === "md",
             "text-base": size === "lg",
-          })}>
-            {isLoading ? "请稍候..." : description}
+          })}
+          style={descriptionStyle}>
+            {isLoading ? "Please wait..." : description}
           </p>
         )}
         
         {!isLoading && action && (
-          <div className="mt-2">
+          <div className="mt-2" style={actionContainerStyle}>
             {action}
           </div>
         )}
         
         {!isLoading && secondaryAction && (
-          <div className="mt-2">
+          <div className="mt-2" style={actionContainerStyle}>
             {secondaryAction}
           </div>
         )}
@@ -149,7 +209,8 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
             "mt-2 text-xs": size === "sm",
             "mt-4 text-xs": size === "md",
             "mt-6 text-sm": size === "lg",
-          })}>
+          })}
+          style={footerStyle}>
             {footer}
           </div>
         )}

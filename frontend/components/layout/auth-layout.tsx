@@ -188,11 +188,18 @@ export function AuthLayout({
         }),
         className
       )}
-      style={
-        variant === "image" && backgroundImage
-          ? { backgroundImage: `url(${backgroundImage})` }
-          : undefined
-      }
+      style={{
+        display: 'flex',
+        minHeight: '100vh',
+        backgroundColor: variant === 'default' ? 'white' : 
+                        variant === 'gradient' ? '#F8FAFC' : undefined,
+        flexDirection: contentPosition === 'left' ? 'row' : 
+                       contentPosition === 'right' ? 'row-reverse' : 'column',
+        alignItems: contentPosition === 'center' ? 'center' : undefined,
+        justifyContent: contentPosition === 'center' ? 'center' : undefined,
+        ...(variant === "image" && backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}),
+        ...props.style
+      }}
       {...props}
     >
       {hasSidebar && (
@@ -203,14 +210,25 @@ export function AuthLayout({
               width: sidebarWidth,
             })
           )}
-          style={
-            sidebarVariant === "image" && sidebarImage
+          style={{
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: sidebarVariant === 'default' ? 'white' : 
+                             sidebarVariant === 'light' ? '#F0F9FF' :
+                             sidebarVariant === 'dark' ? '#0F172A' : undefined,
+            color: sidebarVariant === 'default' || sidebarVariant === 'light' ? '#0F172A' : 'white',
+            borderRight: '1px solid #E2E8F0',
+            width: sidebarWidth === 'sm' ? '25%' : 
+                   sidebarWidth === 'md' ? '33.333%' : 
+                   sidebarWidth === 'lg' ? '50%' : '33.333%',
+            ...(sidebarVariant === "image" && sidebarImage
               ? { backgroundImage: `url(${sidebarImage})` }
-              : undefined
-          }
+              : {})
+          }}
         >
-          <div className="flex flex-col justify-between h-full">
-            <div className="flex-1">
+          <div className="flex flex-col justify-between h-full" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+            <div className="flex-1" style={{ flex: 1 }}>
               {sidebarContent || defaultSidebarContent}
             </div>
             <div>
@@ -228,11 +246,25 @@ export function AuthLayout({
           }),
           "flex flex-col min-h-screen"
         )}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: contentWidth === 'sm' ? '75%' : 
+                 contentWidth === 'md' ? '66.667%' : 
+                 contentWidth === 'lg' ? '50%' : '66.667%',
+          padding: contentPadding === 'sm' ? '1rem' :
+                  contentPadding === 'md' ? '1.5rem' :
+                  contentPadding === 'lg' ? '2rem' :
+                  contentPadding === 'xl' ? '3rem' : '2rem',
+          minHeight: '100vh',
+          flex: 1
+        }}
       >
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           {header || (contentPosition !== "center" && defaultHeader)}
           
-          <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full">
+          <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full" 
+               style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', maxWidth: '28rem', margin: '0 auto', width: '100%' }}>
             {children}
           </div>
           
