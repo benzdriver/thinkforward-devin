@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Link from 'next/link';
+import { ButtonLink } from '../components/ui/button-link';
 
 import { DashboardLayout } from '../components/layout/dashboard-layout';
 import { Card } from '../components/ui/card';
@@ -22,46 +23,46 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 };
 
 const mockUserData = {
-  name: '张明',
-  email: 'zhang.ming@example.com',
+  name: 'John Smith',
+  email: 'john.smith@example.com',
   profileCompletion: 65,
-  immigrationPath: '加拿大快速通道',
+  immigrationPath: 'Canada Express Entry',
   nextSteps: [
-    { id: 1, title: '完成语言考试', status: 'pending', dueDate: '2023-06-30' },
-    { id: 2, title: '提交学历评估', status: 'in-progress', dueDate: '2023-07-15' },
-    { id: 3, title: '更新工作经验', status: 'completed', dueDate: '2023-05-20' },
+    { id: 1, title: 'Complete Language Test', status: 'pending', dueDate: '2023-06-30' },
+    { id: 2, title: 'Submit Education Assessment', status: 'in-progress', dueDate: '2023-07-15' },
+    { id: 3, title: 'Update Work Experience', status: 'completed', dueDate: '2023-05-20' },
   ],
   recentDocuments: [
-    { id: 1, name: '护照扫描件', type: 'pdf', updatedAt: '2023-05-18' },
-    { id: 2, name: '学位证书', type: 'pdf', updatedAt: '2023-05-15' },
-    { id: 3, name: '工作证明信', type: 'docx', updatedAt: '2023-05-10' },
+    { id: 1, name: 'Passport Scan', type: 'pdf', updatedAt: '2023-05-18' },
+    { id: 2, name: 'Degree Certificate', type: 'pdf', updatedAt: '2023-05-15' },
+    { id: 3, name: 'Employment Reference Letter', type: 'docx', updatedAt: '2023-05-10' },
   ],
   upcomingAppointments: [
     { 
       id: 1, 
-      title: '移民顾问咨询', 
+      title: 'Immigration Consultant Meeting', 
       date: '2023-06-05', 
       time: '14:00-15:00',
-      consultant: '李顾问'
+      consultant: 'Consultant Lee'
     }
   ],
   assessmentResults: {
     score: 470,
-    category: '联邦技术移民',
+    category: 'Federal Skilled Worker',
     lastUpdated: '2023-05-01',
     breakdown: [
-      { category: '年龄', score: 110, maxScore: 110 },
-      { category: '教育', score: 120, maxScore: 150 },
-      { category: '语言能力', score: 110, maxScore: 160 },
-      { category: '工作经验', score: 70, maxScore: 80 },
-      { category: '适应性', score: 60, maxScore: 100 },
+      { category: 'Age', score: 110, maxScore: 110 },
+      { category: 'Education', score: 120, maxScore: 150 },
+      { category: 'Language Proficiency', score: 110, maxScore: 160 },
+      { category: 'Work Experience', score: 70, maxScore: 80 },
+      { category: 'Adaptability', score: 60, maxScore: 100 },
     ]
   }
 };
 
 const dashboardNavItems = [
   {
-    title: '仪表盘',
+    title: 'Dashboard', // Use t('navigation.dashboard') inside component
     href: '/dashboard',
     icon: (
       <svg
@@ -83,7 +84,7 @@ const dashboardNavItems = [
     ),
   },
   {
-    title: '评估',
+    title: 'Assessment', // Use t('navigation.assessment') inside component
     href: '/assessment',
     icon: (
       <svg
@@ -106,17 +107,17 @@ const dashboardNavItems = [
     ),
     children: [
       {
-        title: '开始评估',
+        title: 'Start Assessment', // Use t('assessment.startAssessment') inside component
         href: '/assessment/start',
       },
       {
-        title: '评估结果',
+        title: 'Assessment Results', // Use t('dashboard.assessmentResults') inside component
         href: '/assessment/results',
       },
     ],
   },
   {
-    title: '文档',
+    title: 'Documents', // Use t('navigation.documents') inside component
     href: '/documents',
     icon: (
       <svg
@@ -144,7 +145,7 @@ const dashboardNavItems = [
     ),
   },
   {
-    title: '表格',
+    title: 'Forms', // Use t('navigation.forms') inside component
     href: '/forms',
     icon: (
       <svg
@@ -164,7 +165,7 @@ const dashboardNavItems = [
     ),
   },
   {
-    title: '顾问',
+    title: 'Consultants', // Use t('navigation.consultants') inside component
     href: '/consultants',
     icon: (
       <svg
@@ -184,7 +185,7 @@ const dashboardNavItems = [
     ),
   },
   {
-    title: '设置',
+    title: 'Settings', // Use t('navigation.settings') inside component
     href: '/settings',
     icon: (
       <svg
@@ -313,9 +314,9 @@ const DashboardPage: React.FC = () => {
         defaultCollapsed={false}
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* 左侧栏 - 个人资料和下一步 */}
+          {/* Left column - Profile and Next Steps */}
           <div className="md:col-span-2 space-y-6">
-            {/* 欢迎卡片 */}
+            {/* Welcome card */}
             <Card className="p-6">
               <div className="flex flex-col md:flex-row md:items-center justify-between">
                 <div>
@@ -335,14 +336,14 @@ const DashboardPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="mt-4 md:mt-0">
-                  <Button variant="primary">
+                  <ButtonLink href="/profile/build/form" variant="primary">
                     {t('dashboard.continueProfile')}
-                  </Button>
+                  </ButtonLink>
                 </div>
               </div>
             </Card>
             
-            {/* 评估结果卡片 */}
+            {/* Assessment Results Card */}
             <Card className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold">{t('dashboard.assessmentResults')}</h3>
@@ -382,7 +383,7 @@ const DashboardPage: React.FC = () => {
               </div>
             </Card>
             
-            {/* 下一步卡片 */}
+            {/* Next Steps Card */}
             <Card className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold">{t('dashboard.nextSteps')}</h3>
@@ -434,16 +435,16 @@ const DashboardPage: React.FC = () => {
               </div>
               
               <div className="mt-4">
-                <Button variant="outline" className="w-full">
+                <ButtonLink href="/tasks/new" variant="outline" className="w-full">
                   {t('dashboard.addTask')}
-                </Button>
+                </ButtonLink>
               </div>
             </Card>
           </div>
           
-          {/* 右侧栏 - 最近文档和预约 */}
+          {/* Right column - Recent Documents and Appointments */}
           <div className="space-y-6">
-            {/* 最近文档卡片 */}
+            {/* Recent Documents Card */}
             <Card className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold">{t('dashboard.recentDocuments')}</h3>
@@ -471,13 +472,13 @@ const DashboardPage: React.FC = () => {
               </div>
               
               <div className="mt-4">
-                <Button variant="outline" className="w-full">
+                <ButtonLink href="/documents/upload" variant="outline" className="w-full">
                   {t('dashboard.uploadDocument')}
-                </Button>
+                </ButtonLink>
               </div>
             </Card>
             
-            {/* 即将到来的预约卡片 */}
+            {/* Upcoming Appointments Card */}
             <Card className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold">{t('dashboard.upcomingAppointments')}</h3>
@@ -550,12 +551,12 @@ const DashboardPage: React.FC = () => {
                         {appointment.consultant}
                       </div>
                       <div className="mt-3 flex space-x-2">
-                        <Button variant="outline" size="sm">
+                        <ButtonLink href={`/appointments/${appointment.id}/reschedule`} variant="outline" size="sm">
                           {t('dashboard.reschedule')}
-                        </Button>
-                        <Button variant="primary" size="sm">
+                        </ButtonLink>
+                        <ButtonLink href={`/appointments/${appointment.id}/join`} variant="primary" size="sm">
                           {t('dashboard.joinMeeting')}
-                        </Button>
+                        </ButtonLink>
                       </div>
                     </div>
                   ))}
@@ -582,14 +583,14 @@ const DashboardPage: React.FC = () => {
                     </svg>
                   </div>
                   <p>{t('dashboard.noAppointments')}</p>
-                  <Button variant="outline" size="sm" className="mt-3">
+                  <ButtonLink href="/appointments/new" variant="outline" size="sm" className="mt-3">
                     {t('dashboard.scheduleAppointment')}
-                  </Button>
+                  </ButtonLink>
                 </div>
               )}
             </Card>
             
-            {/* 快速链接卡片 */}
+            {/* Quick Links Card */}
             <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4">{t('dashboard.quickLinks')}</h3>
               <div className="space-y-2">

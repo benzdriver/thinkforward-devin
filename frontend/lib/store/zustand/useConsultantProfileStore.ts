@@ -58,7 +58,7 @@ export interface ConsultantProfile {
     category: string;
     price?: number;
     pricingModel?: 'hourly' | 'fixed' | 'session';
-    duration?: number; // 以分钟为单位
+    duration?: number; // in minutes
     isActive: boolean;
   }[];
   socialLinks: {
@@ -69,7 +69,7 @@ export interface ConsultantProfile {
     status: 'available' | 'limited' | 'unavailable';
     message?: string;
     acceptingNewClients: boolean;
-    leadTime: number; // 预约提前天数
+    leadTime: number; // days in advance for booking
   };
   visibility: {
     profile: 'public' | 'clients_only' | 'private';
@@ -88,7 +88,7 @@ export interface ConsultantProfileStats {
   contactCount: number;
   bookingRate: number;
   completionRate: number;
-  responseTime: number; // 以小时为单位
+  responseTime: number; // in hours
   popularServices: {
     serviceId: string;
     serviceName: string;
