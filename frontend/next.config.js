@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
+const { withSentryConfig } = require('@sentry/nextjs');
 
 const nextConfig = {
   distDir: 'dist',
@@ -44,4 +45,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withSentryConfig(nextConfig);

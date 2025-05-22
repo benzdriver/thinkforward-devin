@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:4.4
+        ports:
+          - 27017:27017
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: |
+          cd frontend && npm install
+          cd ../backend && npm install
+          cd ../tests && npm install --legacy-peer-deps
+      
+      - name: Run tests
+        run: |
+          cd tests
+          npm run test:frontend-unit
+          npm run test:api
