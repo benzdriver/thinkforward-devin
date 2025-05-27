@@ -5,6 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { StoreProvider } from '../lib/store';
 import { AuthProvider } from '../lib/auth/AuthContext';
+import { ThemeProvider } from '../lib/theme/ThemeProvider';
 import { queryClient } from '../lib/api';
 import '../styles/globals.css';
 
@@ -12,9 +13,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
-        <AuthProvider>
-          <Component {...pageProps} />
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <Component {...pageProps} />
+          </AuthProvider>
+        </ThemeProvider>
       </StoreProvider>
       {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>

@@ -7,6 +7,7 @@ module.exports = {
     "./lib/**/*.{js,ts,jsx,tsx}",
     "./styles/**/*.{css,scss}",
   ],
+  darkMode: 'class',
   theme: {
     fontFamily: {
       'sans': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
