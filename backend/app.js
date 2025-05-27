@@ -84,10 +84,21 @@ function startFullApplication() {
     console.log('Express application created');
     
     console.log('Connecting to MongoDB...');
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/thinkforward';
+    let mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/thinkforward';
+    
+    if (mongoUri.includes('://:@')) {
+      console.log('Detected empty credentials in MongoDB URI, fixing format');
+      mongoUri = mongoUri.replace('://:', '://');
+      mongoUri = mongoUri.replace(':@', '');
+    }
+    
     console.log('MongoDB URI:', mongoUri.replace(/:([^:@]+)@/, ':****@')); // Hide password in logs
     
-    mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 10000 })
+    mongoose.connect(mongoUri, { 
+      serverSelectionTimeoutMS: 10000,
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
       .then(() => {
         console.log('Connected to MongoDB successfully');
         
@@ -193,13 +204,8 @@ function startFullApplication() {
 
 function setupMinimalApplicationWithoutMongoDB(app, localeMiddleware, handleErrors, handle404, handleValidationErrors) {
   try {
-    const express = require('express');
-    const cors = require('cors');
-    const helmet = require('helmet');
-    const morgan = require('morgan');
-    const path = require('path');
-    
     console.log('Setting up minimal application without MongoDB');
+    console.log('Using existing minimal server for health checks');
     
     app.use(helmet());
     app.use(cors());
@@ -208,8 +214,8 @@ function setupMinimalApplicationWithoutMongoDB(app, localeMiddleware, handleErro
     app.use(express.urlencoded({ extended: true }));
     if (localeMiddleware) app.use(localeMiddleware);
     
-    app.get('/health', (req, res) => {
-      console.log('Health check endpoint called on minimal application');
+    app.get('/api/health', (req, res) => {
+      console.log('API health check endpoint called on minimal application');
       res.status(200).json({ 
         status: 'ok',
         version: process.env.npm_package_version || '1.0.0',
@@ -217,20 +223,28 @@ function setupMinimalApplicationWithoutMongoDB(app, localeMiddleware, handleErro
         mongodb: 'disconnected',
         minimal: true
       });
-      console.log('Health check response sent from minimal application');
+      console.log('API health check response sent from minimal application');
     });
     
     if (handle404) app.use(handle404);
     if (handleValidationErrors) app.use(handleValidationErrors);
     if (handleErrors) app.use(handleErrors);
     
-    const PORT = process.env.PORT || 5000;
+    // Use a different port than the minimal server
+    const PORT = parseInt(process.env.PORT || '5000') + 1;
+    console.log(`Starting minimal application without MongoDB on port ${PORT}`);
+    
     app.listen(PORT, () => {
       console.log(`Minimal application without MongoDB running on port ${PORT}`);
+      console.log(`The original minimal server is still running on port ${process.env.PORT || 5000} for health checks`);
+    }).on('error', (err) => {
+      console.error('Error starting minimal application without MongoDB:', err);
+      console.log('Health checks will still be handled by the minimal server');
     });
     
   } catch (error) {
     console.error('Error setting up minimal application without MongoDB:', error);
+    console.log('Health checks will still be handled by the minimal server');
   }
 }
 
