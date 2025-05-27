@@ -28,12 +28,7 @@ const adminSettingsRoutes = require('./routes/admin/adminSettingsRoutes');
 
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/thinkforward', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-})
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/thinkforward')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
