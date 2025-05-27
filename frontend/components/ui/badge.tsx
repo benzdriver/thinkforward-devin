@@ -1,20 +1,21 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
+import { baseVariants, componentVariants } from "../../lib/theme/variants";
 
 const badgeVariants = cva(
   "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset",
   {
     variants: {
       variant: {
-        default: "bg-neutral-50 text-neutral-800 ring-neutral-200 hover:bg-neutral-100",
-        primary: "bg-primary-50 text-primary-800 ring-primary-200 hover:bg-primary-100",
-        secondary: "bg-secondary-50 text-secondary-800 ring-secondary-200 hover:bg-secondary-100",
-        destructive: "bg-destructive-50 text-destructive-800 ring-destructive-200 hover:bg-destructive-100",
-        success: "bg-success-50 text-success-800 ring-success-200 hover:bg-success-100",
-        warning: "bg-warning-50 text-warning-800 ring-warning-200 hover:bg-warning-100",
-        info: "bg-info-50 text-info-800 ring-info-200 hover:bg-info-100",
-        outline: "bg-transparent text-neutral-800 ring-neutral-300 hover:bg-neutral-50",
+        default: "bg-neutral-50 text-neutral-800 ring-neutral-200 hover:bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-200 dark:ring-neutral-700 dark:hover:bg-neutral-700",
+        primary: "bg-primary-50 text-primary-800 ring-primary-200 hover:bg-primary-100 dark:bg-primary-900 dark:text-primary-200 dark:ring-primary-800 dark:hover:bg-primary-800",
+        secondary: "bg-secondary-50 text-secondary-800 ring-secondary-200 hover:bg-secondary-100 dark:bg-secondary-900 dark:text-secondary-200 dark:ring-secondary-800 dark:hover:bg-secondary-800",
+        destructive: "bg-destructive-50 text-destructive-800 ring-destructive-200 hover:bg-destructive-100 dark:bg-destructive-900 dark:text-destructive-200 dark:ring-destructive-800 dark:hover:bg-destructive-800",
+        success: "bg-success-50 text-success-800 ring-success-200 hover:bg-success-100 dark:bg-success-900 dark:text-success-200 dark:ring-success-800 dark:hover:bg-success-800",
+        warning: "bg-warning-50 text-warning-800 ring-warning-200 hover:bg-warning-100 dark:bg-warning-900 dark:text-warning-200 dark:ring-warning-800 dark:hover:bg-warning-800",
+        info: "bg-info-50 text-info-800 ring-info-200 hover:bg-info-100 dark:bg-info-900 dark:text-info-200 dark:ring-info-800 dark:hover:bg-info-800",
+        outline: "bg-transparent text-neutral-800 ring-neutral-300 hover:bg-neutral-50 dark:text-neutral-200 dark:ring-neutral-700 dark:hover:bg-neutral-800",
       },
       size: {
         sm: "px-2 py-0.5 text-xs",
@@ -69,7 +70,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
         {isRemovable && onRemove && (
           <button
             type="button"
-            className="ml-1 -mr-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-neutral-200/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-0"
+            className="ml-1 -mr-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-neutral-200/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-0 dark:hover:bg-neutral-700/50 dark:focus:ring-primary-500"
             onClick={(e) => {
               e.stopPropagation();
               onRemove();

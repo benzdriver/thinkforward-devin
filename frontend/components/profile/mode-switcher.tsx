@@ -34,7 +34,7 @@ export const ModeSwitcher = ({ currentMode, className = '' }: ModeSwitcherProps)
           </Badge>
         </div>
         
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {currentMode === 'conversation'
             ? t('profile.modeSwitcher.conversationDescription')
             : t('profile.modeSwitcher.formDescription')}
