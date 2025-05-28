@@ -31,6 +31,32 @@ const minimalServer = http.createServer((req, res) => {
       minimal: true
     }));
     console.log('Minimal health check response sent');
+  } else if (req.url === '/' || req.url === '') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>ThinkForward API</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+            h1 { color: #0066cc; }
+            .container { max-width: 800px; margin: 0 auto; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>ThinkForward API</h1>
+            <p>Welcome to the ThinkForward API server. This is the backend service for the ThinkForward application.</p>
+            <p>Status: Running</p>
+            <p>Version: ${process.env.npm_package_version || '1.0.0'}</p>
+            <p>Environment: ${process.env.NODE_ENV || 'development'}</p>
+            <p>Server: Minimal (Startup in progress)</p>
+          </div>
+        </body>
+      </html>
+    `);
+    console.log('Root path response sent from minimal server');
   } else {
     res.writeHead(404);
     res.end('Not found');
@@ -130,6 +156,43 @@ function startFullApplication() {
         });
         console.log('Health check endpoint setup complete');
         
+        console.log('Setting up root path endpoint');
+        app.get('/', (req, res) => {
+          console.log('Root path endpoint called on full application');
+          res.send(`
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <title>ThinkForward API</title>
+                <style>
+                  body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+                  h1 { color: #0066cc; }
+                  .container { max-width: 800px; margin: 0 auto; }
+                  .status { background-color: #e6f7ff; padding: 15px; border-radius: 5px; margin-top: 20px; }
+                  .status-item { margin: 10px 0; }
+                </style>
+              </head>
+              <body>
+                <div class="container">
+                  <h1>ThinkForward API</h1>
+                  <p>Welcome to the ThinkForward API server. This is the backend service for the ThinkForward application.</p>
+                  
+                  <div class="status">
+                    <h2>Server Status</h2>
+                    <div class="status-item"><strong>Status:</strong> Running</div>
+                    <div class="status-item"><strong>Version:</strong> ${process.env.npm_package_version || '1.0.0'}</div>
+                    <div class="status-item"><strong>Environment:</strong> ${process.env.NODE_ENV || 'development'}</div>
+                    <div class="status-item"><strong>Server:</strong> Full Application</div>
+                    <div class="status-item"><strong>MongoDB:</strong> Connected</div>
+                  </div>
+                </div>
+              </body>
+            </html>
+          `);
+          console.log('Root path response sent from full application');
+        });
+        console.log('Root path endpoint setup complete');
+        
         console.log('Loading route modules');
         const routeModules = [
           { path: '/api/auth', module: './routes/authRoutes' },
@@ -224,6 +287,43 @@ function setupMinimalApplicationWithoutMongoDB(app, localeMiddleware, handleErro
         minimal: true
       });
       console.log('API health check response sent from minimal application');
+    });
+    
+    app.get('/', (req, res) => {
+      console.log('Root path endpoint called on minimal application without MongoDB');
+      res.send(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>ThinkForward API</title>
+            <style>
+              body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+              h1 { color: #0066cc; }
+              .container { max-width: 800px; margin: 0 auto; }
+              .status { background-color: #fff0f0; padding: 15px; border-radius: 5px; margin-top: 20px; }
+              .status-item { margin: 10px 0; }
+              .warning { color: #cc3300; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h1>ThinkForward API</h1>
+              <p>Welcome to the ThinkForward API server. This is the backend service for the ThinkForward application.</p>
+              
+              <div class="status">
+                <h2>Server Status</h2>
+                <div class="status-item"><strong>Status:</strong> Running (Limited Functionality)</div>
+                <div class="status-item"><strong>Version:</strong> ${process.env.npm_package_version || '1.0.0'}</div>
+                <div class="status-item"><strong>Environment:</strong> ${process.env.NODE_ENV || 'development'}</div>
+                <div class="status-item"><strong>Server:</strong> Minimal Application</div>
+                <div class="status-item warning"><strong>MongoDB:</strong> Disconnected</div>
+                <div class="status-item warning"><strong>Note:</strong> Some API features may be unavailable due to database connection issues.</div>
+              </div>
+            </div>
+          </body>
+        </html>
+      `);
+      console.log('Root path response sent from minimal application without MongoDB');
     });
     
     if (handle404) app.use(handle404);
